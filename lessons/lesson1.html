@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your first web page · Web Foundations</title>
+<meta name="description" content="Lesson 1 of Web Foundations: tags, headings, paragraphs, links, images and lists.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<style>
+  .anat { font: 600 1.35rem/1.6 var(--mono); background: var(--card); border: 2px dashed var(--pencil); border-radius: var(--radius, 8px); padding: 10px 14px; display: inline-block; margin: 2px 0 10px; }
+  .anat .t { color: var(--pen); }
+  .anat .a { color: var(--redpen); }
+  .anat .v { color: var(--good); }
+  .say { position: relative; }   /* a 🤔 sits at the top-right of its paragraph */
+</style>
+</head>
+<body data-pen="blue">
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="../">← Web Foundations</a>
+    <span class="where">Lesson 1 of 8</span>
+  </header>
+
+  <main data-paged>
+    <div class="paged-head">
+      <h1>Your first web page</h1>
+      <div class="progress" aria-label="Lesson parts"></div>
+    </div>
+
+    <!-- 1 -->
+    <section class="part" data-title="What is a web page?">
+      <h2>What is a web page?</h2>
+      <p class="say">Every web page is a plain text file. Your browser reads the file and draws the page it describes.</p>
+      <p class="say">The file marks each piece of text with a short label in angle brackets, such as <code>&lt;h1&gt;</code> for "a big heading" or <code>&lt;p&gt;</code> for "a paragraph". The language of these labels is called <mark data-peek="Short for HyperText Markup Language. “Markup” means labels added around text to say what each part is.">HTML</mark>.</p>
+      <div class="activity">
+        <div class="do">Try it: change the words on the left. The page on the right changes as you type.</div>
+        <div class="live" data-h="150"><textarea aria-label="Your HTML">
+          <h1>My first page</h1>
+          <p>Hello! I am learning HTML.</p>
+          <p>This line is a paragraph too.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Those labels have a name and a shape. Let's look closer.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="part" data-title="Tags and elements">
+      <h2>Tags and elements</h2>
+      <p class="say">A label like <code>&lt;p&gt;</code> is called a <mark>tag</mark>. Most tags come in pairs: an opening tag, and a closing tag with a <code>/</code> before the name.
+        <button class="doubt" data-peek-from="dTagsPair" aria-label="A doubt">🤔</button></p>
+      <div class="anat"><span class="t" data-peek="Opening tag: “a paragraph starts here”.">&lt;p&gt;</span><span data-peek="Content: the words the reader sees.">Hello!</span><span class="t" data-peek="Closing tag: the same name with a / in front. “The paragraph ends here.”">&lt;/p&gt;</span></div>
+      <p class="say">The opening tag, the content and the closing tag together make one <mark>element</mark>: here, one paragraph element.</p>
+      <div class="activity">
+        <div class="do">Try it: <code>&lt;b&gt;</code> makes text bold. Delete the closing <code>&lt;/b&gt;</code> and watch the rest of the text.</div>
+        <div class="live" data-h="120"><textarea aria-label="Your HTML">
+          <p>This is <b>bold</b> and this is not.</p>
+          <p>A second paragraph.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Without its closing tag, the browser has to guess where bold stops, and it guesses "much later". Always close what you open.</p>
+      <div hidden id="dTagsPair"><b>Do all tags have a closing tag?</b><br>No. A few tags hold no words, so there is nothing to close. For example, <code>&lt;br&gt;</code> starts a new line. These are called empty elements.</div>
+    </section>
+
+    <!-- 3 -->
+    <section class="part" data-title="Every page's skeleton">
+      <h2>Every page's skeleton</h2>
+      <p class="say">A full HTML file wraps your content in the same frame every time. Elements sit inside other elements, like boxes inside boxes. We indent the inner ones so the boxes are easy to see.
+        <button class="doubt" data-peek-from="dDoctype" aria-label="A doubt">🤔</button></p>
+      <p class="say"><code>&lt;head&gt;</code> holds facts about the page that are not shown on it, such as the <code>&lt;title&gt;</code>: the name on the browser tab.</p>
+      <p class="say"><code>&lt;body&gt;</code> holds everything the reader sees.</p>
+      <div class="activity">
+        <div class="do">Try it: change the words inside <code>&lt;title&gt;</code>. Watch the tab above the page.</div>
+        <div class="live" data-h="225" data-tab="1"><textarea aria-label="Your HTML">
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>My page</title>
+            </head>
+            <body>
+              <h1>Welcome</h1>
+              <p>Everything I see is in the body.</p>
+            </body>
+          </html>
+        </textarea></div>
+      </div>
+      <p class="hook">Inside the body, the first thing most pages need is a heading.</p>
+      <div hidden id="dDoctype"><b>What is <code>&lt;!DOCTYPE html&gt;</code> for?</b><br>It tells the browser "this is a modern HTML page". It always goes on the very first line, and it has no closing tag.</div>
+    </section>
+
+    <!-- 4 -->
+    <section class="part" data-title="Headings">
+      <h2>Headings</h2>
+      <p class="say">Headings are titles for the parts of a page. There are six sizes: <code>&lt;h1&gt;</code> is the biggest and most important, <code>&lt;h6&gt;</code> the smallest.</p>
+      <p class="say">Use one <code>&lt;h1&gt;</code> for the page's main title, <code>&lt;h2&gt;</code> for its sections, <code>&lt;h3&gt;</code> for parts inside a section, and so on.
+        <button class="doubt" data-peek-from="dHeadSize" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: turn the <code>&lt;h2&gt;</code> into an <code>&lt;h5&gt;</code>. Change both its tags.</div>
+        <div class="live" data-h="250"><textarea aria-label="Your HTML">
+          <h1>Heading 1: the page title</h1>
+          <h2>Heading 2: a section</h2>
+          <h3>Heading 3: part of a section</h3>
+          <h4>Heading 4</h4>
+          <h5>Heading 5</h5>
+          <h6>Heading 6</h6>
+        </textarea></div>
+      </div>
+      <p class="hook">Under a heading comes ordinary text: paragraphs.</p>
+      <div hidden id="dHeadSize"><b>Can I pick <code>&lt;h3&gt;</code> just because I like its size?</b><br>Better not. Search engines and screen readers use headings to understand how the page is organised. To change the size of text, use CSS (coming in Lesson 3).</div>
+    </section>
+
+    <!-- 5 -->
+    <section class="part" data-title="Paragraphs and line breaks">
+      <h2>Paragraphs and line breaks</h2>
+      <p class="say"><code>&lt;p&gt;</code> makes a paragraph: a block of text with a gap above and below it.</p>
+      <p class="say">The browser ignores extra spaces and new lines in your file. Ten spaces show as one, and pressing Enter does not start a new line on the page.</p>
+      <p class="say">To start a new line inside a paragraph, use <code>&lt;br&gt;</code> (line break). It is empty, so it has no closing tag.
+        <button class="doubt" data-peek-from="dSpace" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: compare the first two paragraphs. Then add a <code>&lt;br&gt;</code> to the third, after "Day 1".</div>
+        <div class="live" data-h="170"><textarea aria-label="Your HTML">
+          <p>Monday: HTML.
+          Tuesday: CSS.</p>
+
+          <p>Monday: HTML.<br>Tuesday: CSS.</p>
+
+          <p>Day 1          lots of spaces          Day 2</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Time to put these together.</p>
+      <div hidden id="dSpace"><b>How do I get a bigger gap, then?</b><br>With CSS, using margin and padding (coming in Lesson 3). Don't stack many <code>&lt;br&gt;</code> tags to make space.</div>
+    </section>
+
+    <!-- 6 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 1.1">
+      <h2>✏️ Practice 1.1</h2>
+      <p class="say">Remember:<br><b class="eqbox">&lt;tag&gt;content&lt;/tag&gt;</b> makes one element<br><code>&lt;title&gt;</code> in the head names the tab · <code>&lt;h1&gt;</code>…<code>&lt;h6&gt;</code> headings · <code>&lt;p&gt;</code> paragraph · <code>&lt;br&gt;</code> new line</p>
+      <div class="activity">
+        <div class="do">Build a small "About me" page. The list below ticks itself as you type.</div>
+        <div class="live" data-h="210" data-tab="1" data-check="aboutMe" data-answer="aboutMeAnswer"><textarea aria-label="Your HTML">
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title></title>
+            </head>
+            <body>
+
+            </body>
+          </html>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="aboutMeAnswer">
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>About Asha</title>
+          </head>
+          <body>
+            <h1>Asha Menon</h1>
+            <h2>What I'm learning</h2>
+            <p>HTML, CSS and JavaScript.</p>
+            <p>Email: asha@example.com<br>City: Kochi</p>
+          </body>
+        </html>
+      </script>
+      <p class="hook">Next: tags that need a few extra details.</p>
+    </section>
+
+    <!-- 7 -->
+    <section class="part" data-title="Attributes">
+      <h2>Attributes: extra details for a tag</h2>
+      <p class="say">Some tags need extra details. You write them inside the opening tag, as <code>name="value"</code>. These details are called <mark>attributes</mark>.</p>
+      <div class="anat"><span class="t">&lt;p</span> <span class="a" data-peek="The attribute's name: which detail this is. title adds a small hint that pops up on hover.">title</span>=<span class="v" data-peek="The value, always inside quotes.">"A hint"</span><span class="t">&gt;</span>Hover me<span class="t">&lt;/p&gt;</span></div>
+      <p class="say">An attribute is a name, an <code>=</code> sign and a value in quotes. One tag can have several, with spaces between them.</p>
+      <div class="activity">
+        <div class="do">Try it: hover over each paragraph on the right (or press and hold on a phone). Then change the words in <code>title</code>.</div>
+        <div class="live" data-h="110"><textarea aria-label="Your HTML">
+          <p title="Hi! I'm a title attribute.">Hover over me.</p>
+          <p title="Me too!" lang="en">I have two attributes.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">The most useful attribute of all makes links.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="part" data-title="Links">
+      <h2>Links</h2>
+      <p class="say">The <code>&lt;a&gt;</code> tag makes a link. Its <code>href</code> attribute holds the address to go to:<br>
+        <b class="eqbox">&lt;a href="address"&gt;words to click&lt;/a&gt;</b></p>
+      <p class="say">Add <code>target="_blank"</code> to open the link in a new tab.
+        <button class="doubt" data-peek-from="dHref" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: click a link on the right. Then change its words or its address.</div>
+        <div class="live" data-h="120"><textarea aria-label="Your HTML">
+          <p>Learn more on <a href="https://www.w3schools.com/html/">W3Schools</a>.</p>
+          <p><a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a> opens in a new tab.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Links take you to things. Next, pictures.</p>
+      <div hidden id="dHref"><b>What else can <code>href</code> point to?</b><br>Another page of your own site, like <code>href="about.html"</code>.<br>An email address: <code>href="mailto:you@example.com"</code> opens the reader's email app.</div>
+    </section>
+
+    <!-- 9 -->
+    <section class="part" data-title="Images">
+      <h2>Images</h2>
+      <p class="say"><code>&lt;img&gt;</code> shows a picture. It is empty, so it has no closing tag. It needs two attributes:</p>
+      <p class="say"><code>src</code>: where the picture file is.<br><code>alt</code>: words that describe it. Screen readers read them aloud, and they show if the picture can't load.</p>
+      <p class="say"><code>width</code> sets the width in <span data-peek="The tiny dots a screen is made of. A laptop screen is about 1,400 pixels wide.">pixels</span>; the height follows to keep its shape.
+        <button class="doubt" data-peek-from="dSrc" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: change the width to 120. Then break the <code>src</code> (type <code>notebookX.svg</code>) and see the <code>alt</code> words appear.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <img src="notebook.svg" alt="A notebook with a pencil" width="220">
+        </textarea></div>
+      </div>
+      <p class="hook">Now, how to change the way any element looks.</p>
+      <div hidden id="dSrc"><b>Where does a picture's address come from?</b><br>Put the picture file in the same folder as your HTML file and write its name: <code>src="photo.jpg"</code>.<br>Or use the full web address of a picture online, starting with <code>https://</code>.</div>
+    </section>
+
+    <!-- 10 -->
+    <section class="part" data-title="The style attribute">
+      <h2>The style attribute</h2>
+      <p class="say">The <code>style</code> attribute changes how one element looks. Its value is a list of <code>property: value;</code> pairs:<br>
+        <b class="eqbox">style="color: teal; font-size: 24px;"</b></p>
+      <p class="say">Four to start with: <code>color</code> (text colour), <code>background-color</code>, <code>font-size</code>, and <code>text-align</code> (<code>left</code>, <code>center</code> or <code>right</code>).
+        <button class="doubt" data-peek-from="dColors" aria-label="A doubt">🤔</button></p>
+      <p class="say">This is a first taste of <span data-peek="Short for Cascading Style Sheets: the language for how pages look.">CSS</span>, the styling language. Lesson 3 covers it properly.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>tomato</code> to <code>teal</code>, and <code>20px</code> to <code>32px</code>.</div>
+        <div class="live" data-h="150"><textarea aria-label="Your HTML">
+          <h1 style="color: tomato; text-align: center;">Welcome</h1>
+          <p style="background-color: lightyellow; font-size: 20px;">A highlighted paragraph.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice time: links, pictures and style together.</p>
+      <div hidden id="dColors"><b>Which colour names can I use?</b><br>About 140 names work, such as <code>red</code>, <code>teal</code>, <code>tomato</code> or <code>gold</code>. You can also use colour codes like <code>#ff6347</code> (explained in Lesson 3).</div>
+    </section>
+
+    <!-- 11 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 1.2">
+      <h2>✏️ Practice 1.2</h2>
+      <p class="say">Remember:<br><b class="eqbox">&lt;a href="address" target="_blank"&gt;words&lt;/a&gt;</b><br><b class="eqbox">&lt;img src="file" alt="description" width="150"&gt;</b><br><b class="eqbox">style="property: value;"</b></p>
+      <div class="activity">
+        <div class="do">Turn this into a small profile card. Use <code>notebook.svg</code> as your picture.</div>
+        <div class="live" data-h="190" data-check="card" data-answer="cardAnswer"><textarea aria-label="Your HTML">
+          <h2>About me</h2>
+          <p>I like building things.</p>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="cardAnswer">
+        <h2 style="text-align: center;">About me</h2>
+        <img src="notebook.svg" alt="My notebook" width="150">
+        <p style="color: teal;">I like building things.</p>
+        <p><a href="https://github.com" target="_blank">My GitHub</a></p>
+      </script>
+      <p class="hook">Next: small tags that change words inside a paragraph.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="part" data-title="Formatting text">
+      <h2>Formatting text</h2>
+      <p class="say">A few small tags change how words look inside a paragraph: bold, italic, highlighted, struck out, and raised or lowered like in H₂O and x². Each one is shown on the right.
+        <button class="doubt" data-peek-from="dStrong" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: add a new paragraph that says E = mc², using <code>&lt;sup&gt;</code> for the 2.</div>
+        <div class="live" data-h="270"><textarea aria-label="Your HTML">
+          <p><b>bold</b> and <strong>strong</strong></p>
+          <p><i>italic</i> and <em>emphasised</em></p>
+          <p><mark>highlighted</mark> and <small>small</small></p>
+          <p><del>deleted</del> and <ins>inserted</ins></p>
+          <p>H<sub>2</sub>O and x<sup>2</sup></p>
+        </textarea></div>
+      </div>
+      <p class="hook">Next: lists, for items that belong together.</p>
+      <div hidden id="dStrong"><b>What's the difference between <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code>?</b><br>They look the same. <code>&lt;strong&gt;</code> also means "this is important", so screen readers stress it. In the same way, <code>&lt;em&gt;</code> means "say this with emphasis", while <code>&lt;i&gt;</code> is only italic.</div>
+    </section>
+
+    <!-- 13 -->
+    <section class="part" data-title="Lists">
+      <h2>Lists</h2>
+      <p class="say"><code>&lt;ul&gt;</code> makes an <mark>unordered list</mark>, with bullets. <code>&lt;ol&gt;</code> makes an <mark>ordered list</mark>, with numbers. Inside both, each item is an <code>&lt;li&gt;</code> (list item).
+        <button class="doubt" data-peek-from="dOl" aria-label="A doubt">🤔</button></p>
+      <p class="say">A <mark>description list</mark>, <code>&lt;dl&gt;</code>, pairs each term (<code>&lt;dt&gt;</code>) with its description (<code>&lt;dd&gt;</code>), like a glossary.</p>
+      <div class="activity">
+        <div class="do">Try it: add an item to each list. Then change <code>&lt;ol&gt;</code> to <code>&lt;ol type="A"&gt;</code>.</div>
+        <div class="live" data-h="330"><textarea aria-label="Your HTML">
+          <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+          </ul>
+
+          <ol>
+            <li>Write the page</li>
+            <li>Style it</li>
+          </ol>
+
+          <dl>
+            <dt>HTML</dt>
+            <dd>What is on the page</dd>
+            <dt>CSS</dt>
+            <dd>How the page looks</dd>
+          </dl>
+        </textarea></div>
+      </div>
+      <p class="hook">Can a list hold another list? Yes.</p>
+      <div hidden id="dOl"><b>Can the numbers start at 5, or be letters?</b><br>Yes. <code>&lt;ol start="5"&gt;</code> starts counting at 5.<br><code>&lt;ol type="A"&gt;</code> uses A, B, C, and <code>type="i"</code> uses i, ii, iii.</div>
+    </section>
+
+    <!-- 14 -->
+    <section class="part" data-title="Lists inside lists">
+      <h2>Lists inside lists</h2>
+      <p class="say">A list item can hold a whole new list. Put the inner <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> inside the <code>&lt;li&gt;</code>, just before its <code>&lt;/li&gt;</code>. This makes a <mark>multi-level list</mark>, like the outline of a book.
+        <button class="doubt" data-peek-from="dNest" aria-label="A doubt">🤔</button></p>
+      <p class="say">Each level gets a different bullet by itself: ● then ○ then ■.</p>
+      <div class="activity">
+        <div class="do">Try it: add a third level under CSS, with two items: Flexbox and Grid.</div>
+        <div class="live" data-h="270"><textarea aria-label="Your HTML">
+          <ul>
+            <li>Frontend
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+              </ul>
+            </li>
+            <li>Backend</li>
+          </ul>
+        </textarea></div>
+      </div>
+      <p class="hook">One last practice before the test.</p>
+      <div hidden id="dNest"><b>Why must the inner list go inside the <code>&lt;li&gt;</code>?</b><br>Only <code>&lt;li&gt;</code> elements may sit directly inside <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>. The inner list belongs to one item, so it goes inside that item.</div>
+    </section>
+
+    <!-- 15 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 1.3">
+      <h2>✏️ Practice 1.3</h2>
+      <p class="say">Remember:<br><b class="eqbox">&lt;ol&gt;</b> numbers · <b class="eqbox">&lt;ul&gt;</b> bullets · each item is an <code>&lt;li&gt;</code><br>An inner list goes inside an <code>&lt;li&gt;</code>, before its <code>&lt;/li&gt;</code>.</p>
+      <div class="activity">
+        <div class="do">Build the goal: a multi-level list with three levels.</div>
+        <div class="live" data-h="150" data-goal="shopGoal" data-goal-h="228" data-check="shop" data-answer="shopGoal"><textarea aria-label="Your HTML">
+          <ol>
+            <li>Fruits</li>
+            <li>Vegetables</li>
+            <li>Drinks</li>
+          </ol>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="shopGoal">
+        <ol>
+          <li>Fruits
+            <ul>
+              <li>Apple</li>
+              <li>Mango
+                <ul>
+                  <li>Alphonso</li>
+                  <li>Banganapalli</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>Vegetables
+            <ul>
+              <li>Carrot</li>
+            </ul>
+          </li>
+          <li>Drinks</li>
+        </ol>
+      </script>
+      <p class="hook">Ready? A short test on everything in this lesson.</p>
+    </section>
+
+    <!-- 16 -->
+    <section class="part" data-title="Lesson test">
+      <h2>Lesson 1 test</h2>
+      <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
+      <div class="test" data-test="1">
+        <div class="quiz" data-page="lesson1.html#2" data-topic="Tags and elements" data-right="Right. With no closing tag, the browser keeps the text bold well past where you meant it to stop.">
+          <div class="q"><small>1. Predict</small>You write <code>&lt;p&gt;This is &lt;b&gt;bold and this is not.&lt;/p&gt;</code> What does the page show?</div>
+          <div class="options">
+            <button data-right>"bold and this is not." is all bold</button>
+            <button data-why="The browser has no closing tag telling it where bold ends, so it doesn't stop after one word.">Only "bold" is bold</button>
+            <button data-why="Browsers don't show an error. They guess, and draw the page anyway.">An error message</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson1.html#5" data-topic="Paragraphs and line breaks" data-right="Right. The browser squeezes all those spaces and the new line into a single space.">
+          <div class="q"><small>2. Predict</small>A paragraph has "One", then ten spaces, then Enter, then "two". On the page, what is between the two words?</div>
+          <div class="options">
+            <button data-right>One space</button>
+            <button data-why="Pressing Enter in the file doesn't start a new line on the page. That needs &lt;br&gt;.">A new line</button>
+            <button data-why="Extra spaces in the file are squeezed into one.">Ten spaces</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson1.html#4" data-topic="Headings" data-right="Right. One h1 for the page title, then an h2 for each section.">
+          <div class="q"><small>3. Apply</small>A page has a main title and three sections. Which headings fit best?</div>
+          <div class="options">
+            <button data-right>One &lt;h1&gt;, then three &lt;h2&gt;</button>
+            <button data-why="A page has one main title, so only one h1. Sections go one level down.">Four &lt;h1&gt;</button>
+            <button data-why="Headings show how the page is organised; pick the level by meaning, not by size.">Whichever sizes look nicest</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson1.html#8" data-topic="Links" data-right="Right. The address goes in href, inside the opening &lt;a&gt; tag.">
+          <div class="q"><small>4. Spot the mistake</small>Which one is a working link?</div>
+          <div class="options">
+            <button data-why="src is for pictures. A link's address goes in href.">&lt;a src="https://example.com"&gt;Go&lt;/a&gt;</button>
+            <button data-right>&lt;a href="https://example.com"&gt;Go&lt;/a&gt;</button>
+            <button data-why="An attribute goes inside the opening tag, not in the closing one.">&lt;a&gt;Go&lt;/a href="https://example.com"&gt;</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson1.html#9" data-topic="Images" data-right="Right. When the picture can't load, the browser shows the alt words instead.">
+          <div class="q"><small>5. Predict</small><code>&lt;img src="dog.jpg" alt="My dog Bruno"&gt;</code>, but dog.jpg isn't in the folder. What does the reader see?</div>
+          <div class="options">
+            <button data-right>The words "My dog Bruno"</button>
+            <button data-why="The browser still draws the page; only the picture is missing.">An empty white page</button>
+            <button data-why="The browser can't guess a picture. It falls back to the alt words.">A picture of some other dog</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson1.html#10" data-topic="The style attribute" data-right="Right. Each pair is property: value; with a colon and a semicolon.">
+          <div class="q"><small>6. Spot the mistake</small>Which one makes the text red?</div>
+          <div class="options">
+            <button data-why="Inside style, a property and its value are joined with a colon, not =.">&lt;p style="color = red"&gt;</button>
+            <button data-why="red isn't an attribute of its own. It goes inside style, after color:.">&lt;p red&gt;</button>
+            <button data-right>&lt;p style="color: red;"&gt;</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson1.html#14" data-topic="Lists inside lists" data-right="Right. The inner list sits inside the Fruits item, before its &lt;/li&gt;.">
+          <div class="q"><small>7. Spot the mistake</small>Which puts "Apple" under "Fruits" correctly?</div>
+          <div class="options">
+            <button data-right>&lt;ul&gt;&lt;li&gt;Fruits &lt;ul&gt;&lt;li&gt;Apple&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</button>
+            <button data-why="Here the inner list comes after &lt;/li&gt;, so it sits directly inside the outer &lt;ul&gt;. Only &lt;li&gt; may go there.">&lt;ul&gt;&lt;li&gt;Fruits&lt;/li&gt;&lt;ul&gt;&lt;li&gt;Apple&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;</button>
+            <button data-why="An item can't go straight inside another item; it needs its own &lt;ul&gt; or &lt;ol&gt; around it.">&lt;ul&gt;&lt;li&gt;Fruits &lt;li&gt;Apple&lt;/li&gt;&lt;/li&gt;&lt;/ul&gt;</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section class="part" data-title="What's next?">
+      <h2>What's next?</h2>
+      <p class="say">You can now write a real page: headings, paragraphs, links, pictures, formatting and lists.</p>
+      <div class="open-question">
+        <div>This leaves a question</div>
+        <div class="big">How do we lay out tables, forms and boxes?</div>
+        <div>Lesson 2 answers it (coming soon).</div>
+      </div>
+      <p><button class="done-toggle" data-done="1">Mark lesson as done</button></p>
+    </section>
+  </main>
+</div>
+
+<nav class="pagebar" aria-label="Move between parts">
+  <div class="inner">
+    <button data-page-back>← Previous</button>
+    <span data-page-label></span>
+    <button class="primary" data-page-next>Next →</button>
+  </div>
+</nav>
+
+<script>
+// Checklists for the practice pages (read by assets/live.js)
+const text = el => (el && el.textContent || "").trim();
+window.LIVE_CHECKS = {
+  aboutMe: [
+    { say: "A tab name in <code>&lt;title&gt;</code>", hint: "Type words between &lt;title&gt; and &lt;/title&gt;.", test: d => d.title.trim() !== "" },
+    { say: "Your name in an <code>&lt;h1&gt;</code>", hint: "Inside the body: &lt;h1&gt;Your name&lt;/h1&gt;", test: d => text(d.querySelector("body h1")) !== "" },
+    { say: "A section heading in an <code>&lt;h2&gt;</code>", hint: "Something like &lt;h2&gt;What I'm learning&lt;/h2&gt;", test: d => text(d.querySelector("body h2")) !== "" },
+    { say: "At least two paragraphs", hint: "Each paragraph is its own &lt;p&gt;…&lt;/p&gt;.", test: d => [...d.querySelectorAll("body p")].filter(p => text(p)).length >= 2 },
+    { say: "A new line inside one paragraph", hint: "Put &lt;br&gt; between two lines of the same &lt;p&gt;.", test: d => !!d.querySelector("p br") },
+  ],
+  card: [
+    { say: "A picture, with <code>alt</code> words", hint: "&lt;img src=\"notebook.svg\" alt=\"…\"&gt;", test: d => { const i = d.querySelector("img"); return !!i && (i.getAttribute("alt") || "").trim() !== "" && i.complete && i.naturalWidth > 0; } },
+    { say: "The picture is 150 pixels wide", hint: "Add width=\"150\" to the img tag.", test: d => { const i = d.querySelector("img"); return !!i && i.getAttribute("width") === "150"; } },
+    { say: "A link that opens in a new tab", hint: "&lt;a href=\"https://…\" target=\"_blank\"&gt;words&lt;/a&gt;", test: d => !!d.querySelector('a[href][target="_blank"]') },
+    { say: "The heading is centred", hint: "Add style=\"text-align: center;\" to the h2.", test: d => [...d.querySelectorAll("h1,h2,h3,h4,h5,h6")].some(h => h.style.textAlign === "center") },
+    { say: "The paragraph has a colour", hint: "Add style=\"color: teal;\" to the p.", test: d => [...d.querySelectorAll("p")].some(p => p.style.color !== "") },
+  ],
+  shop: [
+    { say: "Fruits holds a bulleted list: Apple, Mango", hint: "Put &lt;ul&gt;&lt;li&gt;Apple&lt;/li&gt;&lt;li&gt;Mango&lt;/li&gt;&lt;/ul&gt; inside the Fruits &lt;li&gt;.", test: d => { const li = d.querySelector("ol > li"); const ul = li && li.querySelector(":scope > ul"); return !!ul && /apple/i.test(ul.textContent) && /mango/i.test(ul.textContent); } },
+    { say: "Mango holds a third level: Alphonso, Banganapalli", hint: "Inside the Mango &lt;li&gt;, before its &lt;/li&gt;, add another &lt;ul&gt;.", test: d => [...d.querySelectorAll("ol > li > ul > li")].some(li => /mango/i.test(li.firstChild && li.firstChild.textContent || "") && li.querySelectorAll(":scope > ul > li").length >= 2) },
+    { say: "Vegetables holds a bulleted list: Carrot", hint: "Same idea as Fruits: a &lt;ul&gt; inside the Vegetables &lt;li&gt;.", test: d => { const li = d.querySelectorAll("ol > li")[1]; const ul = li && li.querySelector(":scope > ul"); return !!ul && /carrot/i.test(ul.textContent); } },
+  ],
+};
+</script>
+<script src="../assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/guide.js"></script>
+<script src="../assets/live.js"></script>
+</body>
+</html>

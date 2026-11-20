@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Foundations</title>
+<meta name="description" content="Learn HTML, CSS and JavaScript by writing them, then build your own portfolio site.">
+<!-- Unlisted: shared by link, kept out of search engines. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/home.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="./">Web Foundations</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1>Build the web, <span class="swash">one tag at a time</span>.</h1>
+        <p class="say">Learn HTML, CSS and JavaScript by writing them, then <b>build your own portfolio site.</b></p>
+        <div class="actions">
+          <a class="btn primary" href="lessons/lesson1.html">Start Lesson 1</a>
+          <button data-note="needNote" aria-expanded="false" aria-controls="needNote">What you need</button>
+          <button data-note="howNote" aria-expanded="false" aria-controls="howNote">How to use</button>
+        </div>
+        <div class="need" id="needNote" hidden>
+          <button class="close" aria-label="Close">×</button>
+          <div class="cols">
+            <div>
+              <h3>Helps to know</h3>
+              <ul>
+                <li><span class="yes">✓</span> How to use a web browser</li>
+                <li><span class="yes">✓</span> How to type and copy text</li>
+              </ul>
+            </div>
+            <div>
+              <h3>You don't need</h3>
+              <ul>
+                <li><span class="no">✗</span> Any coding before</li>
+                <li><span class="no">✗</span> To install anything: you write code right in these pages</li>
+                <li><span class="no">✗</span> A powerful laptop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="need blue" id="howNote" hidden>
+          <button class="close" aria-label="Close">×</button>
+          <div class="cols">
+            <div>
+              <h3>Learning</h3>
+              <ul>
+                <li><span class="yes">1</span> Go in order.</li>
+                <li><span class="yes">2</span> Guess before you look.</li>
+                <li><span class="yes">3</span> Type in every editor. Break things!</li>
+                <li><span class="yes">4</span> Take your own notes with the pen (P).</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Teaching</h3>
+              <ul>
+                <li><span class="yes">B</span> Board: zoom and move</li>
+                <li><span class="yes">← →</span> Move between parts</li>
+                <li><span class="yes">Esc</span> Stop pen / guide / board</li>
+                <li><span class="yes">?</span> Ask quizzes out loud first</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity">
+        <div class="do">Try it: change the words on the left. The page changes as you type.</div>
+        <div class="live" data-h="110"><textarea aria-label="Your HTML">
+          <h1>Hello, I'm Asha</h1>
+          <p>I'm learning to build websites.</p>
+          <p>This is <mark>my first page</mark>.</p>
+        </textarea></div>
+      </div>
+    </section>
+
+    <h2 id="path">The path</h2>
+    <p class="path-intro">Each lesson ends with a question. The next lesson answers it.</p>
+    <ol class="path" id="pathList"></ol>
+
+  </main>
+  <footer class="site">Your progress is saved in this browser only.</footer>
+</div>
+
+<script src="assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/home.js"></script>
+<script src="assets/live.js"></script>
+</body>
+</html>
