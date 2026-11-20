@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript basics · Web Foundations</title>
+<meta name="description" content="Lesson 5 of Web Foundations: variables, output, data types, arrays, objects, functions, operators, type conversion and decisions.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body data-pen="blue">
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="../">← Web Foundations</a>
+    <span class="where">Lesson 5 of 8</span>
+  </header>
+
+  <main data-paged>
+    <div class="paged-head">
+      <h1>JavaScript basics</h1>
+      <div class="progress" aria-label="Lesson parts"></div>
+    </div>
+
+    <!-- 1 -->
+    <section class="part" data-title="What JavaScript is">
+      <h2>What JavaScript is</h2>
+      <p class="say">HTML is what's on the page, CSS is how it looks. <mark>JavaScript</mark> is what it <b>does</b>: react to clicks, check a form, work things out, change the page.</p>
+      <p class="say">JavaScript is a list of instructions the browser runs from top to bottom. <code>console.log(…)</code> writes something to the <mark>console</mark>: a box developers use to see what their code is doing.
+        <button class="doubt" data-peek-from="dConsole" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: change the words in quotes, then press <b>▶ Run</b>. Add a third line that logs <code>2 + 2</code> (no quotes).</div>
+        <div class="live" data-js="console" data-h="150"><textarea aria-label="Your JavaScript">
+          console.log("Hello from JavaScript!");
+          console.log("I run top to bottom.");
+          // This line is a comment: it is skipped.
+        </textarea></div>
+      </div>
+      <p class="say mini">A line starting with <code>//</code> is a <b>comment</b>: a note for people. JavaScript skips it.</p>
+      <p class="hook">Programs need to remember things. That's what variables are for.</p>
+      <div hidden id="dConsole"><b>Where is the console in a real browser?</b><br>Press F12 (or right-click → Inspect) and open the Console tab. Every <code>console.log</code> from the page shows up there.</div>
+    </section>
+
+    <!-- 2 -->
+    <section class="part" data-title="Variables: let and const">
+      <h2>Variables: let and const</h2>
+      <p class="say">A <mark>variable</mark> is a named box that holds a value. <code>let</code> makes a box whose value can change later. <code>const</code> makes one that can't.</p>
+      <div class="anat"><span class="t">let</span> <span class="a">score</span> = <span class="v">10</span>;</div>
+      <p class="say">Here the box is named <code>score</code> and holds <code>10</code>. Later, <code>score = 15;</code> puts 15 in it instead. Doing that to a <code>const</code> gives an error.
+        <button class="doubt" data-peek-from="dVar" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: run it. Then add <code>city = "Delhi";</code> at the end and run again. Read the error.</div>
+        <div class="live" data-js="console" data-h="170"><textarea aria-label="Your JavaScript">
+          let score = 10;
+          console.log(score);
+          score = 15;
+          console.log(score);
+
+          const city = "Kochi";
+          console.log(city);
+        </textarea></div>
+      </div>
+      <p class="hook">console.log is one way to show a value. There are three more.</p>
+      <div hidden id="dVar"><b>What about <code>var</code>?</b><br>The old way to make a variable, like <code>let</code> but with confusing rules about where it can be seen. You'll meet it in older code; use <code>let</code> and <code>const</code> in yours.</div>
+    </section>
+
+    <!-- 3 -->
+    <section class="part" data-title="Four ways to show output">
+      <h2>Four ways to show output</h2>
+      <p class="say"><code>console.log()</code>: writes to the console, for you, the developer.<br><code>document.write()</code>: writes straight onto the page.<br><code>alert()</code>: pops up a message box that the visitor must close.<br><code>prompt()</code>: pops up a box that asks a question; whatever the visitor types comes back as a value.
+        <button class="doubt" data-peek-from="dWrite" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: press ▶ Run, answer the question, and close the alert. See where each output went.</div>
+        <div class="live" data-js="page" data-manual data-h="150"><textarea aria-label="Your HTML">
+          <h3>Output demo</h3>
+          <script>
+            let name = prompt("What's your name?");
+            console.log("The visitor typed: " + name);
+            document.write("Hello, " + name + "!");
+            alert("Welcome, " + name);
+          </script>
+        </textarea></div>
+      </div>
+      <p class="hook">Values come in different kinds, called types.</p>
+      <div hidden id="dWrite"><b>Should I use document.write in real sites?</b><br>No: if it runs after the page has loaded, it wipes the whole page. It's fine for practice. Lesson 7 shows the proper way to change a page.</div>
+    </section>
+
+    <!-- 4 -->
+    <section class="part" data-title="Data types">
+      <h2>Data types</h2>
+      <p class="say">Every value has a <mark>type</mark>. The five basic ones are called <mark>primitive types</mark>:</p>
+      <p class="say"><code>42</code>, <code>3.5</code>: a <b>number</b> · <code>"hello"</code>: a <b>string</b> (text, in quotes) · <code>true</code> / <code>false</code>: a <b>boolean</b> · <code>null</code>: "empty on purpose" · <code>undefined</code>: "no value given yet".
+        <button class="doubt" data-peek-from="dTwoMore" aria-label="A doubt">🤔</button></p>
+      <p class="say"><code>typeof</code> tells you a value's type: <code>typeof 42</code> gives <code>"number"</code>.</p>
+      <div class="activity">
+        <div class="do">Try it: run it. Then change <code>age</code> to <code>"20"</code> (with quotes) and run again: what type is it now?</div>
+        <div class="live" data-js="console" data-h="200"><textarea aria-label="Your JavaScript">
+          let age = 20;
+          let name = "Asha";
+          let isStudent = true;
+          let car = null;
+          let phone;
+
+          console.log(typeof age, typeof name, typeof isStudent);
+          console.log(car, phone, typeof phone);
+        </textarea></div>
+      </div>
+      <p class="hook">Primitives hold one value. Two other types hold many.</p>
+      <div hidden id="dTwoMore"><b>Are there only five?</b><br>Two more exist: <b>Symbol</b> (a unique label) and <b>BigInt</b> (whole numbers too big for a normal number, written like <code>123n</code>). You'll rarely need them.</div>
+    </section>
+
+    <!-- 5 -->
+    <section class="part" data-title="Arrays and objects">
+      <h2>Arrays and objects</h2>
+      <p class="say">An <mark>array</mark> is a list in square brackets: <code>["red", "green", "blue"]</code>. Each item has a position number called its <mark>index</mark>, <b>starting at 0</b>. <code>colors[0]</code> is <code>"red"</code>, and <code>colors.length</code> is how many items there are: 3.</p>
+      <p class="say">An <mark>object</mark> groups named values in curly brackets. Each name with its value is a <mark>key-value pair</mark>: <code>{ name: "Asha", age: 20 }</code>. <code>person.name</code> reads one value.</p>
+      <p class="say">These are <mark data-peek="Also called reference types: the variable holds a link to the list or object, not the values themselves.">non-primitive</mark> types: they hold many values.</p>
+      <div class="activity">
+        <div class="do">Try it: log <code>colors[2]</code>. Then add <code>city: "Kochi"</code> to the object (after a comma) and log <code>person.city</code>.</div>
+        <div class="live" data-js="console" data-h="200"><textarea aria-label="Your JavaScript">
+          const colors = ["red", "green", "blue"];
+          console.log(colors[0]);
+          console.log(colors.length);
+
+          const person = { name: "Asha", age: 20 };
+          console.log(person.name);
+          console.log(person);
+        </textarea></div>
+      </div>
+      <p class="hook">Last building block: a way to name a piece of work and reuse it.</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="part" data-title="Functions">
+      <h2>Functions</h2>
+      <p class="say">A <mark>function</mark> is a named piece of code you can run whenever you like, by <b>calling</b> it: its name followed by brackets.</p>
+      <p class="say">The names in the brackets of the definition are <mark>parameters</mark>: empty boxes. The values you pass when calling are <mark>arguments</mark>: they fill the boxes. <code>return</code> sends a value back to whoever called.</p>
+      <div class="anat"><span class="t">function</span> <span class="a">add</span>(<span class="v" data-peek="Parameters: a and b are filled in each time the function is called.">a, b</span>) { <span class="t">return</span> a + b; }</div>
+      <p class="say"><code>add(2, 3)</code> fills <code>a</code> with 2 and <code>b</code> with 3, and gives back 5.</p>
+      <div class="activity">
+        <div class="do">Try it: call <code>add(10, 20)</code> in a new console.log. Then write a function <code>double(n)</code> that returns <code>n * 2</code>.</div>
+        <div class="live" data-js="console" data-h="180"><textarea aria-label="Your JavaScript">
+          function add(a, b) {
+            return a + b;
+          }
+
+          function greet(name) {
+            return "Hello, " + name + "!";
+          }
+
+          console.log(add(2, 3));
+          console.log(greet("Ravi"));
+        </textarea></div>
+      </div>
+      <p class="hook">Practice with all of these.</p>
+    </section>
+
+    <!-- 7 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 5.1">
+      <h2>✏️ Practice 5.1</h2>
+      <p class="say">Remember:<br><code>let</code> can change · <code>const</code> can't · types: number, string, boolean, null, undefined<br>arrays start at index 0 · <code>obj.key</code> · <b class="eqbox">function f(x) { return …; }</b></p>
+      <div class="activity">
+        <div class="do">Write the code, press ▶ Run. The list ticks itself from what your code logs.</div>
+        <div class="live" data-js="console" data-h="250" data-check="basics" data-answer="basicsAnswer"><textarea aria-label="Your JavaScript">
+          // 1. A const called hobbies: an array of 3 hobbies
+
+          // 2. Log the second hobby
+
+          // 3. An object called me, with keys name and age
+
+          // 4. A function called intro(person) that returns "I am NAME" (NAME from person.name)
+
+          // 5. Log intro(me)
+
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="basicsAnswer">
+        const hobbies = ["chess", "cricket", "drawing"];
+        console.log(hobbies[1]);
+
+        const me = { name: "Asha", age: 20 };
+
+        function intro(person) {
+          return "I am " + person.name;
+        }
+
+        console.log(intro(me));
+      </script>
+      <p class="hook">Next: doing maths and comparing values.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="part" data-title="Arithmetic and assignment">
+      <h2>Arithmetic and assignment</h2>
+      <p class="say">Maths operators: <code>+</code> <code>-</code> <code>*</code> (times) <code>/</code> (divide) <code>**</code> (power: <code>2 ** 3</code> is 8) and <code>%</code>, the <mark>remainder</mark>: <code>17 % 5</code> is 2, because 17 = 3 × 5 + <b>2</b>.
+        <button class="doubt" data-peek-from="dMod" aria-label="A doubt">🤔</button></p>
+      <p class="say"><code>=</code> puts a value in a variable. Shortcuts change it in place: <code>x += 5</code> means <code>x = x + 5</code>; <code>x++</code> adds 1.</p>
+      <div class="activity">
+        <div class="do">Try it: predict each line before you run. Then log <code>20 % 6</code>.</div>
+        <div class="live" data-js="console" data-h="200"><textarea aria-label="Your JavaScript">
+          console.log(7 + 3, 7 - 3, 7 * 3, 7 / 2);
+          console.log(2 ** 3);
+          console.log(17 % 5);
+
+          let coins = 10;
+          coins += 5;
+          console.log(coins);
+          coins++;
+          console.log(coins);
+        </textarea></div>
+      </div>
+      <p class="hook">Next: questions with a yes-or-no answer.</p>
+      <div hidden id="dMod"><b>What is % useful for?</b><br>Checking if a number is even: <code>n % 2</code> is 0 for even numbers, 1 for odd ones. Or doing something every 3rd time: <code>i % 3 === 0</code>.</div>
+    </section>
+
+    <!-- 9 -->
+    <section class="part" data-title="Comparison and logic">
+      <h2>Comparison and logic</h2>
+      <p class="say">Comparisons give <code>true</code> or <code>false</code>: <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code>, and <code>===</code> (equal) and <code>!==</code> (not equal).</p>
+      <p class="say"><code>==</code> is a looser "equal" that converts types first, so <code>5 == "5"</code> is true. <code>===</code> checks the type too: <code>5 === "5"</code> is false. Use <code>===</code>.</p>
+      <p class="say"><mark>Logical operators</mark> join answers: <code>&amp;&amp;</code> (and: both true), <code>||</code> (or: at least one true), <code>!</code> (not: flips it).</p>
+      <div class="activity">
+        <div class="do">Try it: predict, then run. Change <code>age</code> to <code>15</code> and run again.</div>
+        <div class="live" data-js="console" data-h="210"><textarea aria-label="Your JavaScript">
+          console.log(5 > 3, 5 === 5, 5 !== 5);
+          console.log(5 == "5", 5 === "5");
+
+          let age = 20;
+          let hasTicket = true;
+          console.log(age >= 18 && hasTicket);
+          console.log(age < 12 || age > 60);
+          console.log(!hasTicket);
+        </textarea></div>
+      </div>
+      <p class="hook">That loose == converted "5" into 5. JavaScript converts types a lot.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="part" data-title="Type conversion">
+      <h2>Type conversion</h2>
+      <p class="say">When types are mixed, JavaScript converts one of them by itself. This is called <mark>coercion</mark>.</p>
+      <p class="say"><code>+</code> with a string <b>joins</b> text: <code>"5" + 1</code> gives <code>"51"</code>. Other maths turns the string into a number: <code>"5" - 1</code> gives <code>4</code>.</p>
+      <p class="say">To convert on purpose: <code>Number("42")</code> gives 42, <code>String(42)</code> gives "42", and <code>Number("hi")</code> gives <code>NaN</code>, "not a number".
+        <button class="doubt" data-peek-from="dPrompt" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: predict each line, then run. Fix the last line so it logs 30, not "1020".</div>
+        <div class="live" data-js="console" data-h="200"><textarea aria-label="Your JavaScript">
+          console.log("5" + 1);
+          console.log("5" - 1);
+          console.log("5" * "2");
+          console.log(Number("42"), String(42), Number("hi"));
+
+          let a = "10";
+          let b = "20";
+          console.log(a + b);
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: a shop bill.</p>
+      <div hidden id="dPrompt"><b>Why does this matter?</b><br><code>prompt()</code> and form boxes always give back strings. If a visitor types 10, you get "10". Add two of them and you'd get "1010": use <code>Number()</code> first.</div>
+    </section>
+
+    <!-- 11 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 5.2">
+      <h2>✏️ Practice 5.2</h2>
+      <p class="say">Remember:<br><code>+ - * / **</code> and <code>%</code> remainder · <code>x += 5</code><br><code>===</code> same value and type · <code>&amp;&amp;</code> and · <code>||</code> or · <b class="eqbox">"5" + 1 = "51"</b> · <code>Number("5")</code> = 5</p>
+      <div class="activity">
+        <div class="do">A pen costs ₹25 and you buy 4. Work it out in code and log each answer.</div>
+        <div class="live" data-js="console" data-h="250" data-check="bill" data-answer="billAnswer"><textarea aria-label="Your JavaScript">
+          const price = 25;
+          const quantity = 4;
+
+          // 1. Log the total (price × quantity)
+
+          // 2. Log the total with 10% off
+
+          // 3. Log whether the total is more than 50 (true or false)
+
+          // 4. The visitor typed this. Log it plus 5, as a number (should be 8)
+          const typed = "3";
+
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="billAnswer">
+        const price = 25;
+        const quantity = 4;
+
+        const total = price * quantity;
+        console.log(total);
+        console.log(total - total * 0.1);
+        console.log(total > 50);
+
+        const typed = "3";
+        console.log(Number(typed) + 5);
+      </script>
+      <p class="hook">Now, making decisions.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="part" data-title="if and else">
+      <h2>if and else</h2>
+      <p class="say"><code>if</code> runs a block of code only when a condition is true. <code>else</code> runs when it's false. <code>else if</code> checks another condition in between. JavaScript checks them top to bottom and runs only the <b>first</b> one that's true.</p>
+      <div class="anat"><span class="t">if</span> (<span class="a">marks &gt;= 50</span>) { … } <span class="t">else</span> { … }</div>
+      <div class="activity">
+        <div class="do">Try it: run with marks 72. Then try 95, 40 and 50. Which line prints for each?</div>
+        <div class="live" data-js="console" data-h="210"><textarea aria-label="Your JavaScript">
+          let marks = 72;
+
+          if (marks >= 90) {
+            console.log("Excellent!");
+          } else if (marks >= 50) {
+            console.log("Passed.");
+          } else {
+            console.log("Try again.");
+          }
+        </textarea></div>
+      </div>
+      <p class="hook">When you compare one value against many fixed choices, there's a tidier way.</p>
+    </section>
+
+    <!-- 13 -->
+    <section class="part" data-title="switch">
+      <h2>switch</h2>
+      <p class="say"><code>switch</code> compares one value against a list of <code>case</code>s, using <code>===</code>. It runs the matching case, and <code>break</code> stops it there. <code>default</code> runs when nothing matches.
+        <button class="doubt" data-peek-from="dBreak" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: change <code>day</code> to 6, then 9. Then add a case for 3: "Wednesday".</div>
+        <div class="live" data-js="console" data-h="250"><textarea aria-label="Your JavaScript">
+          let day = 1;
+
+          switch (day) {
+            case 1:
+              console.log("Monday");
+              break;
+            case 2:
+              console.log("Tuesday");
+              break;
+            case 6:
+            case 7:
+              console.log("Weekend!");
+              break;
+            default:
+              console.log("Some other day");
+          }
+        </textarea></div>
+      </div>
+      <p class="hook">And for a quick either-or, there's a one-liner.</p>
+      <div hidden id="dBreak"><b>What if I forget break?</b><br>It keeps going and runs the next case's code too, until it finds a break. That's why cases 6 and 7 can share one block.</div>
+    </section>
+
+    <!-- 14 -->
+    <section class="part" data-title="The ternary operator">
+      <h2>The ternary operator</h2>
+      <p class="say">The <mark>ternary operator</mark> picks one of two values in a single line:<br><b class="eqbox">condition ? valueIfTrue : valueIfFalse</b></p>
+      <p class="say"><code>age &gt;= 18 ? "adult" : "minor"</code> gives "adult" when age is 20, and "minor" when it's 15. Use it for short choices; use if/else when there's more to do.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>age</code> and run. Then write a ternary that logs "even" or "odd" for <code>n</code>, using <code>n % 2</code>.</div>
+        <div class="live" data-js="console" data-h="160"><textarea aria-label="Your JavaScript">
+          let age = 20;
+          let group = age >= 18 ? "adult" : "minor";
+          console.log(group);
+
+          let n = 7;
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: grades and days.</p>
+    </section>
+
+    <!-- 15 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 5.3">
+      <h2>✏️ Practice 5.3</h2>
+      <p class="say">Remember:<br><b class="eqbox">if (…) { } else if (…) { } else { }</b> the first true one runs<br><code>switch (x) { case 1: …; break; default: … }</code> · <b class="eqbox">cond ? a : b</b></p>
+      <div class="activity">
+        <div class="do">Write all three. Press ▶ Run to check.</div>
+        <div class="live" data-js="console" data-h="250" data-check="decide" data-answer="decideAnswer"><textarea aria-label="Your JavaScript">
+          // 1. if / else: log "Grade: A" for 90+, "Grade: B" for 75+, "Grade: C" for 50+, else "Fail"
+          let marks = 82;
+
+          // 2. switch: log the fruit's colour: "apple" → "red", "banana" → "yellow", anything else → "unknown"
+          let fruit = "banana";
+
+          // 3. ternary: log "open" if hour is from 9 to 17, else "closed"
+          let hour = 20;
+
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="decideAnswer">
+        let marks = 82;
+        if (marks >= 90) {
+          console.log("Grade: A");
+        } else if (marks >= 75) {
+          console.log("Grade: B");
+        } else if (marks >= 50) {
+          console.log("Grade: C");
+        } else {
+          console.log("Fail");
+        }
+
+        let fruit = "banana";
+        switch (fruit) {
+          case "apple":
+            console.log("red");
+            break;
+          case "banana":
+            console.log("yellow");
+            break;
+          default:
+            console.log("unknown");
+        }
+
+        let hour = 20;
+        console.log(hour >= 9 && hour <= 17 ? "open" : "closed");
+      </script>
+      <p class="hook">Ready? A short test on this lesson.</p>
+    </section>
+
+    <!-- 16 -->
+    <section class="part" data-title="Lesson test">
+      <h2>Lesson 5 test</h2>
+      <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
+      <div class="test" data-test="5">
+        <div class="quiz" data-page="lesson5.html#2" data-topic="Variables: let and const" data-right="Right. A const can't be given a new value.">
+          <div class="q"><small>1. Predict</small><code>const x = 5; x = 6;</code> What happens?</div>
+          <div class="options">
+            <button data-right>An error</button>
+            <button data-why="That's what let would do. const can't change.">x becomes 6</button>
+            <button data-why="JavaScript doesn't quietly ignore it; it stops with an error.">x stays 5, no message</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson5.html#5" data-topic="Arrays and objects" data-right="Right. Indexes start at 0, so the third item is at index 2.">
+          <div class="q"><small>2. Predict</small><code>const a = ["x", "y", "z"];</code> What is <code>a[2]</code>?</div>
+          <div class="options">
+            <button data-right>"z"</button>
+            <button data-why="Indexes start at 0: a[0] is "x", a[1] is "y".">"y"</button>
+            <button data-why="There are items 0, 1 and 2, so a[2] exists.">undefined</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson5.html#6" data-topic="Functions" data-right="Right. a is 4 and b is 3, so 4 × 3 = 12.">
+          <div class="q"><small>3. Work it out</small><code>function f(a, b) { return a * b; }</code> What does <code>f(4, 3)</code> give?</div>
+          <div class="options">
+            <button data-right>12</button>
+            <button data-why="The function multiplies (*), it doesn't add.">7</button>
+            <button data-why="return sends the value back, so the call gives a number.">undefined</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson5.html#8" data-topic="Arithmetic and assignment" data-right="Right. 23 = 4 × 5 + 3.">
+          <div class="q"><small>4. Work it out</small>What is <code>23 % 5</code>?</div>
+          <div class="options">
+            <button data-right>3</button>
+            <button data-why="That's how many whole 5s fit. % gives what's left over.">4</button>
+            <button data-why="% isn't a percentage; it's the remainder after dividing.">1.15</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson5.html#10" data-topic="Type conversion" data-right="Right. + with a string joins text.">
+          <div class="q"><small>5. Predict</small>What does <code>"2" + 2</code> give?</div>
+          <div class="options">
+            <button data-right>"22"</button>
+            <button data-why="That's what "2" - 2 + 4 style maths would do. With +, a string joins.">4</button>
+            <button data-why="No error: JavaScript converts the number to text.">An error</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson5.html#12" data-topic="if and else" data-right="Right. 95 >= 50 is checked first and is true, so the rest is skipped.">
+          <div class="q"><small>6. Spot the mistake</small><code>if (m &gt;= 50) { "Pass" } else if (m &gt;= 90) { "Top" }</code>. With m = 95, which runs?</div>
+          <div class="options">
+            <button data-right>"Pass": the 90 check never runs</button>
+            <button data-why="Only the first true condition runs. 95 >= 50 comes first.">"Top"</button>
+            <button data-why="if/else runs one block, never two.">Both</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson5.html#14" data-topic="The ternary operator" data-right="Right. 3 > 5 is false, so the value after : is used.">
+          <div class="q"><small>7. Predict</small><code>3 &gt; 5 ? "yes" : "no"</code></div>
+          <div class="options">
+            <button data-right>"no"</button>
+            <button data-why="The part before : is used only when the condition is true.">"yes"</button>
+            <button data-why="The ternary gives one of the two values, not the condition.">false</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section class="part" data-title="What's next?">
+      <h2>What's next?</h2>
+      <p class="say">You can now store values, work things out and make decisions in JavaScript.</p>
+      <div class="open-question">
+        <div>This leaves a question</div>
+        <div class="big">How do we repeat work without copying it out again?</div>
+        <div><a href="lesson6.html">Lesson 6 answers it.</a></div>
+      </div>
+      <p><button class="done-toggle" data-done="5">Mark lesson as done</button></p>
+    </section>
+  </main>
+</div>
+
+<nav class="pagebar" aria-label="Move between parts">
+  <div class="inner">
+    <button data-page-back>← Previous</button>
+    <span data-page-label></span>
+    <button class="primary" data-page-next>Next →</button>
+  </div>
+</nav>
+
+<script>
+const has = (logs, s) => logs.some(l => l.trim() === s);
+window.LIVE_CHECKS = {
+  basics: [
+    { say: "A const array called hobbies with 3 items", hint: "const hobbies = [\"chess\", \"cricket\", \"drawing\"];", test: (d, code) => { try { return /const\s+hobbies\s*=/.test(code) && d.defaultView.eval("hobbies.length") === 3; } catch (e) { return false; } } },
+    { say: "Logs the second hobby", hint: "The second item is at index 1: hobbies[1].", test: (d, code, logs) => { try { return has(logs, String(d.defaultView.eval("hobbies[1]"))); } catch (e) { return false; } } },
+    { say: "An object me with name and age", hint: "const me = { name: \"Asha\", age: 20 };", test: d => { try { return d.defaultView.eval("typeof me === 'object' && me !== null && 'name' in me && 'age' in me"); } catch (e) { return false; } } },
+    { say: "intro(person) returns \"I am \" + the name", hint: "function intro(person) { return \"I am \" + person.name; }", test: d => { try { return d.defaultView.eval("intro({ name: 'Zed' })") === "I am Zed"; } catch (e) { return false; } } },
+    { say: "Logs intro(me)", hint: "console.log(intro(me));", test: (d, code, logs) => { try { return has(logs, d.defaultView.eval("intro(me)")); } catch (e) { return false; } } },
+  ],
+  bill: [
+    { say: "Logs the total: 100", hint: "console.log(price * quantity);", test: (d, c, logs) => has(logs, "100") },
+    { say: "Logs the total with 10% off: 90", hint: "10% of the total is total * 0.1. Take it away from the total.", test: (d, c, logs) => has(logs, "90") },
+    { say: "Logs whether the total is more than 50: true", hint: "console.log(total > 50);", test: (d, c, logs) => has(logs, "true") },
+    { say: "Logs the typed number plus 5: 8 (not \"35\")", hint: "Convert first: Number(typed) + 5", test: (d, c, logs) => has(logs, "8") && !has(logs, "35") },
+  ],
+  decide: [
+    { say: "if/else logs \"Grade: B\" for 82", hint: "Check 90 first, then 75, then 50.", test: (d, c, logs) => /\bif\s*\(/.test(c) && /\belse\b/.test(c) && has(logs, "Grade: B") },
+    { say: "switch logs \"yellow\" for banana", hint: "case \"banana\": console.log(\"yellow\"); break;", test: (d, c, logs) => /\bswitch\s*\(/.test(c) && has(logs, "yellow") },
+    { say: "A ternary logs \"closed\" for hour 20", hint: "console.log(hour >= 9 && hour <= 17 ? \"open\" : \"closed\");", test: (d, c, logs) => /\?[^:]*:/.test(c) && has(logs, "closed") },
+  ],
+};
+</script>
+<script src="../assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/guide.js"></script>
+<script src="../assets/live.js"></script>
+</body>
+</html>

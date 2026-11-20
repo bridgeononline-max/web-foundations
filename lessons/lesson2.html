@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tables, forms and boxes · Web Foundations</title>
+<meta name="description" content="Lesson 2 of Web Foundations: tables, forms, div, id and class, the style tag, semantic elements, video, audio and meta tags.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body data-pen="green">
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="../">← Web Foundations</a>
+    <span class="where">Lesson 2 of 8</span>
+  </header>
+
+  <main data-paged>
+    <div class="paged-head">
+      <h1>Tables, forms and boxes</h1>
+      <div class="progress" aria-label="Lesson parts"></div>
+    </div>
+
+    <!-- 1 -->
+    <section class="part" data-title="Tables: rows and cells">
+      <h2>Tables: rows and cells</h2>
+      <p class="say">A table shows information in rows and columns, like a timetable or a price list.</p>
+      <p class="say"><code>&lt;table&gt;</code> wraps the whole table. Each <code>&lt;tr&gt;</code> (table row) is one row, and each <code>&lt;td&gt;</code> (table data) inside it is one cell. The columns come from the cells lining up, row after row.
+        <button class="doubt" data-peek-from="dBorder" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: add a third row for "Chai", costing ₹20. Copy a whole <code>&lt;tr&gt;</code>…<code>&lt;/tr&gt;</code>.</div>
+        <div class="live" data-h="190"><textarea aria-label="Your HTML">
+          <table border="1">
+            <tr>
+              <td>Dosa</td>
+              <td>₹60</td>
+            </tr>
+            <tr>
+              <td>Idli</td>
+              <td>₹40</td>
+            </tr>
+          </table>
+        </textarea></div>
+      </div>
+      <p class="hook">The first row of a table usually names the columns. That row gets its own tag.</p>
+      <div hidden id="dBorder"><b>What is <code>border="1"</code>?</b><br>It draws lines around the cells, so you can see them. It's an old attribute; in Lesson 3 you'll draw borders with CSS instead.</div>
+    </section>
+
+    <!-- 2 -->
+    <section class="part" data-title="Header cells and a caption">
+      <h2>Header cells and a caption</h2>
+      <p class="say">A cell that names a column is a <mark>header cell</mark>: <code>&lt;th&gt;</code> instead of <code>&lt;td&gt;</code>. Browsers show it bold and centred.</p>
+      <p class="say"><code>&lt;caption&gt;</code>, just after <code>&lt;table&gt;</code>, gives the whole table a title.
+        <button class="doubt" data-peek-from="dThead" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: change the caption. Then turn a <code>&lt;td&gt;</code> in the first row into <code>&lt;th&gt;</code> and back.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <table border="1">
+            <caption>Menu</caption>
+            <tr>
+              <th>Dish</th>
+              <th>Price</th>
+            </tr>
+            <tr>
+              <td>Dosa</td>
+              <td>₹60</td>
+            </tr>
+          </table>
+        </textarea></div>
+      </div>
+      <p class="hook">Sometimes one cell should stretch across two columns, or two rows.</p>
+      <div hidden id="dThead"><b>I've seen <code>&lt;thead&gt;</code> and <code>&lt;tbody&gt;</code>. What are they?</b><br>Optional wrappers: <code>&lt;thead&gt;</code> around the header rows, <code>&lt;tbody&gt;</code> around the rest. They look the same, but help screen readers and styling. Small tables can skip them.</div>
+    </section>
+
+    <!-- 3 -->
+    <section class="part" data-title="Merging cells">
+      <h2>Merging cells</h2>
+      <p class="say"><code>colspan="2"</code> makes a cell two columns wide. <code>rowspan="2"</code> makes it two rows tall.</p>
+      <p class="say">The merged cell takes the space of the cells it covers, so leave those cells out. In the table below, Monday's row has only 2 <code>&lt;td&gt;</code> where the others have 3: the "Holiday" cell fills two columns.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>colspan="2"</code> to <code>1</code> and see the hole. Put it back. Then make "Ravi" cover both rows with <code>rowspan="2"</code> and delete the second "Ravi".</div>
+        <div class="live" data-h="230"><textarea aria-label="Your HTML">
+          <table border="1">
+            <tr>
+              <th>Teacher</th><th>Day</th><th>Class</th>
+            </tr>
+            <tr>
+              <td>Ravi</td><td colspan="2">Holiday</td>
+            </tr>
+            <tr>
+              <td>Ravi</td><td>Tuesday</td><td>HTML</td>
+            </tr>
+          </table>
+        </textarea></div>
+      </div>
+      <p class="hook">Your turn to build a table.</p>
+    </section>
+
+    <!-- 4 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 2.1">
+      <h2>✏️ Practice 2.1</h2>
+      <p class="say">Remember:<br><code>&lt;tr&gt;</code> a row · <code>&lt;td&gt;</code> a cell · <code>&lt;th&gt;</code> a header cell · <code>&lt;caption&gt;</code> the title<br><b class="eqbox">colspan="2"</b> two columns wide (leave out the cell it covers)</p>
+      <div class="activity">
+        <div class="do">Build the goal: a weekly timetable.</div>
+        <div class="live" data-h="170" data-goal="weekGoal" data-goal-h="170" data-check="week" data-answer="weekGoal"><textarea aria-label="Your HTML">
+          <table border="1">
+            <tr>
+              <td>Day</td><td>Morning</td><td>Afternoon</td>
+            </tr>
+            <tr>
+              <td>Monday</td><td>HTML</td><td>CSS</td>
+            </tr>
+          </table>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="weekGoal">
+        <table border="1">
+          <caption>My week</caption>
+          <tr>
+            <th>Day</th><th>Morning</th><th>Afternoon</th>
+          </tr>
+          <tr>
+            <td>Monday</td><td>HTML</td><td>CSS</td>
+          </tr>
+          <tr>
+            <td>Tuesday</td><td colspan="2">Project day</td>
+          </tr>
+          <tr>
+            <td>Wednesday</td><td>JavaScript</td><td>Review</td>
+          </tr>
+        </table>
+      </script>
+      <p class="hook">Tables show information. Forms collect it.</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="part" data-title="Forms and text boxes">
+      <h2>Forms and text boxes</h2>
+      <p class="say">A <mark>form</mark> collects what the visitor types, like a sign-up page. <code>&lt;form&gt;</code> wraps everything in it.</p>
+      <p class="say"><code>&lt;input type="text"&gt;</code> is a one-line text box. Give it a <code>name</code>: that is the label the typed words are sent under. <code>&lt;label&gt;</code> is the visible name of a box; its <code>for</code> must match the box's <code>id</code>, so clicking the label puts the cursor in the box.
+        <button class="doubt" data-peek-from="dSubmit" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: click the word "Name", type something, then press Send. Read what the form would send.</div>
+        <div class="live" data-h="150"><textarea aria-label="Your HTML">
+          <form>
+            <label for="who">Name</label>
+            <input type="text" id="who" name="name" placeholder="e.g. Asha">
+            <button type="submit">Send</button>
+          </form>
+        </textarea></div>
+      </div>
+      <p class="hook">Not everything is plain text. Inputs come in many types.</p>
+      <div hidden id="dSubmit"><b>Where does the form actually send it?</b><br>To the address in the form's <code>action</code> attribute, such as a server that saves sign-ups. Here nothing is sent: the page just shows you what would go.</div>
+    </section>
+
+    <!-- 6 -->
+    <section class="part" data-title="More kinds of input">
+      <h2>More kinds of input</h2>
+      <p class="say">Change <code>type</code> and the same <code>&lt;input&gt;</code> becomes a different control: <code>email</code>, <code>password</code> (hides what you type), <code>number</code>, <code>date</code>, <code>checkbox</code> (tick or not) and <code>radio</code> (pick one).</p>
+      <p class="say">Radio buttons with the <b>same <code>name</code></b> form one group: picking one un-picks the others. <code>value</code> is what gets sent for the one you pick.
+        <button class="doubt" data-peek-from="dTypes" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: pick a radio button, then another. Now change one radio's <code>name</code> to <code>size2</code> and try again.</div>
+        <div class="live" data-h="250"><textarea aria-label="Your HTML">
+          <form>
+            <p>Email: <input type="email" name="email"></p>
+            <p>Password: <input type="password" name="pass"></p>
+            <p>Age: <input type="number" name="age" min="1"></p>
+            <p>Birthday: <input type="date" name="birthday"></p>
+            <p><input type="checkbox" name="news"> Send me news</p>
+            <p>Size:
+              <input type="radio" name="size" value="S"> S
+              <input type="radio" name="size" value="M"> M
+              <input type="radio" name="size" value="L"> L
+            </p>
+            <button type="submit">Send</button>
+          </form>
+        </textarea></div>
+      </div>
+      <p class="hook">Two more controls: a drop-down list and a big text box.</p>
+      <div hidden id="dTypes"><b>Are there more types?</b><br>Yes: <code>color</code>, <code>range</code> (a slider), <code>file</code>, <code>tel</code>, <code>url</code>, <code>time</code> and more. Try changing one here.</div>
+    </section>
+
+    <!-- 7 -->
+    <section class="part" data-title="Drop-downs and big text boxes">
+      <h2>Drop-downs and big text boxes</h2>
+      <p class="say"><code>&lt;select&gt;</code> makes a drop-down list. Each choice inside it is an <code>&lt;option&gt;</code>.</p>
+      <p class="say"><code>&lt;textarea&gt;</code> is a text box with many lines, for messages. Unlike <code>&lt;input&gt;</code>, it has a closing tag.</p>
+      <p class="say">Add <code>required</code> to any field, and the form won't send until it's filled in.</p>
+      <div class="activity">
+        <div class="do">Try it: press Send with the message empty. Then type a message and send again.</div>
+        <div class="live" data-h="220"><textarea aria-label="Your HTML">
+          <form>
+            <p>Course:
+              <select name="course">
+                <option>HTML</option>
+                <option>CSS</option>
+                <option>JavaScript</option>
+              </select>
+            </p>
+            <p>Message:<br>
+              &lt;textarea name="message" rows="3" cols="30" required&gt;&lt;/textarea&gt;
+            </p>
+            <button type="submit">Send</button>
+          </form>
+        </textarea></div>
+      </div>
+      <p class="hook">Now build a full registration form.</p>
+    </section>
+
+    <!-- 8 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 2.2">
+      <h2>✏️ Practice 2.2</h2>
+      <p class="say">Remember:<br><b class="eqbox">&lt;label for="x"&gt;…&lt;/label&gt; &lt;input id="x" name="…"&gt;</b><br>types: <code>text</code> <code>email</code> <code>password</code> <code>radio</code> (same name = one group) <code>checkbox</code> · <code>&lt;select&gt;&lt;option&gt;</code> · <code>&lt;button type="submit"&gt;</code></p>
+      <div class="activity">
+        <div class="do">Build a registration form. Press your Send button at the end to see what it would send.</div>
+        <div class="live" data-h="250" data-check="register" data-answer="registerAnswer"><textarea aria-label="Your HTML">
+          <form>
+            <h2>Register</h2>
+
+          </form>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="registerAnswer">
+        <form>
+          <h2>Register</h2>
+          <p><label for="name">Name</label> <input type="text" id="name" name="name" required></p>
+          <p><label for="email">Email</label> <input type="email" id="email" name="email" required></p>
+          <p><label for="pass">Password</label> <input type="password" id="pass" name="password" required></p>
+          <p>Gender:
+            <input type="radio" name="gender" value="female"> Female
+            <input type="radio" name="gender" value="male"> Male
+            <input type="radio" name="gender" value="other"> Other
+          </p>
+          <p>Course:
+            <select name="course">
+              <option>HTML &amp; CSS</option>
+              <option>JavaScript</option>
+              <option>Full course</option>
+            </select>
+          </p>
+          <p><input type="checkbox" name="terms" required> I agree to the terms</p>
+          <button type="submit">Register</button>
+        </form>
+      </script>
+      <p class="hook">Next: boxes for grouping parts of a page.</p>
+    </section>
+
+    <!-- 9 -->
+    <section class="part" data-title="div: a box for grouping">
+      <h2><code>&lt;div&gt;</code>: a box for grouping</h2>
+      <p class="say"><code>&lt;div&gt;</code> is an empty box. On its own it changes nothing you can see; it just holds other elements together, so you can style or move them as one piece.</p>
+      <p class="say">Most page layouts are built from divs inside divs: a box for a card, a box for a menu, a box for the whole page.</p>
+      <div class="activity">
+        <div class="do">Try it: give the second card a background too. Copy the <code>style</code> attribute from the first.</div>
+        <div class="live" data-h="220"><textarea aria-label="Your HTML">
+          <div style="background-color: lightyellow; padding: 10px;">
+            <h3>Card one</h3>
+            <p>Both lines belong to this box.</p>
+          </div>
+
+          <div>
+            <h3>Card two</h3>
+            <p>This box has no style yet.</p>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Copying the same style onto every card gets tiring. Names help.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="part" data-title="id and class">
+      <h2><code>id</code> and <code>class</code></h2>
+      <p class="say">Two attributes give elements names, so styles (and later, JavaScript) can find them.</p>
+      <p class="say"><code>id</code> names <b>one</b> element: no two elements on a page may share an id. <code>class</code> names a <b>group</b>: many elements can share one class, and one element can have several, separated by spaces.
+        <button class="doubt" data-peek-from="dIdLink" aria-label="A doubt">🤔</button></p>
+      <div class="anat"><span class="t">&lt;div</span> <span class="a">id</span>=<span class="v">"top"</span> <span class="a">class</span>=<span class="v">"card big"</span><span class="t">&gt;</span></div>
+      <p class="say">Here the div is the only "top", and is in two groups: "card" and "big". The names do nothing yet. The next page uses them.</p>
+      <p class="hook">The style tag can style every member of a group at once.</p>
+      <div hidden id="dIdLink"><b>Can a link jump to an id?</b><br>Yes: <code>&lt;a href="#contact"&gt;</code> jumps to the element with <code>id="contact"</code> on the same page. You'll use this for your portfolio's menu.</div>
+    </section>
+
+    <!-- 11 -->
+    <section class="part" data-title="The style tag">
+      <h2>The <code>&lt;style&gt;</code> tag</h2>
+      <p class="say">Instead of a <code>style</code> attribute on every element, put all the styles in one <code>&lt;style&gt;</code> tag. Each rule says <b>which</b> elements, then <b>how</b> they look:<br>
+        <b class="eqbox">which { property: value; }</b></p>
+      <p class="say"><code>p</code> means every paragraph, <code>.card</code> every element with class "card", and <code>#top</code> the element with id "top".</p>
+      <div class="activity">
+        <div class="do">Try it: add <code>class="card"</code> to the last div. It gets the card look at once.</div>
+        <div class="live" data-h="270"><textarea aria-label="Your HTML">
+          <style>
+            p { color: teal; }
+            .card { background-color: lightyellow; padding: 8px; }
+            #top { color: tomato; }
+          </style>
+
+          <h2 id="top">My cards</h2>
+          <div class="card"><p>First card</p></div>
+          <div class="card"><p>Second card</p></div>
+          <div><p>Not a card yet</p></div>
+        </textarea></div>
+      </div>
+      <p class="hook">Did you notice the cards stretch across the page, while some elements don't? That's next.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="part" data-title="Inline and block elements">
+      <h2>Inline and block elements</h2>
+      <p class="say">A <mark>block</mark> element starts on a new line and stretches across the whole width: <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;form&gt;</code>.</p>
+      <p class="say">An <mark>inline</mark> element sits inside a line of text and is only as wide as its content: <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code>.</p>
+      <p class="say"><code>&lt;span&gt;</code> is the inline version of <code>&lt;div&gt;</code>: an empty wrapper for a few words.</p>
+      <div class="activity">
+        <div class="do">Try it: the backgrounds show each element's size. Change the <code>&lt;span&gt;</code> tags to <code>&lt;div&gt;</code> and see what happens.</div>
+        <div class="live" data-h="190"><textarea aria-label="Your HTML">
+          <style>
+            div { background-color: lightblue; }
+            span { background-color: pink; }
+          </style>
+          <div>A div: block</div>
+          <div>Another div</div>
+          <p>Some text with <span>a span</span> and <span>another</span> inside.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">div and span say nothing about what they hold. Some tags do.</p>
+    </section>
+
+    <!-- 13 -->
+    <section class="part" data-title="Semantic elements">
+      <h2>Semantic elements</h2>
+      <p class="say"><code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> are <mark>non-semantic</mark>: the name says nothing about what's inside. <mark>Semantic</mark> elements do: they behave like a div, but their name tells the browser what the part is.</p>
+      <p class="say"><code>&lt;header&gt;</code> the top · <code>&lt;nav&gt;</code> the menu · <code>&lt;main&gt;</code> the main content · <code>&lt;section&gt;</code> a part with a heading · <code>&lt;article&gt;</code> a piece that stands alone, like a post · <code>&lt;footer&gt;</code> the bottom.
+        <button class="doubt" data-peek-from="dWhySem" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: click "About" in the menu: it jumps to <code>id="about"</code>. Add a <code>&lt;section id="contact"&gt;</code> and a menu link to it.</div>
+        <div class="live" data-h="270"><textarea aria-label="Your HTML">
+          <header>
+            <h1>Asha's site</h1>
+            <nav><a href="#about">About</a> · <a href="#work">Work</a></nav>
+          </header>
+          <main>
+            <section id="about"><h2>About</h2><p>I'm learning to build websites.</p></section>
+            <section id="work"><h2>Work</h2><p>My first projects.</p></section>
+          </main>
+          <footer><p>© 2026 Asha</p></footer>
+        </textarea></div>
+      </div>
+      <p class="hook">Pages hold more than text and pictures: video and sound too.</p>
+      <div hidden id="dWhySem"><b>If they look like divs, why bother?</b><br>Screen readers can jump straight to the <code>&lt;nav&gt;</code> or <code>&lt;main&gt;</code>, search engines understand your page better, and your own code is easier to read.</div>
+    </section>
+
+    <!-- 14 -->
+    <section class="part" data-title="Video and audio">
+      <h2>Video and audio</h2>
+      <p class="say"><code>&lt;video&gt;</code> and <code>&lt;audio&gt;</code> play a file, named in <code>src</code> like an image. Unlike <code>&lt;img&gt;</code>, they have a closing tag.</p>
+      <p class="say">Add <code>controls</code> to show the play button and volume. Without it there are no buttons at all.
+        <button class="doubt" data-peek-from="dAuto" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: play both. Then add <code>loop</code> to the video, next to <code>controls</code>.</div>
+        <div class="live" data-h="270"><textarea aria-label="Your HTML">
+          <video src="clip.mp4" width="300" controls></video>
+
+          <p>A short sound:</p>
+          <audio src="chime.mp3" controls></audio>
+        </textarea></div>
+      </div>
+      <p class="hook">One more kind of tag lives in the head, where nobody sees it.</p>
+      <div hidden id="dAuto"><b>Can a video play by itself?</b><br>Yes, with <code>autoplay muted</code>. Browsers only allow autoplay when the sound is off, so visitors aren't startled.</div>
+    </section>
+
+    <!-- 15 -->
+    <section class="part" data-title="Meta tags">
+      <h2>Meta tags</h2>
+      <p class="say"><code>&lt;meta&gt;</code> tags go in the <code>&lt;head&gt;</code>. They show nothing on the page; they give the browser and search engines facts about it. Three that every page should have:</p>
+      <p class="say"><code>charset="utf-8"</code>: the letters can be any language, and emoji.<br><code>name="viewport"</code>: fit the page to a phone's screen.<br><code>name="description"</code>: the line search engines show under your title.</p>
+      <div class="activity">
+        <div class="do">Try it: change the title and the description. Watch the search result under the page.</div>
+        <div class="live" data-h="150" data-serp="1"><textarea aria-label="Your HTML">
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <meta name="description" content="Recipes from my grandmother's kitchen.">
+              <title>Ammachi's Kitchen</title>
+            </head>
+            <body>
+              <h1>Welcome!</h1>
+            </body>
+          </html>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: lay out a whole page with semantic elements.</p>
+    </section>
+
+    <!-- 16 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 2.3">
+      <h2>✏️ Practice 2.3</h2>
+      <p class="say">Remember:<br><code>&lt;header&gt;</code> <code>&lt;nav&gt;</code> <code>&lt;main&gt;</code> <code>&lt;section&gt;</code> <code>&lt;footer&gt;</code><br><b class="eqbox">&lt;a href="#about"&gt;</b> jumps to <b class="eqbox">id="about"</b></p>
+      <div class="activity">
+        <div class="do">Lay out a small personal page. The menu links must jump to the sections.</div>
+        <div class="live" data-h="260" data-check="layout" data-answer="layoutAnswer"><textarea aria-label="Your HTML">
+          <h1>My name</h1>
+          <p>About me...</p>
+          <p>My skills...</p>
+          <p>© 2026</p>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="layoutAnswer">
+        <header>
+          <h1>Asha Menon</h1>
+          <nav><a href="#about">About</a> · <a href="#skills">Skills</a></nav>
+        </header>
+        <main>
+          <section id="about">
+            <h2>About</h2>
+            <p>I'm learning to build websites.</p>
+          </section>
+          <section id="skills">
+            <h2>Skills</h2>
+            <p>HTML, CSS, a little JavaScript.</p>
+          </section>
+        </main>
+        <footer><p>© 2026 Asha</p></footer>
+      </script>
+      <p class="hook">Ready? A short test on this lesson.</p>
+    </section>
+
+    <!-- 17 -->
+    <section class="part" data-title="Lesson test">
+      <h2>Lesson 2 test</h2>
+      <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
+      <div class="test" data-test="2">
+        <div class="quiz" data-page="lesson2.html#3" data-topic="Merging cells" data-right="Right. The wide cell covers the second and third columns, so that row needs only 2 cells.">
+          <div class="q"><small>1. Work it out</small>A table has 3 columns. One row has a cell with <code>colspan="2"</code>. How many <code>&lt;td&gt;</code> does that row need?</div>
+          <div class="options">
+            <button data-right>2</button>
+            <button data-why="With 3 cells, the wide one plus 2 more would make 4 columns: the row would stick out.">3</button>
+            <button data-why="The wide cell fills 2 columns; one more column is still empty.">1</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson2.html#6" data-topic="More kinds of input" data-right="Right. Different names make separate groups, so each can be picked at once.">
+          <div class="q"><small>2. Predict</small>Three radio buttons have <code>name="a"</code>, <code>name="b"</code> and <code>name="c"</code>. What can the visitor pick?</div>
+          <div class="options">
+            <button data-right>All three at once</button>
+            <button data-why="Only radios with the same name form one pick-one group. These names all differ.">Only one of them</button>
+            <button data-why="Each radio can still be picked; it just never un-picks.">None of them</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson2.html#5" data-topic="Forms and text boxes" data-right="Right. The label's for must match the input's id.">
+          <div class="q"><small>3. Spot the mistake</small>Clicking the label doesn't put the cursor in the box: <code>&lt;label for="mail"&gt;Email&lt;/label&gt; &lt;input id="email"&gt;</code>. Why?</div>
+          <div class="options">
+            <button data-right>for="mail" doesn't match id="email"</button>
+            <button data-why="Labels work with every input type. The problem is the names.">Labels don't work with email</button>
+            <button data-why="A label can sit before or after its box; the matching name is what joins them.">The label must come after the input</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson2.html#10" data-topic="id and class" data-right="Right. Many elements share a group, so that's a class.">
+          <div class="q"><small>4. Apply</small>Ten product cards should all look the same. What do you give them?</div>
+          <div class="options">
+            <button data-right>The same class, e.g. class="card"</button>
+            <button data-why="An id names one element only; no two may share it.">The same id, e.g. id="card"</button>
+            <button data-why="Possible, but then every style is copied ten times. A shared class styles them all with one rule.">Each its own style attribute</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson2.html#11" data-topic="The style tag" data-right="Right. #main means the element with id main.">
+          <div class="q"><small>5. Predict</small><code>&lt;style&gt; #main { color: red; } &lt;/style&gt;</code>. What turns red?</div>
+          <div class="options">
+            <button data-right>The element with id="main"</button>
+            <button data-why="A class is written with a dot: .main.">Every element with class="main"</button>
+            <button data-why="#main points to an id, not a tag name.">The &lt;main&gt; element</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson2.html#12" data-topic="Inline and block elements" data-right="Right. Each div is a block, so each starts on its own line.">
+          <div class="q"><small>6. Predict</small><code>&lt;div&gt;One&lt;/div&gt;&lt;div&gt;Two&lt;/div&gt;</code> written on one line. How does it show?</div>
+          <div class="options">
+            <button data-right>"One" and "Two" on separate lines</button>
+            <button data-why="That's how spans behave. div is a block: it always starts a new line.">"One Two" on one line</button>
+            <button data-why="Both show; divs just start new lines.">Only "One"</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson2.html#13" data-topic="Semantic elements" data-right="Right. nav is the semantic element for a menu of links.">
+          <div class="q"><small>7. Apply</small>Which element should hold your site's menu links?</div>
+          <div class="options">
+            <button data-right>&lt;nav&gt;</button>
+            <button data-why="footer is for the bottom of the page.">&lt;footer&gt;</button>
+            <button data-why="A div works, but says nothing about what it holds. nav tells browsers it's the menu.">&lt;div&gt;</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="part" data-title="What's next?">
+      <h2>What's next?</h2>
+      <p class="say">You can now build tables, forms and a whole page laid out with semantic elements.</p>
+      <div class="open-question">
+        <div>This leaves a question</div>
+        <div class="big">The page works, but it looks plain. How do we style it?</div>
+        <div><a href="lesson3.html">Lesson 3 answers it.</a></div>
+      </div>
+      <p><button class="done-toggle" data-done="2">Mark lesson as done</button></p>
+    </section>
+  </main>
+</div>
+
+<nav class="pagebar" aria-label="Move between parts">
+  <div class="inner">
+    <button data-page-back>← Previous</button>
+    <span data-page-label></span>
+    <button class="primary" data-page-next>Next →</button>
+  </div>
+</nav>
+
+<script>
+const text = el => (el && el.textContent || "").trim();
+const labelled = (d, sel) => [...d.querySelectorAll(sel)].some(i => i.id && d.querySelector(`label[for="${i.id}"]`));
+window.LIVE_CHECKS = {
+  week: [
+    { say: "A caption above the table", hint: "Put &lt;caption&gt;My week&lt;/caption&gt; right after &lt;table&gt;.", test: d => text(d.querySelector("table caption")) !== "" },
+    { say: "The first row uses header cells", hint: "Change the first row's &lt;td&gt; to &lt;th&gt;.", test: d => { const r = d.querySelector("tr"); return !!r && r.querySelectorAll("th").length >= 3 && !r.querySelector("td"); } },
+    { say: "A Tuesday row with one cell across two columns", hint: "&lt;td colspan=\"2\"&gt;Project day&lt;/td&gt;, and only one other cell in that row.", test: d => [...d.querySelectorAll("tr")].some(r => /tuesday/i.test(r.textContent) && r.querySelector('td[colspan="2"]') && r.children.length === 2) },
+    { say: "A Wednesday row with three cells", hint: "Copy the Monday row and change the words.", test: d => [...d.querySelectorAll("tr")].some(r => /wednesday/i.test(r.textContent) && r.children.length === 3) },
+  ],
+  register: [
+    { say: "A name box with a matching label", hint: "&lt;label for=\"name\"&gt;Name&lt;/label&gt; &lt;input type=\"text\" id=\"name\" name=\"name\"&gt;", test: d => labelled(d, 'form input[type="text"]') },
+    { say: "An email box", hint: "&lt;input type=\"email\" name=\"email\"&gt;", test: d => !!d.querySelector('form input[type="email"]') },
+    { say: "A password box", hint: "&lt;input type=\"password\" name=\"password\"&gt;", test: d => !!d.querySelector('form input[type="password"]') },
+    { say: "At least two radio buttons in one group", hint: "Give them the same name, e.g. name=\"gender\".", test: d => { const n = {}; d.querySelectorAll('form input[type="radio"][name]').forEach(r => n[r.name] = (n[r.name] || 0) + 1); return Object.values(n).some(c => c >= 2); } },
+    { say: "A drop-down with at least three options", hint: "&lt;select name=\"course\"&gt; with three &lt;option&gt; inside.", test: d => [...d.querySelectorAll("form select")].some(s => s.options.length >= 3) },
+    { say: "A checkbox, e.g. to agree to the terms", hint: "&lt;input type=\"checkbox\" name=\"terms\"&gt; I agree", test: d => !!d.querySelector('form input[type="checkbox"]') },
+    { say: "A button that sends the form", hint: "&lt;button type=\"submit\"&gt;Register&lt;/button&gt;", test: d => !!d.querySelector('form button:not([type]), form button[type="submit"], form input[type="submit"]') },
+  ],
+  layout: [
+    { say: "A <code>&lt;header&gt;</code> holding the <code>&lt;h1&gt;</code>", hint: "Wrap the h1 (and the menu) in &lt;header&gt;…&lt;/header&gt;.", test: d => !!d.querySelector("header h1") },
+    { say: "A <code>&lt;nav&gt;</code> with at least two links", hint: "&lt;nav&gt;&lt;a href=\"#about\"&gt;About&lt;/a&gt; …&lt;/nav&gt;", test: d => [...d.querySelectorAll("nav")].some(n => n.querySelectorAll("a[href]").length >= 2) },
+    { say: "A <code>&lt;main&gt;</code> with two sections, each with an <code>&lt;h2&gt;</code> and an id", hint: "&lt;section id=\"about\"&gt;&lt;h2&gt;About&lt;/h2&gt;…&lt;/section&gt; inside &lt;main&gt;.", test: d => [...d.querySelectorAll("main section[id]")].filter(s => s.querySelector("h2")).length >= 2 },
+    { say: "Every menu link jumps to a section that exists", hint: "Each href=\"#x\" needs a section with id=\"x\".", test: d => { const a = [...d.querySelectorAll("nav a[href]")]; return a.length >= 2 && a.every(l => { const h = l.getAttribute("href"); return h.startsWith("#") && h.length > 1 && !!d.getElementById(h.slice(1)); }); } },
+    { say: "A <code>&lt;footer&gt;</code>", hint: "Wrap the last line in &lt;footer&gt;…&lt;/footer&gt;.", test: d => text(d.querySelector("footer")) !== "" },
+  ],
+};
+</script>
+<script src="../assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/guide.js"></script>
+<script src="../assets/live.js"></script>
+</body>
+</html>

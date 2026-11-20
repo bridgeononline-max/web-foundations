@@ -1,0 +1,3 @@
+/* site.css: an external style sheet, linked from the CSS lesson's editor */
+body { font-family: Georgia, serif; background-color: #FFF8E7; }
+h1 { color: saddlebrown; border-bottom: 3px double saddlebrown; }

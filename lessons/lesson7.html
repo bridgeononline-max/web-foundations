@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrays and the DOM · Web Foundations</title>
+<meta name="description" content="Lesson 7 of Web Foundations: array methods, searching and sorting, then the DOM: find elements, change them, react to events, create new ones.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body data-pen="pink">
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="../">← Web Foundations</a>
+    <span class="where">Lesson 7 of 8</span>
+  </header>
+
+  <main data-paged>
+    <div class="paged-head">
+      <h1>Arrays and the DOM</h1>
+      <div class="progress" aria-label="Lesson parts"></div>
+    </div>
+
+    <!-- 1 -->
+    <section class="part" data-title="Arrays: reading them">
+      <h2>Arrays: reading them</h2>
+      <p class="say">An array is a list with indexes from 0. <code>length</code> is how many items it has, so the last item is at <code>length - 1</code>.</p>
+      <p class="say"><code>at(-1)</code> reads from the end: <code>at(-1)</code> is the last item, <code>at(-2)</code> the one before. <code>toString()</code> turns the list into one string with commas. <code>join(" - ")</code> does the same with whatever you put between.</p>
+      <div class="activity">
+        <div class="do">Try it: log the last item two ways: with <code>length - 1</code> and with <code>at(-1)</code>. Then join with <code>" | "</code>.</div>
+        <div class="live" data-js="console" data-h="170"><textarea aria-label="Your JavaScript">
+          const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+          console.log(days.length);
+          console.log(days[0], days.at(-1));
+          console.log(days.toString());
+          console.log(days.join(" - "));
+        </textarea></div>
+      </div>
+      <p class="hook">Lists change: items are added and taken away.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="part" data-title="Adding and removing">
+      <h2>Adding and removing</h2>
+      <p class="say">At the <b>end</b> of the list: <code>push(x)</code> adds x; <code>pop()</code> removes the last item and gives it back.</p>
+      <p class="say">At the <b>start</b>: <code>unshift(x)</code> adds x; <code>shift()</code> removes the first item and gives it back. Every other item moves up or down one index.</p>
+      <p class="say"><code>delete list[1]</code> empties a slot but leaves a hole: the length stays the same. Avoid it.</p>
+      <div class="activity">
+        <div class="do">Try it: predict the list after each line, then run. Add <code>queue.unshift("Zara")</code> and run again.</div>
+        <div class="live" data-js="console" data-h="220"><textarea aria-label="Your JavaScript">
+          const queue = ["Asha", "Ravi"];
+          queue.push("Meera");
+          console.log(queue);
+
+          const left = queue.shift();
+          console.log(left + " left the queue");
+          console.log(queue);
+
+          queue.pop();
+          console.log(queue);
+
+          const holes = ["a", "b", "c"];
+          delete holes[1];
+          console.log(holes, holes.length);
+        </textarea></div>
+      </div>
+      <p class="hook">Three more for joining, copying and cutting.</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="part" data-title="concat, slice and splice">
+      <h2>concat, slice and splice</h2>
+      <p class="say"><code>a.concat(b)</code> makes a new array: a, then b. <code>slice(start, end)</code> copies a piece, stopping before <code>end</code>, like with strings. Neither changes the original.</p>
+      <p class="say"><code>splice(start, count, …new)</code> <b>changes</b> the array: from index <code>start</code>, it removes <code>count</code> items, then puts any new items in their place. <code>splice(1, 1)</code> removes the item at index 1; <code>splice(1, 0, "x")</code> inserts "x" there.</p>
+      <div class="activity">
+        <div class="do">Try it: use <code>splice</code> to replace "c" with "C". Then check that <code>slice</code> left <code>letters</code> alone.</div>
+        <div class="live" data-js="console" data-h="210"><textarea aria-label="Your JavaScript">
+          const letters = ["a", "b", "c", "d"];
+          console.log(letters.concat(["e", "f"]));
+          console.log(letters.slice(1, 3));
+          console.log(letters);
+
+          letters.splice(1, 1);
+          console.log(letters);
+          letters.splice(1, 0, "X", "Y");
+          console.log(letters);
+        </textarea></div>
+      </div>
+      <p class="hook">Practice with these.</p>
+    </section>
+
+    <!-- 4 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 7.1">
+      <h2>✏️ Practice 7.1</h2>
+      <p class="say">Remember:<br><code>push</code> / <code>pop</code> the end · <code>unshift</code> / <code>shift</code> the start · <code>at(-1)</code> the last · <code>join</code><br><b class="eqbox">splice(start, count, …new)</b> changes the array · <code>slice</code> copies</p>
+      <div class="activity">
+        <div class="do">Change the playlist step by step. Log it at the end.</div>
+        <div class="live" data-js="console" data-h="250" data-check="arr" data-answer="arrAnswer"><textarea aria-label="Your JavaScript">
+          const songs = ["A", "B", "C", "D"];
+
+          // 1. Add "E" at the end
+          // 2. Remove the first song
+          // 3. Replace "C" with "Z" using splice
+          // 4. Log the last song using at()
+          // 5. Log the whole list joined with " > " (should be "B > Z > D > E")
+
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="arrAnswer">
+        const songs = ["A", "B", "C", "D"];
+
+        songs.push("E");
+        songs.shift();
+        songs.splice(1, 1, "Z");
+        console.log(songs.at(-1));
+        console.log(songs.join(" > "));
+      </script>
+      <p class="hook">Next: finding things in an array.</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="part" data-title="Searching arrays">
+      <h2>Searching arrays</h2>
+      <p class="say">For an exact value: <code>indexOf(x)</code> gives its first index (or −1), <code>lastIndexOf(x)</code> its last, and <code>includes(x)</code> gives true or false.</p>
+      <p class="say">For a value that passes a test, give the method a small function. It's called once per item and returns true when that item matches: <code>find(n =&gt; n &gt; 10)</code> gives the first item over 10. <code>findIndex</code> gives its index instead. <code>findLast</code> and <code>findLastIndex</code> search from the end.</p>
+      <div class="activity">
+        <div class="do">Try it: find the first score below 50. Then find the index of the last score over 80.</div>
+        <div class="live" data-js="console" data-h="200"><textarea aria-label="Your JavaScript">
+          const scores = [45, 82, 67, 91, 30, 88];
+          console.log(scores.indexOf(67), scores.includes(100));
+
+          console.log(scores.find(s => s > 80));
+          console.log(scores.findIndex(s => s > 80));
+          console.log(scores.findLast(s => s > 80));
+
+          const people = [{ name: "Asha", age: 20 }, { name: "Ravi", age: 17 }];
+          console.log(people.find(p => p.age < 18));
+        </textarea></div>
+      </div>
+      <p class="hook">Next: putting a list in order.</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="part" data-title="Sorting">
+      <h2>Sorting</h2>
+      <p class="say"><code>sort()</code> puts items in alphabetical order, changing the array. <code>reverse()</code> flips the order.</p>
+      <p class="say">For numbers, plain <code>sort()</code> is wrong: it compares them as text, so 100 comes before 25. Give it a compare function instead: <code>sort((a, b) =&gt; a - b)</code> sorts smallest first, <code>b - a</code> biggest first. The same works for objects: <code>(a, b) =&gt; a.age - b.age</code>.
+        <button class="doubt" data-peek-from="dCmp" aria-label="A doubt">🤔</button></p>
+      <p class="say"><code>Math.min(...nums)</code> and <code>Math.max(...nums)</code> give the smallest and biggest. The <code>...</code> spreads the list out into separate numbers.</p>
+      <div class="activity">
+        <div class="do">Try it: run and compare the two number sorts. Then sort <code>people</code> by age.</div>
+        <div class="live" data-js="console" data-h="220"><textarea aria-label="Your JavaScript">
+          const names = ["Ravi", "asha", "Meera", "Arjun"];
+          console.log(names.sort());
+
+          const nums = [100, 25, 3, 42];
+          console.log([...nums].sort());
+          console.log([...nums].sort((a, b) => a - b));
+          console.log(Math.min(...nums), Math.max(...nums));
+
+          const people = [{ name: "Asha", age: 20 }, { name: "Ravi", age: 17 }, { name: "Meera", age: 25 }];
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: searching and sorting.</p>
+      <div hidden id="dCmp"><b>How does a - b work?</b><br>sort calls it with two items. A negative answer puts a first, positive puts b first, 0 keeps them. For 25 and 100, 25 − 100 is negative, so 25 goes first. <code>() =&gt; Math.random() - 0.5</code> gives a random order: a quick shuffle.</div>
+    </section>
+
+    <!-- 7 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 7.2">
+      <h2>✏️ Practice 7.2</h2>
+      <p class="say">Remember:<br><code>includes</code> · <code>find(x =&gt; …)</code> · <code>findIndex</code> · <b class="eqbox">sort((a, b) =&gt; a - b)</b> smallest first · <code>Math.max(...arr)</code></p>
+      <div class="activity">
+        <div class="do">Write the code, press ▶ Run.</div>
+        <div class="live" data-js="console" data-h="250" data-check="search" data-answer="searchAnswer"><textarea aria-label="Your JavaScript">
+          const prices = [250, 99, 1200, 450, 75];
+          const books = [
+            { title: "HTML Basics", pages: 120 },
+            { title: "CSS Magic", pages: 300 },
+            { title: "JS Journey", pages: 210 },
+          ];
+
+          // 1. Log whether prices includes 450 (true)
+          // 2. Log the first price over 1000
+          // 3. Log the prices sorted smallest first: [75, 99, 250, 450, 1200]
+          // 4. Log the biggest price with Math.max
+          // 5. Log the title of the book with the most pages (sort books by pages)
+
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="searchAnswer">
+        const prices = [250, 99, 1200, 450, 75];
+        const books = [
+          { title: "HTML Basics", pages: 120 },
+          { title: "CSS Magic", pages: 300 },
+          { title: "JS Journey", pages: 210 },
+        ];
+
+        console.log(prices.includes(450));
+        console.log(prices.find(p => p > 1000));
+        console.log([...prices].sort((a, b) => a - b));
+        console.log(Math.max(...prices));
+        books.sort((a, b) => b.pages - a.pages);
+        console.log(books[0].title);
+      </script>
+      <p class="hook">Now the big one: changing the page with JavaScript.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="part" data-title="The DOM: the page as a tree">
+      <h2>The DOM: the page as a tree</h2>
+      <p class="say">When the browser reads your HTML, it builds a tree of objects, one per element, called the <mark data-peek="Document Object Model.">DOM</mark>. At the top is <code>document</code>; inside it <code>html</code>, then <code>head</code> and <code>body</code>, and so on, the same way the boxes sit inside each other.</p>
+      <p class="say">JavaScript can read and change this tree. Every change shows on the page at once.</p>
+      <div class="activity">
+        <div class="do">Try it: add a <code>&lt;p&gt;</code> inside the div, or give the h1 an id. Watch the tree under the page change.</div>
+        <div class="live" data-h="110" data-tree="1"><textarea aria-label="Your HTML">
+          <h1>My list</h1>
+          <div class="box">
+            <ul>
+              <li>Milk</li>
+              <li>Bread</li>
+            </ul>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">To change an element, first you have to find it.</p>
+    </section>
+
+    <!-- 9 -->
+    <section class="part" data-title="Finding elements">
+      <h2>Finding elements</h2>
+      <p class="say"><code>document.getElementById("title")</code> finds the element with <code>id="title"</code>.</p>
+      <p class="say"><code>document.querySelector(".note")</code> takes any CSS selector and finds the <b>first</b> match. <code>document.querySelectorAll("li")</code> finds <b>all</b> matches, as a list you can loop over with for…of.</p>
+      <div class="activity">
+        <div class="do">Try it: run it. Then use <code>querySelector</code> to log the second paragraph, using its class.</div>
+        <div class="live" data-js="page" data-h="160"><textarea aria-label="Your HTML">
+          <h2 id="title">Shopping</h2>
+          <p>Remember the list.</p>
+          <p class="note">Shop closes at 9.</p>
+          <ul><li>Milk</li><li>Bread</li><li>Eggs</li></ul>
+
+          <script>
+            const title = document.getElementById("title");
+            console.log(title);
+
+            const items = document.querySelectorAll("li");
+            console.log(items.length + " items");
+            for (const li of items) {
+              console.log(li.textContent);
+            }
+          </script>
+        </textarea></div>
+      </div>
+      <p class="hook">Found it. Now change it.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="part" data-title="Changing elements">
+      <h2>Changing elements</h2>
+      <p class="say"><code>el.textContent = "…"</code> replaces the text inside. <code>el.innerHTML = "…"</code> replaces the HTML inside, so tags in it become elements.</p>
+      <p class="say"><code>el.style.color = "red"</code> changes one CSS property. Names with a dash lose it and capitalise the next letter: <code>background-color</code> becomes <code>style.backgroundColor</code>.</p>
+      <p class="say"><code>el.classList.add("done")</code> adds a class (<code>remove</code> and <code>toggle</code> too). <code>el.setAttribute("src", "x.png")</code> changes an attribute.</p>
+      <div class="activity">
+        <div class="do">Try it: make the heading's background yellow. Then change the picture's width with setAttribute.</div>
+        <div class="live" data-js="page" data-h="210"><textarea aria-label="Your HTML">
+          <style> .done { text-decoration: line-through; color: gray; } </style>
+          <h2 id="title">Hello</h2>
+          <p id="msg">Old text</p>
+          <img id="pic" src="notebook.svg" alt="Notebook" width="80">
+
+          <script>
+            document.getElementById("title").textContent = "Hello, DOM!";
+            const msg = document.getElementById("msg");
+            msg.innerHTML = "New text with <b>bold</b>";
+            msg.style.color = "teal";
+            msg.classList.add("done");
+          </script>
+        </textarea></div>
+      </div>
+      <p class="hook">So far the changes happen as soon as the page loads. Better: when the visitor does something.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="part" data-title="Events">
+      <h2>Events</h2>
+      <p class="say">An <mark>event</mark> is something that happens on the page: a click, a key press, typing in a box. <code>el.addEventListener("click", function)</code> runs the function every time that element is clicked.</p>
+      <p class="say">Other events: <code>"input"</code> (the text in a box changes), <code>"mouseover"</code>, <code>"submit"</code> (a form is sent). A box's typed text is in its <code>value</code>.</p>
+      <div class="activity">
+        <div class="do">Try it: click the button a few times, and type in the box. Then add a second button that sets the count back to 0.</div>
+        <div class="live" data-js="page" data-h="190"><textarea aria-label="Your HTML">
+          <button id="btn">Clicked 0 times</button>
+          <p><input id="name" placeholder="Your name"></p>
+          <p id="hello">Hello!</p>
+
+          <script>
+            let count = 0;
+            const btn = document.getElementById("btn");
+            btn.addEventListener("click", () => {
+              count++;
+              btn.textContent = "Clicked " + count + " times";
+            });
+
+            const box = document.getElementById("name");
+            box.addEventListener("input", () => {
+              document.getElementById("hello").textContent = "Hello, " + box.value + "!";
+            });
+          </script>
+        </textarea></div>
+      </div>
+      <p class="hook">Last piece: making brand-new elements.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="part" data-title="Creating elements">
+      <h2>Creating elements</h2>
+      <p class="say"><code>document.createElement("li")</code> makes a new, empty element. It isn't on the page yet. Fill it in, then <code>parent.appendChild(el)</code> adds it as the parent's last child. <code>el.remove()</code> takes an element off the page.</p>
+      <div class="activity">
+        <div class="do">Try it: type a task and press Add. Then make each new task disappear when it's clicked: add a click listener to <code>li</code> that calls <code>li.remove()</code>.</div>
+        <div class="live" data-js="page" data-h="200"><textarea aria-label="Your HTML">
+          <input id="task" placeholder="New task">
+          <button id="add">Add</button>
+          <ul id="list"></ul>
+
+          <script>
+            const list = document.getElementById("list");
+            const input = document.getElementById("task");
+
+            document.getElementById("add").addEventListener("click", () => {
+              const li = document.createElement("li");
+              li.textContent = input.value;
+              list.appendChild(li);
+              input.value = "";
+            });
+          </script>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: a small app.</p>
+    </section>
+
+    <!-- 13 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 7.3">
+      <h2>✏️ Practice 7.3</h2>
+      <p class="say">Remember:<br><code>getElementById</code> · <code>querySelector</code> · <code>textContent</code> · <code>style.color</code> · <code>classList.toggle</code><br><b class="eqbox">el.addEventListener("click", () =&gt; { … })</b> · <code>createElement</code> + <code>appendChild</code></p>
+      <div class="activity">
+        <div class="do">Make the buttons work. Press ▶ Run, then try them on the page. The list checks them for you.</div>
+        <div class="live" data-js="page" data-h="200" data-check="dom" data-answer="domAnswer"><textarea aria-label="Your HTML">
+          <style> .dark { background-color: #222; color: white; } </style>
+          <h2 id="count">0</h2>
+          <button id="plus">+1</button>
+          <button id="theme">Dark mode</button>
+          <button id="note">Add note</button>
+          <ul id="notes"></ul>
+
+          <script>
+            // 1. +1 adds 1 to the number in #count
+            // 2. Dark mode toggles the class "dark" on document.body
+            // 3. Add note adds an li saying "Note 1", "Note 2", … to #notes
+
+          </script>
+        </textarea></div>
+      </div>
+      <template id="domAnswer">
+        <style> .dark { background-color: #222; color: white; } </style>
+        <h2 id="count">0</h2>
+        <button id="plus">+1</button>
+        <button id="theme">Dark mode</button>
+        <button id="note">Add note</button>
+        <ul id="notes"></ul>
+
+        <script>
+          let count = 0;
+          document.getElementById("plus").addEventListener("click", () => {
+            count++;
+            document.getElementById("count").textContent = count;
+          });
+
+          document.getElementById("theme").addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+          });
+
+          let n = 0;
+          document.getElementById("note").addEventListener("click", () => {
+            n++;
+            const li = document.createElement("li");
+            li.textContent = "Note " + n;
+            document.getElementById("notes").appendChild(li);
+          });
+        </script>
+      </template>
+      <p class="hook">Ready? A short test on this lesson.</p>
+    </section>
+
+    <!-- 14 -->
+    <section class="part" data-title="Lesson test">
+      <h2>Lesson 7 test</h2>
+      <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
+      <div class="test" data-test="7">
+        <div class="quiz" data-page="lesson7.html#2" data-topic="Adding and removing" data-right="Right. pop removes the last item, 3, and gives it back.">
+          <div class="q"><small>1. Predict</small><code>const a = [1, 2, 3]; const x = a.pop();</code> What are x and a?</div>
+          <div class="options">
+            <button data-right>x is 3, a is [1, 2]</button>
+            <button data-why="That's shift: it takes from the start. pop takes from the end.">x is 1, a is [2, 3]</button>
+            <button data-why="pop changes the array: the last item is gone.">x is 3, a is [1, 2, 3]</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson7.html#3" data-topic="concat, slice and splice" data-right="Right. From index 1, remove 2 items (b and c).">
+          <div class="q"><small>2. Predict</small><code>const a = ["a", "b", "c", "d"]; a.splice(1, 2);</code> What is a now?</div>
+          <div class="options">
+            <button data-right>["a", "d"]</button>
+            <button data-why="The second number is how many to remove, not an end index.">["a", "c", "d"]</button>
+            <button data-why="splice changes the array; that's slice, which copies.">["a", "b", "c", "d"]</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson7.html#5" data-topic="Searching arrays" data-right="Right. find gives the first item that passes: 7.">
+          <div class="q"><small>3. Predict</small><code>[3, 7, 9, 12].find(n =&gt; n &gt; 5)</code></div>
+          <div class="options">
+            <button data-right>7</button>
+            <button data-why="That's what findIndex would give: the index of 7.">1</button>
+            <button data-why="find stops at the first match; it doesn't return all of them.">[7, 9, 12]</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson7.html#6" data-topic="Sorting" data-right="Right. Without a compare function, numbers are sorted as text: "10" comes before "9".">
+          <div class="q"><small>4. Predict</small><code>[9, 10, 1].sort()</code></div>
+          <div class="options">
+            <button data-right>[1, 10, 9]</button>
+            <button data-why="That needs sort((a, b) =&gt; a - b). Plain sort compares as text.">[1, 9, 10]</button>
+            <button data-why="sort without a function is alphabetical, not biggest-first.">[10, 9, 1]</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson7.html#9" data-topic="Finding elements" data-right="Right. querySelector gives only the first match.">
+          <div class="q"><small>5. Predict</small>A page has three <code>&lt;p&gt;</code>. What does <code>document.querySelector("p")</code> give?</div>
+          <div class="options">
+            <button data-right>The first paragraph only</button>
+            <button data-why="That's querySelectorAll.">All three paragraphs</button>
+            <button data-why="Any CSS selector works, including a tag name.">null</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson7.html#10" data-topic="Changing elements" data-right="Right. textContent shows tags as plain text; innerHTML turns them into elements.">
+          <div class="q"><small>6. Spot the mistake</small><code>el.textContent = "&lt;b&gt;Hi&lt;/b&gt;"</code> shows the tags on the page instead of bold text. What should it be?</div>
+          <div class="options">
+            <button data-right>el.innerHTML = "&lt;b&gt;Hi&lt;/b&gt;"</button>
+            <button data-why="style.fontWeight would make the text bold, but the tags would still show as text.">el.style.fontWeight = "bold"</button>
+            <button data-why="setAttribute changes attributes, not the content inside.">el.setAttribute("b", "Hi")</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson7.html#12" data-topic="Creating elements" data-right="Right. A new element is only on the page once it's appended somewhere.">
+          <div class="q"><small>7. Spot the mistake</small><code>const li = document.createElement("li"); li.textContent = "New";</code> Nothing appears. Why?</div>
+          <div class="options">
+            <button data-right>It was never added with appendChild</button>
+            <button data-why="textContent works fine on new elements.">textContent doesn't work on new elements</button>
+            <button data-why="createElement takes the tag name without angle brackets.">It should be createElement("&lt;li&gt;")</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section class="part" data-title="What's next?">
+      <h2>What's next?</h2>
+      <p class="say">You can now handle lists of data and make a page respond to the visitor.</p>
+      <div class="open-question">
+        <div>This leaves a question</div>
+        <div class="big">How do we build a complete, good-looking site quickly?</div>
+        <div><a href="lesson8.html">Lesson 8 answers it.</a></div>
+      </div>
+      <p><button class="done-toggle" data-done="7">Mark lesson as done</button></p>
+    </section>
+  </main>
+</div>
+
+<nav class="pagebar" aria-label="Move between parts">
+  <div class="inner">
+    <button data-page-back>← Previous</button>
+    <span data-page-label></span>
+    <button class="primary" data-page-next>Next →</button>
+  </div>
+</nav>
+
+<script>
+const has = (logs, s) => logs.some(l => l.trim() === s);
+const ev = (d, s) => { try { return d.defaultView.eval(s); } catch (e) { return undefined; } };
+// Clicks a button in a hidden copy of the student's page (from probe()), never the page they see
+const click = (d, id) => { const b = d.getElementById(id); if (b) b.click(); return !!b; };
+window.LIVE_CHECKS = {
+  arr: [
+    { say: "\"E\" added at the end, the first song removed", hint: "songs.push(\"E\"); songs.shift();", test: d => { const s = ev(d, "songs"); return Array.isArray(s) && s[0] === "B" && s.at(-1) === "E"; } },
+    { say: "\"C\" replaced with \"Z\" using splice", hint: "songs.splice(1, 1, \"Z\"); (C is at index 1 after the shift)", test: (d, c) => /splice\(/.test(c) && JSON.stringify(ev(d, "songs")) === JSON.stringify(["B", "Z", "D", "E"]) },
+    { say: "Logs the last song with at(): E", hint: "console.log(songs.at(-1));", test: (d, c, logs) => /\.at\(\s*-1\s*\)/.test(c) && has(logs, "E") },
+    { say: "Logs \"B > Z > D > E\"", hint: "console.log(songs.join(\" > \"));", test: (d, c, logs) => has(logs, "B > Z > D > E") },
+  ],
+  search: [
+    { say: "Logs true for includes(450)", hint: "console.log(prices.includes(450));", test: (d, c, logs) => /includes\(/.test(c) && has(logs, "true") },
+    { say: "Logs the first price over 1000: 1200", hint: "prices.find(p => p > 1000)", test: (d, c, logs) => /\.find\(/.test(c) && has(logs, "1200") },
+    { say: "Logs [75, 99, 250, 450, 1200]", hint: "[...prices].sort((a, b) => a - b)", test: (d, c, logs) => has(logs, "[75, 99, 250, 450, 1200]") },
+    { say: "Logs the biggest with Math.max: 1200", hint: "Math.max(...prices)", test: (d, c, logs) => /Math\.max\(/.test(c) && logs.filter(l => l === "1200").length >= 1 },
+    { say: "Logs the longest book's title: CSS Magic", hint: "books.sort((a, b) => b.pages - a.pages); then books[0].title", test: (d, c, logs) => /\.sort\(/.test(c) && has(logs, "CSS Magic") },
+  ],
+  dom: [
+    { say: "+1 adds 1 to the number", hint: "Keep a count, add 1 on click, put it in #count with textContent.", test: (x, c0, l, probe) => probe().then(d => { const c = d.getElementById("count"); if (!c) return false; const before = Number(c.textContent); click(d, "plus"); click(d, "plus"); return Number(c.textContent) === before + 2; }) },
+    { say: "Dark mode toggles the class \"dark\" on the body", hint: "document.body.classList.toggle(\"dark\")", test: (x, c0, l, probe) => probe().then(d => { const a = d.body.classList.contains("dark"); click(d, "theme"); const b = d.body.classList.contains("dark"); click(d, "theme"); return a !== b && d.body.classList.contains("dark") === a; }) },
+    { say: "Add note adds \"Note 1\", \"Note 2\", …", hint: "createElement(\"li\"), set its text, appendChild to #notes.", test: (x, c0, l, probe) => probe().then(d => { const ul = d.getElementById("notes"); if (!ul) return false; const n = ul.children.length; click(d, "note"); click(d, "note"); const items = [...ul.children].map(li => li.textContent.trim()); return items.length === n + 2 && items.at(-1) === `Note ${n + 2}` && items.at(-2) === `Note ${n + 1}`; }) },
+  ],
+};
+</script>
+<script src="../assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/guide.js"></script>
+<script src="../assets/live.js"></script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Styling with CSS · Web Foundations</title>
+<meta name="description" content="Lesson 3 of Web Foundations: three ways to add CSS, selectors, colours, borders, margin, padding, the box model and position.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+<style>
+  .bm { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: start; }
+  @media (max-width: 900px) { .bm { grid-template-columns: 1fr; } }
+  .bm-draw { display: flex; justify-content: center; align-items: center; min-height: 200px; background: var(--card); border: 1px dashed var(--pencil); border-radius: var(--radius, 8px); overflow: hidden; }
+  .bm-m { background: var(--note-orange); outline: 1px dashed var(--pencil); position: relative; }
+  .bm-b { background: var(--ink); position: relative; }
+  .bm-p { background: var(--note-green); position: relative; }
+  .bm-c { background: var(--note-blue); color: var(--ink); display: grid; place-items: center; font: 600 0.85rem var(--mono); height: 60px; }
+  .bm-tag { position: absolute; top: 1px; left: 4px; font: 0.7rem var(--mono); color: var(--ink); }
+  .bm-b > .bm-tag { color: var(--paper); }
+  .bm-ctl label { display: grid; grid-template-columns: 5.6em minmax(0, 1fr) 3.2em; gap: 6px; align-items: center; font-size: 0.95rem; margin-bottom: 6px; }
+  .bm-ctl b { font-family: var(--mono); font-size: 0.9rem; text-align: right; }
+  .bm-ctl .sw { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--pencil); margin-right: 4px; vertical-align: -1px; }
+  .bm-sum { font: 0.95rem/1.7 var(--mono); margin-top: 8px; }
+  .bm-sizing { display: flex; gap: 6px; margin: 4px 0 10px; flex-wrap: wrap; }
+  .bm-sizing button { padding: 4px 10px; font-size: 0.85rem; }
+  .bm-sizing button[aria-pressed="true"] { background: var(--hl-yellow); color: var(--on-hl); }
+</style>
+</head>
+<body data-pen="pink">
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="../">← Web Foundations</a>
+    <span class="where">Lesson 3 of 8</span>
+  </header>
+
+  <main data-paged>
+    <div class="paged-head">
+      <h1>Styling with CSS</h1>
+      <div class="progress" aria-label="Lesson parts"></div>
+    </div>
+
+    <!-- 1 -->
+    <section class="part" data-title="What CSS is">
+      <h2>What CSS is</h2>
+      <p class="say">HTML says <b>what</b> is on the page. <mark data-peek="Short for Cascading Style Sheets.">CSS</mark> says <b>how it looks</b>: colours, sizes, spacing, layout.</p>
+      <p class="say">CSS is a list of <mark>rules</mark>. Each rule names which elements to style (the <mark>selector</mark>), then sets one or more <code>property: value;</code> pairs inside curly brackets:</p>
+      <div class="anat"><span class="a" data-peek="The selector: which elements. Here, every h1.">h1</span> { <span class="t" data-peek="The property: what to change.">color</span>: <span class="v" data-peek="The value: what to change it to.">teal</span>; <span class="t">font-size</span>: <span class="v">40px</span>; }</div>
+      <div class="activity">
+        <div class="do">Try it: change <code>teal</code> to <code>purple</code>. Then add a rule that makes every <code>p</code> grey.</div>
+        <div class="live" data-h="170"><textarea aria-label="Your HTML">
+          <style>
+            h1 { color: teal; font-size: 40px; }
+          </style>
+          <h1>Hello, CSS</h1>
+          <p>This paragraph has no rule yet.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">That rule lived in a style tag. There are three places CSS can live.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="part" data-title="Three ways to add CSS">
+      <h2>Three ways to add CSS</h2>
+      <p class="say"><b>Inline:</b> a <code>style</code> attribute on one element. Quick, but only for that element.</p>
+      <p class="say"><b>Internal:</b> a <code>&lt;style&gt;</code> tag in the head, for this page only.</p>
+      <p class="say"><b>External:</b> a separate <code>.css</code> file, linked from the head with <code>&lt;link rel="stylesheet" href="site.css"&gt;</code>. Every page of a site can link the same file, so one change restyles the whole site. Real sites use this.
+        <button class="doubt" data-peek-from="dOrder" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: delete the <code>&lt;link&gt;</code> line and watch the font and background go. Put it back.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="site.css">
+          <style>
+            p { color: darkgreen; }
+          </style>
+
+          <h1>Three ways</h1>
+          <p>Green from the style tag.</p>
+          <p style="color: crimson;">Red from my own style attribute.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Next: more ways to pick which elements a rule styles.</p>
+      <div hidden id="dOrder"><b>What if two of them disagree?</b><br>The inline style wins: it is the most specific. Between a style tag and a linked file, the rule that comes later wins. Lesson 4 explains the full order, called specificity.</div>
+    </section>
+
+    <!-- 3 -->
+    <section class="part" data-title="Element, id and class selectors">
+      <h2>Element, id and class selectors</h2>
+      <p class="say">An <b>element selector</b> is a tag name: <code>p</code> styles every paragraph.<br>An <b>id selector</b> starts with <code>#</code>: <code>#title</code> styles the element with <code>id="title"</code>.<br>A <b>class selector</b> starts with a dot: <code>.note</code> styles every element with <code>class="note"</code>.</p>
+      <p class="say">To give several selectors the same style, list them with commas: <code>h1, h2 { … }</code>.</p>
+      <div class="activity">
+        <div class="do">Try it: add <code>class="note"</code> to the plain paragraph. Then add <code>h2</code> to the first rule: <code>h1, h2 { … }</code>.</div>
+        <div class="live" data-h="250"><textarea aria-label="Your HTML">
+          <style>
+            h1 { font-family: Georgia, serif; }
+            #title { color: tomato; }
+            .note { background-color: lightyellow; padding: 6px; }
+          </style>
+
+          <h1 id="title">Selectors</h1>
+          <h2>A smaller heading</h2>
+          <p class="note">I'm a note.</p>
+          <p>I'm a plain paragraph.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Two more selectors: one for everything, and one for attributes.</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="part" data-title="Universal and attribute selectors">
+      <h2>Universal and attribute selectors</h2>
+      <p class="say">The <b>universal selector</b> <code>*</code> picks every element on the page. It's often used to reset spacing, like <code>* { margin: 0; }</code>.</p>
+      <p class="say">An <b>attribute selector</b> uses square brackets. <code>[title]</code> picks elements that have a <code>title</code> attribute. <code>[type="email"]</code> picks elements whose <code>type</code> is exactly "email".</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>[type="email"]</code> to <code>[type="password"]</code>. Then delete the <code>*</code> rule.</div>
+        <div class="live" data-h="210"><textarea aria-label="Your HTML">
+          <style>
+            * { font-family: Arial, sans-serif; }
+            [type="email"] { border: 2px solid green; }
+            [title] { text-decoration: underline dotted; }
+          </style>
+
+          <p title="A hint">I have a title attribute.</p>
+          <p><input type="email" placeholder="Email"></p>
+          <p><input type="password" placeholder="Password"></p>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice with selectors.</p>
+    </section>
+
+    <!-- 5 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 3.1">
+      <h2>✏️ Practice 3.1</h2>
+      <p class="say">Remember:<br><b class="eqbox">selector { property: value; }</b><br><code>p</code> every p · <code>#x</code> id="x" · <code>.x</code> class="x" · <code>*</code> everything · <code>[type="text"]</code> an attribute</p>
+      <div class="activity">
+        <div class="do">Write the rules inside the style tag. Change only the CSS, not the HTML.</div>
+        <div class="live" data-h="270" data-check="sel" data-answer="selAnswer"><textarea aria-label="Your HTML">
+          <style>
+
+          </style>
+
+          <h1 id="shop">Chai Corner</h1>
+          <p class="price">Masala chai: ₹20</p>
+          <p class="price">Ginger chai: ₹25</p>
+          <p>Open 7am to 9pm.</p>
+          <input type="text" placeholder="Your order">
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="selAnswer">
+        <style>
+          * { font-family: Arial, sans-serif; }
+          #shop { color: saddlebrown; }
+          .price { font-weight: bold; color: green; }
+          [type="text"] { border: 2px solid orange; }
+        </style>
+
+        <h1 id="shop">Chai Corner</h1>
+        <p class="price">Masala chai: ₹20</p>
+        <p class="price">Ginger chai: ₹25</p>
+        <p>Open 7am to 9pm.</p>
+        <input type="text" placeholder="Your order">
+      </script>
+      <p class="hook">Now, colours beyond their names.</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="part" data-title="Colours">
+      <h2>Colours</h2>
+      <p class="say">Three properties take a colour: <code>color</code> (text), <code>background-color</code> and <code>border-color</code>.</p>
+      <p class="say">Besides names like <code>teal</code>, you can mix any colour from red, green and blue light, each from 0 (none) to 255 (full): <code>rgb(255, 99, 71)</code> is lots of red, some green, a little blue: tomato.</p>
+      <p class="say">A <mark>hex code</mark> writes the same three amounts in base 16: <code>#ff6347</code> is <code>ff</code> red (255), <code>63</code> green (99), <code>47</code> blue (71).
+        <button class="doubt" data-peek-from="dHex" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: set the first box to <code>rgb(0, 0, 255)</code>, then <code>rgb(255, 255, 0)</code>. Which colour does full red plus full green make?</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <style>
+            div { padding: 12px; margin-bottom: 6px; }
+          </style>
+          <div style="background-color: rgb(255, 99, 71);">rgb(255, 99, 71)</div>
+          <div style="background-color: #ff6347;">#ff6347: the same tomato</div>
+          <div style="background-color: rgba(255, 99, 71, 0.3);">rgba: 30% see-through</div>
+          <div style="color: white; background-color: #333;">white text on dark grey</div>
+        </textarea></div>
+      </div>
+      <p class="hook">Colours look good on borders too.</p>
+      <div hidden id="dHex"><b>How do I find a colour's code?</b><br>Search "colour picker" online, or use your browser's developer tools. In the editor, <code>&lt;input type="color"&gt;</code> also shows a picker with its hex code.</div>
+    </section>
+
+    <!-- 7 -->
+    <section class="part" data-title="Borders">
+      <h2>Borders</h2>
+      <p class="say">A border needs a width, a style and a colour, written together: <b class="eqbox">border: 3px solid teal;</b></p>
+      <p class="say">Styles include <code>solid</code>, <code>dashed</code>, <code>dotted</code> and <code>double</code>. One side only: <code>border-bottom</code>, <code>border-left</code> and so on.</p>
+      <p class="say"><code>border-radius</code> rounds the corners. On a square, <code>50%</code> makes a circle.</p>
+      <div class="activity">
+        <div class="do">Try it: make the second box's border <code>dotted</code>. Then change the third box's radius to <code>10px</code>.</div>
+        <div class="live" data-h="270"><textarea aria-label="Your HTML">
+          <style>
+            div { padding: 10px; margin-bottom: 10px; }
+            .a { border: 3px solid teal; }
+            .b { border: 3px dashed tomato; }
+            .c { border: 3px solid purple; border-radius: 50%; width: 80px; height: 80px; }
+            .d { border-left: 6px solid gold; background-color: lightyellow; }
+          </style>
+          <div class="a">solid</div>
+          <div class="b">dashed</div>
+          <div class="c">circle</div>
+          <div class="d">only a left border</div>
+        </textarea></div>
+      </div>
+      <p class="hook">Notice the space between each border and its words? That space has a name.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="part" data-title="Padding and margin">
+      <h2>Padding and margin</h2>
+      <p class="say"><mark>Padding</mark> is the space <b>inside</b> the border, between the border and the content. <mark>Margin</mark> is the space <b>outside</b> the border, pushing other elements away.</p>
+      <p class="say">One value sets all four sides: <code>padding: 20px</code>. Two values: top and bottom, then left and right: <code>padding: 10px 30px</code>. Four go clockwise from the top: <code>margin: 10px 0 20px 0</code>.
+        <button class="doubt" data-peek-from="dCenter" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: set the box's padding to <code>40px</code>, then its margin to <code>40px</code>. Watch which one moves the border.</div>
+        <div class="live" data-h="250"><textarea aria-label="Your HTML">
+          <style>
+            .box {
+              border: 3px solid teal;
+              padding: 10px;
+              margin: 10px;
+              background-color: lightcyan;
+            }
+          </style>
+          <p>A paragraph above.</p>
+          <div class="box">My box</div>
+          <p>A paragraph below.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Content, padding, border, margin: together they decide how much room a box takes.</p>
+      <div hidden id="dCenter"><b>How do I centre a box?</b><br>Give it a width and <code>margin: 0 auto;</code>. <code>auto</code> shares the leftover space equally on the left and right.</div>
+    </section>
+
+    <!-- 9 -->
+    <section class="part" data-title="The box model">
+      <h2>The box model</h2>
+      <p class="say">Every element is a box made of four layers: the content, then padding, then border, then margin. This is the <mark>box model</mark>.</p>
+      <p class="say">By default, <code>width</code> sets only the content. A box with <code>width: 100px</code>, <code>padding: 10px</code> and <code>border: 5px</code> really takes up<br>5 + 10 + 100 + 10 + 5 = 130 pixels across (before margins).</p>
+      <p class="say"><code>box-sizing: border-box</code> makes <code>width</code> include the padding and border, so the box stays exactly as wide as you said.
+        <button class="doubt" data-peek-from="dBb" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: move the sliders. Then switch to border-box and watch the total.</div>
+        <div class="bm" id="bm">
+          <div class="bm-draw"><div class="bm-m" id="bmM"><span class="bm-tag">margin</span><div class="bm-b" id="bmB"><span class="bm-tag">border</span><div class="bm-p" id="bmP"><span class="bm-tag">padding</span><div class="bm-c" id="bmC"></div></div></div></div></div>
+          <div class="bm-ctl">
+            <div class="bm-sizing" role="group" aria-label="box-sizing">
+              <button type="button" data-s="content-box" aria-pressed="true">content-box</button>
+              <button type="button" data-s="border-box" aria-pressed="false">border-box</button>
+            </div>
+            <label><span>width</span><input type="range" min="60" max="160" step="10" value="100" data-k="w"><b></b></label>
+            <label><span><i class="sw" style="background:var(--note-green)"></i>padding</span><input type="range" min="0" max="30" step="5" value="10" data-k="p"><b></b></label>
+            <label><span><i class="sw" style="background:var(--ink)"></i>border</span><input type="range" min="0" max="15" step="1" value="5" data-k="b"><b></b></label>
+            <label><span><i class="sw" style="background:var(--note-orange)"></i>margin</span><input type="range" min="0" max="30" step="5" value="10" data-k="m"><b></b></label>
+            <div class="bm-sum" id="bmSum"></div>
+          </div>
+        </div>
+      </div>
+      <p class="hook">Practice: a card with all four layers.</p>
+      <div hidden id="dBb"><b>Which should I use?</b><br>Most developers put <code>* { box-sizing: border-box; }</code> at the top of their CSS. Widths then mean what you'd expect.</div>
+    </section>
+
+    <!-- 10 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 3.2">
+      <h2>✏️ Practice 3.2</h2>
+      <p class="say">Remember:<br><b class="eqbox">border: 2px solid teal;</b> · <code>border-radius</code> rounds corners<br><code>padding</code> inside the border · <code>margin</code> outside it · colours: names, <code>#ff6347</code>, <code>rgb(255, 99, 71)</code></p>
+      <div class="activity">
+        <div class="do">Style the <code>.card</code> rule to match the list. Change only the CSS.</div>
+        <div class="live" data-h="250" data-check="card3" data-answer="card3Answer"><textarea aria-label="Your HTML">
+          <style>
+            .card {
+
+            }
+          </style>
+
+          <div class="card">
+            <h3>Asha Menon</h3>
+            <p>Web developer in training</p>
+          </div>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="card3Answer">
+        <style>
+          .card {
+            width: 220px;
+            background-color: #fff8e7;
+            border: 2px solid teal;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px;
+          }
+        </style>
+
+        <div class="card">
+          <h3>Asha Menon</h3>
+          <p>Web developer in training</p>
+        </div>
+      </script>
+      <p class="hook">So far boxes sit where they fall. CSS can also move them.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="part" data-title="position: static and relative">
+      <h2>position: static and relative</h2>
+      <p class="say">The <code>position</code> property decides how a box is placed. The default is <code>static</code>: the box sits wherever it falls on the page, and <code>top</code>, <code>left</code> and the like do nothing.</p>
+      <p class="say"><code>position: relative</code> lets you nudge a box away from where it would have been. <code>top: 20px</code> pushes it 20px down from its usual spot; <code>left: 30px</code> pushes it right. The space it came from stays empty.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>left: 30px</code> to <code>left: 80px</code>. Then change <code>relative</code> to <code>static</code>.</div>
+        <div class="live" data-h="220"><textarea aria-label="Your HTML">
+          <style>
+            div { width: 120px; padding: 10px; margin-bottom: 6px; background-color: lightblue; }
+            .moved { position: relative; top: 20px; left: 30px; background-color: pink; }
+          </style>
+          <div>Box 1</div>
+          <div class="moved">Box 2, moved</div>
+          <div>Box 3</div>
+        </textarea></div>
+      </div>
+      <p class="hook">Relative boxes keep their space. Absolute ones don't.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="part" data-title="position: absolute">
+      <h2>position: absolute</h2>
+      <p class="say"><code>position: absolute</code> lifts a box out of the page's flow: the other elements close the gap as if it weren't there.</p>
+      <p class="say">Its <code>top</code>, <code>right</code>, <code>bottom</code> and <code>left</code> are measured from the nearest parent that has a position other than static. The usual trick: give the parent <code>position: relative</code>, so the child is placed inside it.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>top: 10px; right: 10px;</code> to <code>bottom: 10px; left: 10px;</code>. Then delete <code>position: relative</code> from <code>.card</code>.</div>
+        <div class="live" data-h="230"><textarea aria-label="Your HTML">
+          <style>
+            .card {
+              position: relative;
+              width: 220px; height: 120px;
+              border: 2px solid teal; padding: 10px;
+            }
+            .badge {
+              position: absolute;
+              top: 10px; right: 10px;
+              background-color: tomato; color: white; padding: 2px 8px;
+            }
+          </style>
+          <div class="card">
+            Running shoes
+            <span class="badge">NEW</span>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Two more: boxes that stay put while the page scrolls.</p>
+    </section>
+
+    <!-- 13 -->
+    <section class="part" data-title="fixed and sticky">
+      <h2>fixed and sticky</h2>
+      <p class="say"><code>position: fixed</code> pins a box to the screen: it stays in the same spot while the page scrolls. Chat buttons in a corner use this.</p>
+      <p class="say"><code>position: sticky</code> scrolls normally until it reaches its <code>top</code> value, then sticks there. Menus that stay at the top use this.</p>
+      <div class="activity">
+        <div class="do">Try it: scroll inside the page on the right. Watch the menu stick and the button stay in its corner.</div>
+        <div class="live" data-h="250"><textarea aria-label="Your HTML">
+          <style>
+            nav { position: sticky; top: 0; background-color: navy; color: white; padding: 8px; }
+            .help { position: fixed; bottom: 10px; right: 10px; background-color: green; color: white; padding: 8px; border-radius: 20px; }
+            p { height: 120px; }
+          </style>
+          <h2>My long page</h2>
+          <nav>Menu: Home · About · Contact</nav>
+          <p>Scroll down…</p>
+          <p>Keep going…</p>
+          <p>Almost there…</p>
+          <p>The end.</p>
+          <div class="help">💬 Help</div>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: put a badge on a card's corner.</p>
+    </section>
+
+    <!-- 14 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 3.3">
+      <h2>✏️ Practice 3.3</h2>
+      <p class="say">Remember:<br><code>relative</code> nudge, keeps its space · <code>absolute</code> placed inside the nearest positioned parent · <code>fixed</code> pinned to the screen · <code>sticky</code> sticks when it reaches <code>top</code></p>
+      <div class="activity">
+        <div class="do">Build the goal: a "SALE" badge in the card's top-left corner, and a sticky title.</div>
+        <div class="live" data-h="180" data-goal="posGoal" data-goal-h="180" data-check="pos" data-answer="posGoal"><textarea aria-label="Your HTML">
+          <style>
+            h2 { background-color: gold; margin: 0; padding: 6px; }
+            .card { width: 200px; height: 90px; border: 2px solid teal; padding: 30px 10px 10px; margin: 10px 0; }
+            .badge { background-color: crimson; color: white; padding: 2px 8px; }
+            p { height: 60px; }
+          </style>
+          <h2>Today's deals</h2>
+          <div class="card">Headphones<span class="badge">SALE</span></div>
+          <p>More deals below…</p>
+          <p>…and more.</p>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="posGoal">
+        <style>
+          h2 { background-color: gold; margin: 0; padding: 6px; position: sticky; top: 0; }
+          .card { width: 200px; height: 90px; border: 2px solid teal; padding: 30px 10px 10px; margin: 10px 0; position: relative; }
+          .badge { background-color: crimson; color: white; padding: 2px 8px; position: absolute; top: 0; left: 0; }
+          p { height: 60px; }
+        </style>
+        <h2>Today's deals</h2>
+        <div class="card">Headphones<span class="badge">SALE</span></div>
+        <p>More deals below…</p>
+        <p>…and more.</p>
+      </script>
+      <p class="hook">Ready? A short test on this lesson.</p>
+    </section>
+
+    <!-- 15 -->
+    <section class="part" data-title="Lesson test">
+      <h2>Lesson 3 test</h2>
+      <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
+      <div class="test" data-test="3">
+        <div class="quiz" data-page="lesson3.html#3" data-topic="Element, id and class selectors" data-right="Right. A dot means a class.">
+          <div class="q"><small>1. Predict</small><code>.big { font-size: 30px; }</code>. What gets bigger?</div>
+          <div class="options">
+            <button data-right>Every element with class="big"</button>
+            <button data-why="An id is written with #, like #big.">The element with id="big"</button>
+            <button data-why="There is no &lt;big&gt; element here: the dot means a class.">Every &lt;big&gt; element</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson3.html#2" data-topic="Three ways to add CSS" data-right="Right. Every page links the same file, so one change restyles them all.">
+          <div class="q"><small>2. Apply</small>Your site has 20 pages that should share one look. Where should the CSS go?</div>
+          <div class="options">
+            <button data-right>One external .css file, linked from every page</button>
+            <button data-why="Then every change must be made 20 times, once per page.">A style tag in each page</button>
+            <button data-why="That's even more copying: every element on every page.">style attributes on each element</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson3.html#6" data-topic="Colours" data-right="Right. Full red, no green, no blue.">
+          <div class="q"><small>3. Work it out</small>What colour is <code>rgb(255, 0, 0)</code>?</div>
+          <div class="options">
+            <button data-right>Red</button>
+            <button data-why="Black would be rgb(0, 0, 0): no light at all.">Black</button>
+            <button data-why="White would be rgb(255, 255, 255): all three at full.">White</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson3.html#9" data-topic="The box model" data-right="Right. 2 + 10 + 200 + 10 + 2 = 224.">
+          <div class="q"><small>4. Work it out</small><code>width: 200px; padding: 10px; border: 2px solid;</code> with the default box-sizing. How wide is the box, border included?</div>
+          <div class="options">
+            <button data-right>224px</button>
+            <button data-why="That's border-box behaviour. By default, width is only the content.">200px</button>
+            <button data-why="Padding and border are on both sides: count each twice.">212px</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson3.html#8" data-topic="Padding and margin" data-right="Right. Padding sits inside the border, so the background fills it.">
+          <div class="q"><small>5. Predict</small>A box has a yellow background. You make its padding bigger. What happens?</div>
+          <div class="options">
+            <button data-right>The yellow area grows</button>
+            <button data-why="That's margin: space outside the border, with no background.">The gap around the box grows, the yellow stays the same</button>
+            <button data-why="Padding adds space; the text stays the same size.">The text gets bigger</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson3.html#12" data-topic="position: absolute" data-right="Right. Without a positioned parent, it's placed against the whole page.">
+          <div class="q"><small>6. Spot the mistake</small>A badge has <code>position: absolute; top: 0; right: 0;</code> but jumps to the corner of the whole page, not its card. Why?</div>
+          <div class="options">
+            <button data-right>The card has no position: relative</button>
+            <button data-why="Absolute boxes are placed with top, right, bottom and left; those are fine.">top and right don't work with absolute</button>
+            <button data-why="fixed would pin it to the screen: further from the card, not closer.">It should be position: fixed</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson3.html#13" data-topic="fixed and sticky" data-right="Right. Sticky scrolls along, then stays once it reaches top: 0.">
+          <div class="q"><small>7. Apply</small>A menu should scroll with the page until it reaches the top, then stay there. Which one?</div>
+          <div class="options">
+            <button data-right>position: sticky</button>
+            <button data-why="fixed never scrolls: it's pinned from the start.">position: fixed</button>
+            <button data-why="relative boxes scroll away like everything else.">position: relative</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="part" data-title="What's next?">
+      <h2>What's next?</h2>
+      <p class="say">You can now colour, space, border and position anything on a page.</p>
+      <div class="open-question">
+        <div>This leaves a question</div>
+        <div class="big">How do we put things side by side, and make the page fit a phone?</div>
+        <div><a href="lesson4.html">Lesson 4 answers it.</a></div>
+      </div>
+      <p><button class="done-toggle" data-done="3">Mark lesson as done</button></p>
+    </section>
+  </main>
+</div>
+
+<nav class="pagebar" aria-label="Move between parts">
+  <div class="inner">
+    <button data-page-back>← Previous</button>
+    <span data-page-label></span>
+    <button class="primary" data-page-next>Next →</button>
+  </div>
+</nav>
+
+<script>
+const css = (d, sel) => { const el = d.querySelector(sel); return el ? d.defaultView.getComputedStyle(el) : null; };
+window.LIVE_CHECKS = {
+  sel: [
+    { say: "Every element uses one font, set with <code>*</code>", hint: "* { font-family: Arial, sans-serif; }", test: (d, code) => /\*\s*\{[^}]*font-family/i.test(code) },
+    { say: "The shop name has a colour, set with its id", hint: "#shop { color: saddlebrown; }", test: (d, code) => /#shop\s*\{[^}]*color/i.test(code) && css(d, "#shop").color !== "rgb(0, 0, 0)" },
+    { say: "Both prices are bold, set with their class", hint: ".price { font-weight: bold; }", test: (d, code) => /\.price\s*\{/i.test(code) && [...d.querySelectorAll(".price")].every(p => Number(d.defaultView.getComputedStyle(p).fontWeight) >= 600) },
+    { say: "The text box has a border, set with an attribute selector", hint: "[type=\"text\"] { border: 2px solid orange; }", test: (d, code) => /\[type=["']?text["']?\]\s*\{[^}]*border/i.test(code) },
+    { say: "Your rules are in the style tag; the HTML is unchanged", hint: "Put your rules between &lt;style&gt; and &lt;/style&gt; only.", test: d => [...d.querySelectorAll("style")].some(s => /\{/.test(s.textContent)) && !!d.querySelector('#shop') && d.querySelectorAll(".price").length === 2 && !d.querySelector("[style]") },
+  ],
+  card3: [
+    { say: "A border with width, style and colour", hint: "border: 2px solid teal;", test: d => { const s = css(d, ".card"); return !!s && parseFloat(s.borderTopWidth) > 0 && s.borderTopStyle !== "none"; } },
+    { say: "Rounded corners", hint: "border-radius: 12px;", test: d => { const s = css(d, ".card"); return !!s && parseFloat(s.borderTopLeftRadius) > 0; } },
+    { say: "Padding inside the border", hint: "padding: 16px;", test: d => { const s = css(d, ".card"); return !!s && parseFloat(s.paddingLeft) > 0; } },
+    { say: "Margin outside the border", hint: "margin: 20px;", test: d => { const s = css(d, ".card"); return !!s && parseFloat(s.marginLeft) > 0; } },
+    { say: "A background colour", hint: "background-color: #fff8e7;", test: d => { const s = css(d, ".card"); return !!s && s.backgroundColor !== "rgba(0, 0, 0, 0)"; } },
+    { say: "A width, so it doesn't fill the whole line", hint: "width: 220px;", test: d => { const el = d.querySelector(".card"); return !!el && el.getBoundingClientRect().width < d.body.clientWidth - 40; } },
+  ],
+  pos: [
+    { say: "The card is the badge's positioned parent", hint: "Add position: relative; to .card.", test: d => { const s = css(d, ".card"); return !!s && s.position === "relative"; } },
+    { say: "The badge sits in the card's top-left corner", hint: "Add position: absolute; top: 0; left: 0; to .badge.", test: d => { const c = d.querySelector(".card"), b = d.querySelector(".badge"); if (!c || !b || css(d, ".badge").position !== "absolute") return false; const cr = c.getBoundingClientRect(), br = b.getBoundingClientRect(); return Math.abs(br.top - cr.top) < 6 && Math.abs(br.left - cr.left) < 6; } },
+    { say: "The title sticks to the top when you scroll", hint: "Add position: sticky; top: 0; to h2.", test: d => { const s = css(d, "h2"); return !!s && s.position === "sticky" && s.top === "0px"; } },
+  ],
+};
+
+// The box model sliders
+(function () {
+  const root = document.getElementById("bm");
+  if (!root) return;
+  const v = { w: 100, p: 10, b: 5, m: 10, s: "content-box" };
+  const start = { ...v };
+  const M = document.getElementById("bmM"), B = document.getElementById("bmB"), P = document.getElementById("bmP"), C = document.getElementById("bmC"), S = document.getElementById("bmSum");
+  function draw() {
+    root.querySelectorAll("input[type=range]").forEach(r => { r.value = v[r.dataset.k]; r.nextElementSibling.textContent = v[r.dataset.k] + "px"; });
+    root.querySelectorAll(".bm-sizing button").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === v.s));
+    const content = v.s === "border-box" ? Math.max(0, v.w - 2 * v.p - 2 * v.b) : v.w;
+    M.style.padding = v.m + "px"; B.style.padding = v.b + "px"; P.style.padding = v.p + "px";
+    C.style.width = content + "px"; C.textContent = content + "px";
+    const total = content + 2 * v.p + 2 * v.b;
+    S.innerHTML = (v.s === "border-box"
+      ? `content = ${v.w} − ${v.p} − ${v.p} − ${v.b} − ${v.b} = ${content}<br>`
+      : `content = width = ${v.w}<br>`) +
+      `box = ${v.b} + ${v.p} + ${content} + ${v.p} + ${v.b}<br>&nbsp;&nbsp;&nbsp;&nbsp;= <b class="eqbox">${total}px</b><br>with margins: ${total + 2 * v.m}px`;
+  }
+  root.querySelectorAll("input[type=range]").forEach(r => r.addEventListener("input", () => { v[r.dataset.k] = Number(r.value); draw(); }));
+  root.querySelectorAll(".bm-sizing button").forEach(b => b.addEventListener("click", () => { v.s = b.dataset.s; draw(); }));
+  const reset = () => { Object.assign(v, start); draw(); };
+  if (typeof addReset === "function") addReset(root, reset); else window.addEventListener("load", () => addReset(root, reset));
+  draw();
+})();
+</script>
+<script src="../assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/guide.js"></script>
+<script src="../assets/live.js"></script>
+</body>
+</html>

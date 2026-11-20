@@ -1,0 +1,14 @@
+/* lesson.css — small styles shared by this course's lessons (the notebook look itself comes from study-notebook-design). */
+.anat { font: 600 1.35rem/1.6 var(--mono); background: var(--card); border: 2px dashed var(--pencil); border-radius: var(--radius, 8px); padding: 10px 14px; display: inline-block; margin: 2px 0 10px; max-width: 100%; overflow-x: auto; }
+.anat .t { color: var(--pen); }
+.anat .a { color: var(--redpen); }
+.anat .v { color: var(--good); }
+.say { position: relative; }   /* a 🤔 sits at the top-right of its paragraph */
+.steps-list { margin: 0 0 1em 1.2em; font-size: 1.1rem; line-height: 1.55; }
+.steps-list li { margin-bottom: 4px; }
+.mini { font-size: 0.95rem; color: var(--pencil); }
+.serp { margin-top: 8px; background: #fff; border: 1px solid #C9CED8; border-radius: 8px; padding: 10px 14px; font-family: Arial, sans-serif; }
+.serp .u { color: #4D5156; font-size: 0.8rem; }
+.serp .t { color: #1A0DAB; font-size: 1.15rem; margin: 2px 0; }
+.serp .d { color: #4D5156; font-size: 0.88rem; }
+.serp .t.empty, .serp .d.empty { color: #A0A4AB; font-style: italic; }

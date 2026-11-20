@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loops, functions and strings · Web Foundations</title>
+<meta name="description" content="Lesson 6 of Web Foundations: for, while and do-while loops, functions, objects, for-in and for-of, string methods and template literals.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body data-pen="green">
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="../">← Web Foundations</a>
+    <span class="where">Lesson 6 of 8</span>
+  </header>
+
+  <main data-paged>
+    <div class="paged-head">
+      <h1>Loops, functions and strings</h1>
+      <div class="progress" aria-label="Lesson parts"></div>
+    </div>
+
+    <!-- 1 -->
+    <section class="part" data-title="The for loop">
+      <h2>The for loop</h2>
+      <p class="say">A <mark>loop</mark> runs the same code again and again. A <code>for</code> loop has three parts in its brackets, separated by semicolons:</p>
+      <div class="anat"><span class="t">for</span> (<span class="a" data-peek="Start: runs once, before the loop.">let i = 1</span>; <span class="v" data-peek="Keep going while this is true. Checked before every round.">i &lt;= 5</span>; <span class="a" data-peek="After every round: add 1 to i.">i++</span>) { … }</div>
+      <p class="say">Read it as: start <code>i</code> at 1; while <code>i</code> is 5 or less, run the block; after each round, add 1. So the block runs with i = 1, 2, 3, 4, 5, then stops when i becomes 6.</p>
+      <div class="activity">
+        <div class="do">Try it: make it count to 10. Then make it count by twos: change <code>i++</code> to <code>i += 2</code>.</div>
+        <div class="live" data-js="console" data-h="160"><textarea aria-label="Your JavaScript">
+          for (let i = 1; i <= 5; i++) {
+            console.log("Round " + i);
+          }
+          console.log("Done!");
+        </textarea></div>
+      </div>
+      <p class="hook">for is best when you know how many rounds. When you don't, use while.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="part" data-title="while and do…while">
+      <h2>while and do…while</h2>
+      <p class="say"><code>while (condition) { … }</code> checks the condition first, and repeats the block as long as it's true. If it's false from the start, the block never runs.</p>
+      <p class="say"><code>do { … } while (condition);</code> runs the block <b>first</b>, then checks. So it always runs at least once.</p>
+      <p class="say">Something inside must change the condition, or the loop never ends and the page freezes.
+        <button class="doubt" data-peek-from="dFreeze" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: set <code>n</code> to 0 in both loops and run. Which loop still prints once?</div>
+        <div class="live" data-js="console" data-h="220"><textarea aria-label="Your JavaScript">
+          let n = 3;
+          while (n > 0) {
+            console.log("while: " + n);
+            n--;
+          }
+
+          let m = 3;
+          do {
+            console.log("do-while: " + m);
+            m--;
+          } while (m > 0);
+        </textarea></div>
+      </div>
+      <p class="hook">Practice with loops.</p>
+      <div hidden id="dFreeze"><b>What if my page freezes?</b><br>That's a loop that never ends: for example, forgetting <code>n--</code>. Close the tab, reopen the lesson, and fix the code before pressing Run.</div>
+    </section>
+
+    <!-- 3 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 6.1">
+      <h2>✏️ Practice 6.1</h2>
+      <p class="say">Remember:<br><b class="eqbox">for (let i = 1; i &lt;= 10; i++) { … }</b><br><code>while (cond) { … }</code> checks first · <code>do { … } while (cond);</code> runs at least once · <code>total += i</code> adds i to total</p>
+      <div class="activity">
+        <div class="do">Write three loops. Press ▶ Run to check.</div>
+        <div class="live" data-js="console" data-h="250" data-check="loops" data-answer="loopsAnswer"><textarea aria-label="Your JavaScript">
+          // 1. The 7 times table: log "7 x 1 = 7" up to "7 x 10 = 70"
+
+          // 2. Add up 1 + 2 + … + 100 and log the total once
+
+          // 3. A while loop that logs a countdown: 3, 2, 1, then "Go!"
+
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="loopsAnswer">
+        for (let i = 1; i <= 10; i++) {
+          console.log("7 x " + i + " = " + 7 * i);
+        }
+
+        let total = 0;
+        for (let i = 1; i <= 100; i++) {
+          total += i;
+        }
+        console.log(total);
+
+        let n = 3;
+        while (n > 0) {
+          console.log(n);
+          n--;
+        }
+        console.log("Go!");
+      </script>
+      <p class="hook">Next: more ways to write functions.</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="part" data-title="More about functions">
+      <h2>More about functions</h2>
+      <p class="say">A function can also be stored in a variable. This is a <mark>function expression</mark>: <code>const square = function (n) { return n * n; };</code></p>
+      <p class="say">An <mark>arrow function</mark> is a shorter way to write the same: <code>const square = (n) =&gt; n * n;</code>. With one line after the arrow, its value is returned without writing <code>return</code>.</p>
+      <p class="say">A parameter can have a <mark>default value</mark>, used when no argument is given: <code>function greet(name = "friend")</code>.</p>
+      <div class="activity">
+        <div class="do">Try it: call <code>greet()</code> with nothing, then <code>greet("Ravi")</code>. Then write an arrow function <code>half</code> that returns <code>n / 2</code>.</div>
+        <div class="live" data-js="console" data-h="210"><textarea aria-label="Your JavaScript">
+          const square = function (n) {
+            return n * n;
+          };
+          const cube = (n) => n * n * n;
+
+          function greet(name = "friend") {
+            return "Hi, " + name;
+          }
+
+          console.log(square(4), cube(2));
+          console.log(greet());
+        </textarea></div>
+      </div>
+      <p class="hook">Functions can live inside objects too.</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="part" data-title="Objects in depth">
+      <h2>Objects in depth</h2>
+      <p class="say">Read a value with a dot, <code>car.brand</code>, or with square brackets and a string, <code>car["brand"]</code>. Brackets also work when the key is in a variable.</p>
+      <p class="say">Change or add a value the same way: <code>car.color = "red";</code>.</p>
+      <p class="say">A function stored in an object is a <mark>method</mark>. Inside it, <code>this</code> means "the object this method belongs to".</p>
+      <div class="activity">
+        <div class="do">Try it: add <code>car.year = 2024;</code> before the last line and run. Then call <code>car.describe()</code> again after changing the colour.</div>
+        <div class="live" data-js="console" data-h="230"><textarea aria-label="Your JavaScript">
+          const car = {
+            brand: "Tata",
+            color: "blue",
+            describe: function () {
+              return "A " + this.color + " " + this.brand;
+            },
+          };
+
+          console.log(car.brand, car["color"]);
+          console.log(car.describe());
+          car.color = "red";
+          console.log(car);
+        </textarea></div>
+      </div>
+      <p class="hook">How do you go through every key of an object, or every item of an array?</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="part" data-title="for…in and for…of">
+      <h2>for…in and for…of</h2>
+      <p class="say"><code>for (let key in object)</code> goes through an object's <b>keys</b>, one per round. Use <code>object[key]</code> to get each value.</p>
+      <p class="say"><code>for (let item of array)</code> goes through an array's <b>items</b>, one per round. It also works on a string, one letter at a time.
+        <button class="doubt" data-peek-from="dInOf" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: add a key <code>email</code> to <code>user</code> and run. Then loop over the string <code>"hi!"</code> with for…of.</div>
+        <div class="live" data-js="console" data-h="220"><textarea aria-label="Your JavaScript">
+          const user = { name: "Asha", age: 20, city: "Kochi" };
+          for (let key in user) {
+            console.log(key + " → " + user[key]);
+          }
+
+          const fruits = ["mango", "banana", "jackfruit"];
+          for (let fruit of fruits) {
+            console.log("I like " + fruit);
+          }
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: functions and objects together.</p>
+      <div hidden id="dInOf"><b>How do I remember which is which?</b><br><b>in</b> for keys <b>in</b> an object; <b>of</b> for each item <b>of</b> a list. for…in on an array gives the indexes ("0", "1", "2"), not the items.</div>
+    </section>
+
+    <!-- 7 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 6.2">
+      <h2>✏️ Practice 6.2</h2>
+      <p class="say">Remember:<br><b class="eqbox">const f = (x) =&gt; x * 2;</b> · <code>obj.key</code> or <code>obj["key"]</code> · <code>this</code> inside a method<br><code>for (let k in obj)</code> keys · <code>for (let x of arr)</code> items</p>
+      <div class="activity">
+        <div class="do">Write the code, press ▶ Run.</div>
+        <div class="live" data-js="console" data-h="250" data-check="objs" data-answer="objsAnswer"><textarea aria-label="Your JavaScript">
+          const prices = { tea: 20, coffee: 35, juice: 50 };
+
+          // 1. An arrow function addTax(n) that returns n * 1.1
+
+          // 2. Use for…in to log each item and price, like "tea: 20"
+
+          // 3. Use for…of to log the total of these marks: [70, 85, 90]
+
+          // 4. An object pet with name and a method speak() that returns NAME + " says hi" (use this.name)
+
+          // 5. Log pet.speak()
+
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="objsAnswer">
+        const prices = { tea: 20, coffee: 35, juice: 50 };
+
+        const addTax = (n) => n * 1.1;
+
+        for (let item in prices) {
+          console.log(item + ": " + prices[item]);
+        }
+
+        let total = 0;
+        for (let m of [70, 85, 90]) {
+          total += m;
+        }
+        console.log(total);
+
+        const pet = {
+          name: "Bruno",
+          speak: function () {
+            return this.name + " says hi";
+          },
+        };
+        console.log(pet.speak());
+      </script>
+      <p class="hook">Now, working with text.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="part" data-title="Strings: the basics">
+      <h2>Strings: the basics</h2>
+      <p class="say">A string is a row of characters, each with an index starting at 0, just like an array. <code>.length</code> is how many characters it has.</p>
+      <p class="say">Strings come with built-in functions called <mark>methods</mark>, written after a dot: <code>charAt(0)</code> the first character · <code>toUpperCase()</code> · <code>toLowerCase()</code> · <code>trim()</code> removes spaces at both ends · <code>concat()</code> joins strings.
+        <button class="doubt" data-peek-from="dImmut" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: log <code>word.charAt(3)</code>. Then log the length of <code>messy</code> before and after <code>trim()</code>.</div>
+        <div class="live" data-js="console" data-h="220"><textarea aria-label="Your JavaScript">
+          const word = "Kerala";
+          console.log(word.length);
+          console.log(word[0], word.charAt(1));
+          console.log(word.toUpperCase(), word.toLowerCase());
+
+          const messy = "   hello   ";
+          console.log("[" + messy.trim() + "]");
+          console.log("Good ".concat("morning"));
+        </textarea></div>
+      </div>
+      <p class="hook">Next: cutting strings into pieces.</p>
+      <div hidden id="dImmut"><b>Does toUpperCase() change the original string?</b><br>No. String methods give back a <b>new</b> string; the original stays the same. To keep the result, store it: <code>let big = word.toUpperCase();</code></div>
+    </section>
+
+    <!-- 9 -->
+    <section class="part" data-title="Cutting and changing strings">
+      <h2>Cutting and changing strings</h2>
+      <p class="say"><code>slice(start, end)</code> cuts from index <code>start</code> up to, <b>but not including</b>, <code>end</code>. <code>"JavaScript".slice(0, 4)</code> is "Java". A negative number counts from the end: <code>slice(-6)</code> is "Script".
+        <button class="doubt" data-peek-from="dSubstr" aria-label="A doubt">🤔</button></p>
+      <p class="say"><code>split(",")</code> cuts a string into an array at each comma · <code>replace("a", "b")</code> swaps the first "a" for "b" · <code>padStart(5, "0")</code> adds zeros at the front until it's 5 long; <code>padEnd</code> adds at the end.</p>
+      <div class="activity">
+        <div class="do">Try it: log <code>lang.slice(4)</code>. Then split <code>date</code> at the "-" marks.</div>
+        <div class="live" data-js="console" data-h="210"><textarea aria-label="Your JavaScript">
+          const lang = "JavaScript";
+          console.log(lang.slice(0, 4), lang.slice(-6));
+          console.log(lang.substring(4, 10));
+
+          console.log("tea,coffee,juice".split(","));
+          console.log("I like cats".replace("cats", "dogs"));
+          console.log("7".padStart(3, "0"), "Hi".padEnd(5, "!"));
+
+          const date = "2026-11-20";
+        </textarea></div>
+      </div>
+      <p class="hook">Next: finding things inside a string.</p>
+      <div hidden id="dSubstr"><b>What are substring and substr?</b><br><code>substring(start, end)</code> is like slice, but doesn't take negative numbers. <code>substr(start, length)</code> takes a length instead of an end; it's old, so prefer slice.</div>
+    </section>
+
+    <!-- 10 -->
+    <section class="part" data-title="Searching in strings">
+      <h2>Searching in strings</h2>
+      <p class="say"><code>indexOf("x")</code> gives the index of the first "x", or −1 if there isn't one. <code>lastIndexOf</code> finds the last. <code>search()</code> works like indexOf, and can also take a pattern.</p>
+      <p class="say">Three give <code>true</code> or <code>false</code>: <code>includes("x")</code> · <code>startsWith("x")</code> · <code>endsWith("x")</code>.</p>
+      <p class="say"><code>match(/a/g)</code> finds every match, using a <span data-peek="A regular expression: a search pattern between slashes. The g means 'find all, not just the first'.">pattern</span>, and gives them back as an array.</p>
+      <div class="activity">
+        <div class="do">Try it: check whether <code>email</code> ends with ".com". Then find where "@" is.</div>
+        <div class="live" data-js="console" data-h="210"><textarea aria-label="Your JavaScript">
+          const s = "banana";
+          console.log(s.indexOf("a"), s.lastIndexOf("a"), s.indexOf("z"));
+          console.log(s.search("n"));
+          console.log(s.includes("nan"), s.startsWith("ba"), s.endsWith("x"));
+          console.log(s.match(/a/g));
+
+          const email = "asha@example.com";
+        </textarea></div>
+      </div>
+      <p class="hook">Joining strings with + gets messy. There's a cleaner way.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="part" data-title="Template literals">
+      <h2>Template literals</h2>
+      <p class="say">A <mark>template literal</mark> is a string written between backticks <code>`…`</code> instead of quotes. Inside it, <code>${…}</code> drops in the value of any variable or expression.</p>
+      <p class="say"><code>"Hi " + name + ", you are " + age</code> becomes <code>`Hi ${name}, you are ${age}`</code>. Template literals can also span several lines.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>qty</code> and run. Then rewrite the last line as a template literal.</div>
+        <div class="live" data-js="console" data-h="190"><textarea aria-label="Your JavaScript">
+          const item = "dosa";
+          const qty = 3;
+          const price = 60;
+
+          console.log(`${qty} ${item}s cost ₹${qty * price}`);
+          console.log(`Line one
+          Line two`);
+
+          console.log("Order: " + qty + " x " + item);
+        </textarea></div>
+      </div>
+      <p class="hook">Practice with strings.</p>
+    </section>
+
+    <!-- 12 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 6.3">
+      <h2>✏️ Practice 6.3</h2>
+      <p class="say">Remember:<br><code>slice(start, end)</code> stops before end · <code>split</code> · <code>toUpperCase</code> · <code>trim</code> · <code>includes</code> · <code>padStart</code><br><b class="eqbox">`Hi ${name}`</b></p>
+      <div class="activity">
+        <div class="do">Write the code, press ▶ Run.</div>
+        <div class="live" data-js="console" data-h="250" data-check="strs" data-answer="strsAnswer"><textarea aria-label="Your JavaScript">
+          const full = "  asha menon  ";
+
+          // 1. Log full without the spaces, in capitals: "ASHA MENON"
+
+          // 2. Log the first name only, "asha", using trim and split
+
+          // 3. Log whether full includes "men" (true)
+
+          // 4. Log order number 42 as "0042" using padStart
+
+          // 5. Log `Welcome, asha!` using a template literal with the first name
+
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="strsAnswer">
+        const full = "  asha menon  ";
+
+        console.log(full.trim().toUpperCase());
+
+        const first = full.trim().split(" ")[0];
+        console.log(first);
+
+        console.log(full.includes("men"));
+
+        console.log(String(42).padStart(4, "0"));
+
+        console.log(`Welcome, ${first}!`);
+      </script>
+      <p class="hook">Ready? A short test on this lesson.</p>
+    </section>
+
+    <!-- 13 -->
+    <section class="part" data-title="Lesson test">
+      <h2>Lesson 6 test</h2>
+      <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
+      <div class="test" data-test="6">
+        <div class="quiz" data-page="lesson6.html#1" data-topic="The for loop" data-right="Right. i is 0, 1, 2, 3: four rounds, stopping when i reaches 4.">
+          <div class="q"><small>1. Work it out</small>How many times does <code>for (let i = 0; i &lt; 4; i++)</code> run its block?</div>
+          <div class="options">
+            <button data-right>4</button>
+            <button data-why="i &lt; 4 is false when i is 4, so 4 doesn't get a round.">5</button>
+            <button data-why="Starting at 0 adds a round: 0, 1, 2, 3.">3</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson6.html#2" data-topic="while and do…while" data-right="Right. do…while runs once before it checks.">
+          <div class="q"><small>2. Predict</small><code>let n = 0; do { console.log(n); } while (n &gt; 0);</code> How many lines print?</div>
+          <div class="options">
+            <button data-right>1</button>
+            <button data-why="A plain while would print none. do…while runs first, then checks.">0</button>
+            <button data-why="After the first round, n &gt; 0 is false, so it stops.">It never stops</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson6.html#4" data-topic="More about functions" data-right="Right. No argument, so the default 10 is used: 10 × 2.">
+          <div class="q"><small>3. Predict</small><code>const f = (n = 10) =&gt; n * 2;</code> What is <code>f()</code>?</div>
+          <div class="options">
+            <button data-right>20</button>
+            <button data-why="The default value fills n when no argument is given.">NaN</button>
+            <button data-why="An arrow function with one line after the arrow returns that value.">undefined</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson6.html#6" data-topic="for…in and for…of" data-right="Right. for…in goes through the keys.">
+          <div class="q"><small>4. Predict</small><code>for (let k in { a: 1, b: 2 }) console.log(k);</code> What prints?</div>
+          <div class="options">
+            <button data-right>a, then b</button>
+            <button data-why="Those are the values. for…in gives keys; use obj[k] for values.">1, then 2</button>
+            <button data-why="for…in works on plain objects; for…of is the one that doesn't.">An error</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson6.html#9" data-topic="Cutting and changing strings" data-right="Right. Indexes 2, 3 and 4, stopping before 5: l, l, o.">
+          <div class="q"><small>5. Work it out</small>What is <code>"Hello".slice(2, 5)</code>?</div>
+          <div class="options">
+            <button data-right>"llo"</button>
+            <button data-why="Index 2 is the third letter, because indexes start at 0.">"ell"</button>
+            <button data-why="slice stops before index 5, so index 4 (the o) is still included.">"ll"</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson6.html#10" data-topic="Searching in strings" data-right="Right. There's no z, so indexOf gives −1.">
+          <div class="q"><small>6. Predict</small>What is <code>"cat".indexOf("z")</code>?</div>
+          <div class="options">
+            <button data-right>-1</button>
+            <button data-why="0 would mean it was found at the very start.">0</button>
+            <button data-why="indexOf never fails; −1 means not found.">An error</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson6.html#11" data-topic="Template literals" data-right="Right. ${…} works out 2 + 3 first.">
+          <div class="q"><small>7. Predict</small><code>`Sum: ${2 + 3}`</code></div>
+          <div class="options">
+            <button data-right>"Sum: 5"</button>
+            <button data-why="Inside ${…}, the expression is worked out, not joined as text.">"Sum: 23"</button>
+            <button data-why="With backticks, ${…} is replaced by its value.">"Sum: ${2 + 3}"</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="part" data-title="What's next?">
+      <h2>What's next?</h2>
+      <p class="say">You can now repeat work with loops, organise it with functions and objects, and handle text.</p>
+      <div class="open-question">
+        <div>This leaves a question</div>
+        <div class="big">How do we work with a whole list of things, and change the page itself?</div>
+        <div><a href="lesson7.html">Lesson 7 answers it.</a></div>
+      </div>
+      <p><button class="done-toggle" data-done="6">Mark lesson as done</button></p>
+    </section>
+  </main>
+</div>
+
+<nav class="pagebar" aria-label="Move between parts">
+  <div class="inner">
+    <button data-page-back>← Previous</button>
+    <span data-page-label></span>
+    <button class="primary" data-page-next>Next →</button>
+  </div>
+</nav>
+
+<script>
+const has = (logs, s) => logs.some(l => l.trim() === s);
+const ev = (d, s) => { try { return d.defaultView.eval(s); } catch (e) { return undefined; } };
+window.LIVE_CHECKS = {
+  loops: [
+    { say: "The 7 times table, from \"7 x 1 = 7\" to \"7 x 10 = 70\"", hint: "for (let i = 1; i <= 10; i++) { console.log(\"7 x \" + i + \" = \" + 7 * i); }", test: (d, c, logs) => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].every(i => has(logs, `7 x ${i} = ${7 * i}`)) },
+    { say: "The total of 1 to 100, logged once: 5050", hint: "Start total at 0, add i every round, log after the loop.", test: (d, c, logs) => logs.filter(l => l.trim() === "5050").length === 1 },
+    { say: "A while loop counting down 3, 2, 1, then \"Go!\"", hint: "let n = 3; while (n > 0) { console.log(n); n--; } then log \"Go!\".", test: (d, c, logs) => { if (!/\bwhile\s*\(/.test(c)) return false; const i = logs.lastIndexOf("Go!"); return i >= 3 && logs[i - 3] === "3" && logs[i - 2] === "2" && logs[i - 1] === "1"; } },
+  ],
+  objs: [
+    { say: "addTax is an arrow function: addTax(100) gives 110", hint: "const addTax = (n) => n * 1.1;", test: (d, c) => /addTax\s*=\s*\(?\s*\w*\s*\)?\s*=>/.test(c) && Math.abs(ev(d, "addTax(100)") - 110) < 1e-9 },
+    { say: "for…in logs \"tea: 20\", \"coffee: 35\" and \"juice: 50\"", hint: "for (let item in prices) { console.log(item + \": \" + prices[item]); }", test: (d, c, logs) => /for\s*\(\s*(let|const|var)\s+\w+\s+in\s+/.test(c) && ["tea: 20", "coffee: 35", "juice: 50"].every(s => has(logs, s)) },
+    { say: "for…of logs the total of the marks: 245", hint: "let total = 0; for (let m of [70, 85, 90]) { total += m; }", test: (d, c, logs) => /for\s*\(\s*(let|const|var)\s+\w+\s+of\s+/.test(c) && has(logs, "245") },
+    { say: "pet.speak() uses this.name", hint: "speak: function () { return this.name + \" says hi\"; }", test: (d, c) => /this\.name/.test(c) && ev(d, "(() => { const p = Object.assign({}, pet, { name: 'Zed' }); return p.speak(); })()") === "Zed says hi" },
+    { say: "Logs pet.speak()", hint: "console.log(pet.speak());", test: (d, c, logs) => { const v = ev(d, "pet.speak()"); return !!v && has(logs, v); } },
+  ],
+  strs: [
+    { say: "Logs \"ASHA MENON\"", hint: "full.trim().toUpperCase()", test: (d, c, logs) => has(logs, "ASHA MENON") && logs.includes("ASHA MENON") },
+    { say: "Logs \"asha\"", hint: "full.trim().split(\" \")[0]", test: (d, c, logs) => logs.includes("asha") },
+    { say: "Logs true for includes(\"men\")", hint: "console.log(full.includes(\"men\"));", test: (d, c, logs) => /includes\(/.test(c) && has(logs, "true") },
+    { say: "Logs \"0042\"", hint: "String(42).padStart(4, \"0\")", test: (d, c, logs) => /padStart/.test(c) && logs.includes("0042") },
+    { say: "Logs \"Welcome, asha!\" from a template literal", hint: "console.log(`Welcome, ${first}!`);", test: (d, c, logs) => /`[^`]*\$\{[^}]+\}[^`]*`/.test(c) && logs.includes("Welcome, asha!") },
+  ],
+};
+</script>
+<script src="../assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/guide.js"></script>
+<script src="../assets/live.js"></script>
+</body>
+</html>

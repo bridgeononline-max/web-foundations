@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Layout: Flexbox and Grid · Web Foundations</title>
+<meta name="description" content="Lesson 4 of Web Foundations: display, Flexbox, pseudo-classes, combinators, specificity, Grid, transitions, animations and media queries.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+<style>
+  .fx { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 16px; align-items: start; }
+  @media (max-width: 760px) { .fx { grid-template-columns: 1fr; } }
+  .fx-row { margin-bottom: 8px; }
+  .fx-row .k { font: 600 0.85rem var(--mono); display: block; margin-bottom: 3px; }
+  .fx-row .opts { display: flex; flex-wrap: wrap; gap: 4px; }
+  .fx-row button { padding: 2px 8px; font: 0.8rem var(--mono); }
+  .fx-row button[aria-pressed="true"] { background: var(--hl-yellow); color: var(--on-hl); }
+  .fx-box { display: flex; height: 190px; border: 2px dashed var(--pencil); border-radius: var(--radius, 8px); padding: 6px; gap: 6px; background: var(--card); transition: all .3s; }
+  .fx-box div { background: var(--note-blue); border: 2px solid var(--ink); color: var(--ink); font: 600 1rem var(--mono); padding: 8px 14px; border-radius: 6px; }
+  .fx-box div:nth-child(2) { background: var(--note-pink); padding: 18px 14px; }
+  .fx-box div:nth-child(3) { background: var(--note-green); }
+  .fx-css { font: 0.88rem/1.5 var(--mono); background: var(--code-bg); color: var(--code-ink); padding: 8px 12px; border-radius: var(--radius, 8px); margin-top: 8px; white-space: pre; overflow-x: auto; }
+</style>
+</head>
+<body data-pen="orange">
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="../">← Web Foundations</a>
+    <span class="where">Lesson 4 of 8</span>
+  </header>
+
+  <main data-paged>
+    <div class="paged-head">
+      <h1>Layout: Flexbox and Grid</h1>
+      <div class="progress" aria-label="Lesson parts"></div>
+    </div>
+
+    <!-- 1 -->
+    <section class="part" data-title="The display property">
+      <h2>The display property</h2>
+      <p class="say">You've met block elements (a new line, full width) and inline ones (inside a line, only as wide as their words). The <code>display</code> property switches any element between them:</p>
+      <p class="say"><code>block</code> · <code>inline</code> · <code>inline-block</code>: sits in a line like inline, but takes a width, height and padding like a block · <code>none</code>: hidden, and its space is gone.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>inline</code> to <code>inline-block</code> and watch the width work. Then try <code>none</code>.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <style>
+            span {
+              display: inline;
+              width: 90px;
+              padding: 10px;
+              background-color: gold;
+              border: 2px solid black;
+            }
+          </style>
+          <p>Some text <span>A</span> <span>B</span> <span>C</span> more text.</p>
+        </textarea></div>
+      </div>
+      <p class="hook">For real layouts there's a much stronger display value: <code>flex</code>.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="part" data-title="Flexbox: a row of boxes">
+      <h2>Flexbox: a row of boxes</h2>
+      <p class="say">Give a box <code>display: flex</code> and it becomes a <mark>flex container</mark>: the elements directly inside it (its <mark>items</mark>) line up in a row, side by side, even if they are blocks.</p>
+      <p class="say"><code>flex-direction</code> sets the line: <code>row</code> (left to right, the default) or <code>column</code> (top to bottom).
+        <button class="doubt" data-peek-from="dFlexItems" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: delete <code>display: flex;</code> and see the blocks stack. Put it back, then add <code>flex-direction: column;</code>.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <style>
+            .row {
+              display: flex;
+              border: 2px dashed gray;
+            }
+            .row div { background-color: lightblue; border: 2px solid navy; padding: 10px; }
+          </style>
+          <div class="row">
+            <div>One</div>
+            <div>Two</div>
+            <div>Three</div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Next: where the items sit along the line, and across it.</p>
+      <div hidden id="dFlexItems"><b>Do the items inside the items line up too?</b><br>No. Only the direct children of the flex container become flex items. To line up deeper boxes, make their parent a flex container too.</div>
+    </section>
+
+    <!-- 3 -->
+    <section class="part" data-title="justify-content and align-items">
+      <h2>justify-content and align-items</h2>
+      <p class="say"><code>justify-content</code> places the items <b>along</b> the line: at the start, centred, at the end, or with the spare space shared between them.</p>
+      <p class="say"><code>align-items</code> places them <b>across</b> the line. In a row, that means up and down. <code>stretch</code> (the default) makes them all as tall as the container.</p>
+      <p class="say"><code>gap</code> puts space between the items.</p>
+      <div class="activity">
+        <div class="do">Try it: press the options. Find the setting that puts all three boxes in the exact middle.</div>
+        <div class="fx" id="fx">
+          <div id="fxCtl"></div>
+          <div><div class="fx-box" id="fxBox"><div>1</div><div>2</div><div>3</div></div><div class="fx-css" id="fxCss"></div></div>
+        </div>
+      </div>
+      <p class="hook">What if there are too many items for one row?</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="part" data-title="Wrapping and growing">
+      <h2>Wrapping and growing</h2>
+      <p class="say">By default, flex items squeeze onto one line. <code>flex-wrap: wrap</code> lets them flow onto new lines instead, like words in a paragraph.</p>
+      <p class="say"><code>flex: 1</code> on an item lets it grow to fill the spare space. If two items have <code>flex: 1</code> and one has <code>flex: 2</code>, the spare space is shared 1 : 1 : 2.</p>
+      <div class="activity">
+        <div class="do">Try it: give the search box <code>flex: 1;</code> so it fills the bar. Then make the window narrow… or add 4 more buttons and see them wrap.</div>
+        <div class="live" data-h="160"><textarea aria-label="Your HTML">
+          <style>
+            .bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; background-color: #eee; }
+            .search { padding: 6px; }
+            button { padding: 6px 12px; }
+          </style>
+          <div class="bar">
+            <input class="search" placeholder="Search…">
+            <button>Go</button>
+            <button>Help</button>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Before building a menu, a way to style links when the mouse is over them.</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="part" data-title="Pseudo-classes">
+      <h2>Pseudo-classes</h2>
+      <p class="say">A <mark>pseudo-class</mark> picks elements by their <b>state</b> or <b>position</b>. It's written after a colon:</p>
+      <p class="say"><code>a:hover</code> a link while the mouse is over it · <code>input:focus</code> the box you're typing in · <code>li:first-child</code> the first item · <code>li:last-child</code> the last · <code>li:nth-child(odd)</code> the 1st, 3rd, 5th…
+        <button class="doubt" data-peek-from="dNth" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: hover over the links. Then change <code>odd</code> to <code>even</code>.</div>
+        <div class="live" data-h="250"><textarea aria-label="Your HTML">
+          <style>
+            a { color: navy; }
+            a:hover { color: tomato; background-color: lightyellow; }
+            li:nth-child(odd) { background-color: #eef; }
+            li:first-child { font-weight: bold; }
+            input:focus { outline: 3px solid gold; }
+          </style>
+          <p><a href="#">Hover me</a> · <a href="#">Me too</a></p>
+          <ul>
+            <li>First</li><li>Second</li><li>Third</li><li>Fourth</li><li>Fifth</li>
+          </ul>
+          <input placeholder="Click in here">
+        </textarea></div>
+      </div>
+      <p class="hook">A close cousin styles a <b>part</b> of an element, or adds to it.</p>
+      <div hidden id="dNth"><b>What else goes inside nth-child()?</b><br>A number, like <code>nth-child(3)</code> for the third. Or a pattern: <code>nth-child(3n)</code> picks every third one: the 3rd, 6th, 9th…</div>
+    </section>
+
+    <!-- 6 -->
+    <section class="part" data-title="Pseudo-elements">
+      <h2>Pseudo-elements</h2>
+      <p class="say">A <mark>pseudo-element</mark> styles a part of an element as if it were its own element. It's written after two colons:</p>
+      <p class="say"><code>p::first-letter</code> the first letter · <code>p::first-line</code> the first line · <code>input::placeholder</code> the hint text in a box · <code>::before</code> and <code>::after</code> add content before or after an element, set with <code>content: "…"</code>.</p>
+      <div class="activity">
+        <div class="do">Try it: change the <code>content</code> of <code>.tip::before</code> to <code>"⭐ "</code>. Add an <code>::after</code> rule to <code>.tip</code> too.</div>
+        <div class="live" data-h="220"><textarea aria-label="Your HTML">
+          <style>
+            p::first-letter { font-size: 2em; color: tomato; }
+            .tip::before { content: "💡 "; }
+            input::placeholder { color: green; font-style: italic; }
+          </style>
+          <p>Once upon a time, a student learned CSS.</p>
+          <p class="tip">Use ::before for small icons.</p>
+          <input placeholder="Type here">
+        </textarea></div>
+      </div>
+      <p class="hook">Now you can build a proper navigation bar.</p>
+    </section>
+
+    <!-- 7 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 4.1">
+      <h2>✏️ Practice 4.1</h2>
+      <p class="say">Remember:<br><b class="eqbox">display: flex;</b> puts the items in a row · <code>justify-content</code> along · <code>align-items</code> across · <code>gap</code><br><code>a:hover</code> styles a link while the mouse is over it</p>
+      <div class="activity">
+        <div class="do">Turn the list into a navigation bar. Change only the CSS.</div>
+        <div class="live" data-h="190" data-check="nav" data-answer="navAnswer"><textarea aria-label="Your HTML">
+          <style>
+            ul { background-color: #333; padding: 0; margin: 0; list-style: none; }
+            a { color: white; text-decoration: none; padding: 14px 16px; display: block; }
+          </style>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="navAnswer">
+        <style>
+          ul { background-color: #333; padding: 0; margin: 0; list-style: none; display: flex; }
+          a { color: white; text-decoration: none; padding: 14px 16px; display: block; }
+          a:hover { background-color: #111; }
+          li:last-child { margin-left: auto; }
+        </style>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">News</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </script>
+      <p class="hook">Next: picking elements by how they sit inside each other.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="part" data-title="Combinators">
+      <h2>Combinators</h2>
+      <p class="say">A <mark>combinator</mark> joins two selectors to pick elements by where they sit:</p>
+      <p class="say"><code>nav a</code> (a space): every <code>a</code> anywhere inside a <code>nav</code>.<br><code>ul &gt; li</code>: only <code>li</code> directly inside a <code>ul</code>, not deeper.<br><code>h2 + p</code>: the one <code>p</code> right after an <code>h2</code>.<br><code>h2 ~ p</code>: every <code>p</code> after an <code>h2</code> with the same parent.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>h2 + p</code> to <code>h2 ~ p</code>. Then change <code>.menu &gt; li</code> to <code>.menu li</code>.</div>
+        <div class="live" data-h="270"><textarea aria-label="Your HTML">
+          <style>
+            h2 + p { color: crimson; }
+            .menu > li { border-left: 4px solid teal; }
+          </style>
+          <h2>A heading</h2>
+          <p>Right after the heading.</p>
+          <p>Further down.</p>
+          <ul class="menu">
+            <li>Top level
+              <ul><li>One level deeper</li></ul>
+            </li>
+          </ul>
+        </textarea></div>
+      </div>
+      <p class="hook">When two rules disagree about one element, which wins?</p>
+    </section>
+
+    <!-- 9 -->
+    <section class="part" data-title="Specificity and !important">
+      <h2>Specificity and !important</h2>
+      <p class="say">When rules clash, the more specific selector wins. Count each selector as three numbers: <b>ids</b> – <b>classes</b> (and pseudo-classes, attributes) – <b>elements</b>. Compare from the left.</p>
+      <p class="say"><code>p</code> scores 0-0-1. <code>.intro</code> scores 0-1-0, so it beats <code>p</code>. <code>#first</code> scores 1-0-0 and beats both. If the scores are equal, the later rule wins. An inline <code>style</code> beats them all.</p>
+      <p class="say"><code>!important</code> after a value beats everything. Use it rarely: it makes CSS hard to fix later.</p>
+      <div class="activity">
+        <div class="do">Try it: the paragraph is blue because <code>#first</code> scores highest. Delete the id rule: who wins now? Then add <code>!important</code> to the <code>p</code> rule.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <style>
+            #first { color: blue; }      /* 1-0-0 */
+            .intro { color: green; }     /* 0-1-0 */
+            p { color: red; }            /* 0-0-1 */
+          </style>
+          <p id="first" class="intro">What colour am I?</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Four small properties come up again and again.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="part" data-title="Overflow, z-index, opacity, max-width">
+      <h2>Overflow, z-index, opacity, max-width</h2>
+      <p class="say"><code>overflow</code>: what happens when content is too big for its box. <code>visible</code> spills out (the default), <code>hidden</code> cuts it off, <code>auto</code> adds a scroll bar when needed.</p>
+      <p class="say"><code>z-index</code>: which positioned box is on top when they overlap. Bigger numbers come to the front.</p>
+      <p class="say"><code>opacity</code>: from 0 (invisible) to 1 (solid). <code>max-width</code>: a box may shrink, but never grow past this width. <code>img { max-width: 100%; }</code> stops pictures from spilling out of their box.</p>
+      <div class="activity">
+        <div class="do">Try it: set <code>overflow: auto;</code> on <code>.small</code>. Then give <code>.b</code> <code>z-index: 2;</code> to bring it to the front.</div>
+        <div class="live" data-h="250"><textarea aria-label="Your HTML">
+          <style>
+            .small { width: 160px; height: 60px; border: 2px solid gray; overflow: visible; }
+            .a, .b { position: absolute; width: 90px; height: 60px; top: 130px; }
+            .a { left: 20px; background-color: tomato; z-index: 1; }
+            .b { left: 70px; background-color: royalblue; opacity: 0.8; }
+          </style>
+          <div class="small">This text is much too long to fit inside this little box, so it has to go somewhere.</div>
+          <div class="a"></div>
+          <div class="b"></div>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: fix a broken card.</p>
+    </section>
+
+    <!-- 11 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 4.2">
+      <h2>✏️ Practice 4.2</h2>
+      <p class="say">Remember:<br><code>overflow: auto</code> scrolls · <code>max-width: 100%</code> keeps a picture inside its box · a bigger <code>z-index</code> is in front<br>Specificity: ids – classes – elements · <b class="eqbox">#x beats .x beats p</b></p>
+      <div class="activity">
+        <div class="do">This card is broken in three ways. Fix each one by changing or adding CSS.</div>
+        <div class="live" data-h="270" data-check="fix" data-answer="fixAnswer"><textarea aria-label="Your HTML">
+          <style>
+            .card { width: 200px; border: 2px solid teal; padding: 8px; position: relative; }
+            .card img { width: 400px; }
+            .note { height: 40px; }
+            .ribbon { position: absolute; top: 4px; left: 4px; background: gold; padding: 2px 6px; z-index: 1; }
+            .card img { position: relative; z-index: 2; }
+          </style>
+          <div class="card">
+            <span class="ribbon">TOP PICK</span>
+            <img src="notebook.svg" alt="A notebook">
+            <p class="note">A long description that does not fit in forty pixels of height, so it spills over the bottom of the card.</p>
+          </div>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="fixAnswer">
+        <style>
+          .card { width: 200px; border: 2px solid teal; padding: 8px; position: relative; }
+          .card img { max-width: 100%; }
+          .note { height: 40px; overflow: auto; }
+          .ribbon { position: absolute; top: 4px; left: 4px; background: gold; padding: 2px 6px; z-index: 3; }
+          .card img { position: relative; z-index: 2; }
+        </style>
+        <div class="card">
+          <span class="ribbon">TOP PICK</span>
+          <img src="notebook.svg" alt="A notebook">
+          <p class="note">A long description that does not fit in forty pixels of height, so it spills over the bottom of the card.</p>
+        </div>
+      </script>
+      <p class="hook">Flexbox lines things up in one direction. Grid does rows and columns at once.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="part" data-title="Grid: rows and columns">
+      <h2>Grid: rows and columns</h2>
+      <p class="say"><code>display: grid</code> makes a <mark>grid container</mark>. <code>grid-template-columns</code> sets how many columns there are and how wide each is; the items fill the cells in order, row by row.</p>
+      <p class="say">The unit <code>fr</code> means "a share of the free space". <code>1fr 1fr 1fr</code> is three equal columns. <code>2fr 1fr</code> makes the first column twice as wide as the second. <code>repeat(4, 1fr)</code> is four equal columns.</p>
+      <div class="activity">
+        <div class="do">Try it: change the columns to <code>2fr 1fr</code>, then to <code>repeat(4, 1fr)</code>. Change <code>gap</code> too.</div>
+        <div class="live" data-h="220"><textarea aria-label="Your HTML">
+          <style>
+            .grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              gap: 10px;
+            }
+            .grid div { background-color: lightgreen; padding: 14px; text-align: center; }
+          </style>
+          <div class="grid">
+            <div>1</div><div>2</div><div>3</div>
+            <div>4</div><div>5</div><div>6</div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">An item can also take up more than one cell.</p>
+    </section>
+
+    <!-- 13 -->
+    <section class="part" data-title="Grid: spanning cells">
+      <h2>Grid: spanning cells</h2>
+      <p class="say"><code>grid-column: span 2</code> makes an item two columns wide. <code>grid-row: span 2</code> makes it two rows tall. The other items flow around it.</p>
+      <p class="say">This is how most page layouts work: a header across the top, a sidebar, the main part, a footer across the bottom.</p>
+      <div class="activity">
+        <div class="do">Try it: make the footer span both columns, like the header. Then make the sidebar the wide column with <code>grid-template-columns: 2fr 1fr</code>.</div>
+        <div class="live" data-h="250"><textarea aria-label="Your HTML">
+          <style>
+            .page { display: grid; grid-template-columns: 1fr 3fr; gap: 8px; }
+            .page > * { padding: 12px; background-color: #eef; margin: 0; }
+            header { grid-column: span 2; background-color: gold; }
+            aside { background-color: #fde; }
+          </style>
+          <div class="page">
+            <header>Header</header>
+            <aside>Sidebar</aside>
+            <main>Main content</main>
+            <footer>Footer</footer>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Next, make things move.</p>
+    </section>
+
+    <!-- 14 -->
+    <section class="part" data-title="Transform and transition">
+      <h2>Transform and transition</h2>
+      <p class="say"><code>transform</code> moves, turns or resizes an element without touching the layout: <code>scale(1.2)</code> makes it 20% bigger, <code>rotate(10deg)</code> turns it, <code>translateY(-5px)</code> lifts it 5px.</p>
+      <p class="say"><code>transition</code> makes a change happen smoothly instead of at once. <code>transition: transform 0.3s;</code> means "when transform changes, take 0.3 seconds".</p>
+      <div class="activity">
+        <div class="do">Try it: hover over the button. Change <code>0.3s</code> to <code>2s</code>, then <code>scale(1.2)</code> to <code>rotate(15deg)</code>.</div>
+        <div class="live" data-h="160"><textarea aria-label="Your HTML">
+          <style>
+            button {
+              font-size: 20px; padding: 10px 20px; margin: 30px;
+              background-color: teal; color: white; border: none; border-radius: 8px;
+              transition: transform 0.3s, background-color 0.3s;
+            }
+            button:hover { transform: scale(1.2); background-color: tomato; }
+          </style>
+          <button>Hover me</button>
+        </textarea></div>
+      </div>
+      <p class="hook">A transition needs a change, like a hover. An animation runs by itself.</p>
+    </section>
+
+    <!-- 15 -->
+    <section class="part" data-title="Animation">
+      <h2>Animation</h2>
+      <p class="say">An animation has two parts. <code>@keyframes</code> names it and says what happens from start (<code>from</code>, or 0%) to end (<code>to</code>, or 100%). Then <code>animation</code> plays it on an element: which one, how long, and how many times.</p>
+      <p class="say"><code>animation: bounce 1s infinite alternate;</code> plays "bounce" for 1 second, forever, going forwards then backwards.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>1s</code> to <code>0.3s</code>. Add a <code>50%</code> step to the keyframes that turns the ball gold.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <style>
+            @keyframes bounce {
+              from { transform: translateY(0); }
+              to   { transform: translateY(100px); }
+            }
+            .ball {
+              width: 50px; height: 50px; margin: 10px 40px;
+              background-color: tomato; border-radius: 50%;
+              animation: bounce 1s infinite alternate;
+            }
+          </style>
+          <div class="ball"></div>
+        </textarea></div>
+      </div>
+      <p class="hook">Last: make the page fit any screen, from a phone to a laptop.</p>
+    </section>
+
+    <!-- 16 -->
+    <section class="part" data-title="Media queries">
+      <h2>Media queries</h2>
+      <p class="say">A <mark>media query</mark> applies rules only when the screen matches a condition. <code>@media (max-width: 600px) { … }</code> means "only when the screen is 600px wide or less", which is roughly a phone.</p>
+      <p class="say">The usual pattern: three columns on a laptop, one column on a phone.
+        <button class="doubt" data-peek-from="dContainer" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: drag the "Screen width" slider below 600px and watch the columns change. Then change <code>600px</code> to <code>450px</code>.</div>
+        <div class="live" data-h="200" data-resize="1"><textarea aria-label="Your HTML">
+          <style>
+            .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .cards div { background-color: lightblue; padding: 20px; text-align: center; }
+
+            @media (max-width: 600px) {
+              .cards { grid-template-columns: 1fr; }
+              h2 { color: tomato; }
+            }
+          </style>
+          <h2>Responsive cards</h2>
+          <div class="cards">
+            <div>A</div><div>B</div><div>C</div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: a photo gallery that fits every screen.</p>
+      <div hidden id="dContainer"><b>What is a container query?</b><br>The same idea, but it asks how wide the <b>box</b> is, not the screen: give the box <code>container-type: inline-size;</code>, then write <code>@container (max-width: 400px) { … }</code>. A card can then change its layout wherever it's placed.</div>
+    </section>
+
+    <!-- 17 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 4.3">
+      <h2>✏️ Practice 4.3</h2>
+      <p class="say">Remember:<br><b class="eqbox">display: grid; grid-template-columns: repeat(3, 1fr);</b> · <code>gap</code> · <code>grid-column: span 2</code><br><b class="eqbox">@media (max-width: 600px) { … }</b> rules only for narrow screens</p>
+      <div class="activity">
+        <div class="do">Make a gallery: 3 columns, the first photo 2 columns wide, and 1 column on narrow screens. Use the slider to test.</div>
+        <div class="live" data-h="230" data-resize="1" data-check="gallery" data-answer="galleryAnswer"><textarea aria-label="Your HTML">
+          <style>
+            .gallery img { width: 100%; display: block; border-radius: 6px; }
+          </style>
+          <div class="gallery">
+            <img class="big" src="notebook.svg" alt="Photo 1">
+            <img src="notebook.svg" alt="Photo 2">
+            <img src="notebook.svg" alt="Photo 3">
+            <img src="notebook.svg" alt="Photo 4">
+            <img src="notebook.svg" alt="Photo 5">
+          </div>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="galleryAnswer">
+        <style>
+          .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+          .gallery img { width: 100%; display: block; border-radius: 6px; }
+          .gallery .big { grid-column: span 2; }
+
+          @media (max-width: 600px) {
+            .gallery { grid-template-columns: 1fr; }
+            .gallery .big { grid-column: span 1; }
+          }
+        </style>
+        <div class="gallery">
+          <img class="big" src="notebook.svg" alt="Photo 1">
+          <img src="notebook.svg" alt="Photo 2">
+          <img src="notebook.svg" alt="Photo 3">
+          <img src="notebook.svg" alt="Photo 4">
+          <img src="notebook.svg" alt="Photo 5">
+        </div>
+      </script>
+      <p class="hook">Ready? A short test on this lesson.</p>
+    </section>
+
+    <!-- 18 -->
+    <section class="part" data-title="Lesson test">
+      <h2>Lesson 4 test</h2>
+      <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
+      <div class="test" data-test="4">
+        <div class="quiz" data-page="lesson4.html#1" data-topic="The display property" data-right="Right. Inline elements ignore width; inline-block takes it while staying in the line.">
+          <div class="q"><small>1. Predict</small>A <code>&lt;span&gt;</code> has <code>width: 200px</code> but stays narrow. Which display makes the width work while it stays in the line?</div>
+          <div class="options">
+            <button data-right>inline-block</button>
+            <button data-why="block takes the width, but starts a new line.">block</button>
+            <button data-why="none hides it completely.">none</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson4.html#3" data-topic="justify-content and align-items" data-right="Right. justify-content centres along the row; align-items centres across it.">
+          <div class="q"><small>2. Apply</small>In a row flex container, how do you put the items in the exact middle, left-right and up-down?</div>
+          <div class="options">
+            <button data-right>justify-content: center; align-items: center;</button>
+            <button data-why="text-align centres text inside a box, not the flex items themselves.">text-align: center;</button>
+            <button data-why="That centres along the line only; the items still sit at the top.">justify-content: center; only</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson4.html#4" data-topic="Wrapping and growing" data-right="Right. Spare space 300px shared 1 : 2 gives 100px and 200px.">
+          <div class="q"><small>3. Work it out</small>A row has 300px of spare space. Item A has <code>flex: 1</code>, item B <code>flex: 2</code>. How much extra does B get?</div>
+          <div class="options">
+            <button data-right>200px</button>
+            <button data-why="That would be an equal split. B's share is twice A's.">150px</button>
+            <button data-why="B gets 2 of the 3 shares, not all of it.">300px</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson4.html#9" data-topic="Specificity and !important" data-right="Right. #main p scores 1-0-1, which beats .text at 0-1-0.">
+          <div class="q"><small>4. Work it out</small><code>#main p { color: blue; }</code> and <code>.text { color: red; }</code> both match a paragraph. Which colour wins?</div>
+          <div class="options">
+            <button data-right>Blue</button>
+            <button data-why="Order only matters when the scores tie. #main p has an id: 1-0-1 against 0-1-0.">Red, because it comes later</button>
+            <button data-why="Clashing values don't mix; one rule wins.">Purple, a mix</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson4.html#8" data-topic="Combinators" data-right="Right. &gt; means directly inside, so the nested li is skipped.">
+          <div class="q"><small>5. Predict</small><code>ul &gt; li { color: red; }</code>. An <code>li</code> sits in a <code>ul</code> that is inside another <code>li</code>. Is the inner <code>li</code> red?</div>
+          <div class="options">
+            <button data-right>Yes: it is directly inside its own ul</button>
+            <button data-why="&gt; checks the li's own parent. Its parent is a ul, so it matches.">No: it's nested too deep</button>
+            <button data-why="Combinators work on any elements.">No: &gt; only works on divs</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson4.html#12" data-topic="Grid: rows and columns" data-right="Right. 1fr + 1fr + 2fr = 4 shares; 400 ÷ 4 = 100 per share, so 200px.">
+          <div class="q"><small>6. Work it out</small><code>grid-template-columns: 1fr 1fr 2fr;</code> in a 400px-wide grid with no gap. How wide is the third column?</div>
+          <div class="options">
+            <button data-right>200px</button>
+            <button data-why="fr shares aren't equal here: the third column has 2 of the 4 shares.">133px</button>
+            <button data-why="2fr means two shares out of four, not 2 pixels or 2 columns.">100px</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson4.html#16" data-topic="Media queries" data-right="Right. max-width: 600px means 600px or narrower.">
+          <div class="q"><small>7. Predict</small>Rules inside <code>@media (max-width: 600px)</code>. When do they apply?</div>
+          <div class="options">
+            <button data-right>When the screen is 600px wide or less</button>
+            <button data-why="That's min-width: rules for screens at least that wide.">When the screen is wider than 600px</button>
+            <button data-why="The condition is about the screen, not the page's height.">When the page is 600px tall</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19 -->
+    <section class="part" data-title="What's next?">
+      <h2>What's next?</h2>
+      <p class="say">You can now lay out whole pages with Flexbox and Grid, and make them fit any screen.</p>
+      <p class="say">✏️ <b>Clone project:</b> pick a simple site you like and rebuild its home page with HTML and CSS only. It's the best way to see how much you already know. For quick drills, try a few <span data-peek="cssbattle.dev: copy a target picture with as little CSS as you can.">CSS Battle</span> targets too.</p>
+      <div class="open-question">
+        <div>This leaves a question</div>
+        <div class="big">The page looks right. How do we make it do things?</div>
+        <div><a href="lesson5.html">Lesson 5 answers it.</a></div>
+      </div>
+      <p><button class="done-toggle" data-done="4">Mark lesson as done</button></p>
+    </section>
+  </main>
+</div>
+
+<nav class="pagebar" aria-label="Move between parts">
+  <div class="inner">
+    <button data-page-back>← Previous</button>
+    <span data-page-label></span>
+    <button class="primary" data-page-next>Next →</button>
+  </div>
+</nav>
+
+<script>
+const css = (d, el) => (typeof el === "string" ? (el = d.querySelector(el)) : el) ? d.defaultView.getComputedStyle(el) : null;
+window.LIVE_CHECKS = {
+  nav: [
+    { say: "The links sit side by side in one bar", hint: "Add display: flex; to the ul rule.", test: d => css(d, "ul").display === "flex" },
+    { say: "A link changes colour when the mouse is over it", hint: "a:hover { background-color: #111; }", test: (d, code) => /a\s*:hover\s*\{[^}]*(background|color)/i.test(code) },
+    { say: "\"About\" is pushed to the far right", hint: "li:last-child { margin-left: auto; } or justify-content on the ul.", test: d => { const li = d.querySelectorAll("li"); if (li.length < 4) return false; const ul = d.querySelector("ul").getBoundingClientRect(), last = li[3].getBoundingClientRect(), third = li[2].getBoundingClientRect(); return Math.abs(last.right - ul.right) < 3 && last.left - third.right > 20; } },
+  ],
+  fix: [
+    { say: "The picture fits inside the card", hint: "Change width: 400px to max-width: 100%;", test: d => { const c = d.querySelector(".card"), i = d.querySelector(".card img"); return !!c && !!i && i.complete && i.naturalWidth > 0 && i.getBoundingClientRect().right <= c.getBoundingClientRect().right + 1; } },
+    { say: "The long text scrolls inside its 40px instead of spilling out", hint: "Add overflow: auto; to .note.", test: d => ["auto", "scroll", "hidden"].includes(css(d, ".note").overflowY) && /overflow\s*:\s*(auto|scroll)/i.test([...d.querySelectorAll("style")].map(s => s.textContent).join("")) },
+    { say: "The \"TOP PICK\" ribbon is in front of the picture", hint: "The picture has z-index: 2. Give the ribbon a bigger one.", test: d => { const r = d.querySelector(".ribbon"); if (!r) return false; const b = r.getBoundingClientRect(); const top = d.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return !!top && r.contains(top); } },
+  ],
+  gallery: [
+    { say: "A grid with three columns (on a wide screen)", hint: ".gallery { display: grid; grid-template-columns: repeat(3, 1fr); }", test: (d, code) => /\.gallery\s*\{[^}]*display\s*:\s*grid/i.test(code) && /grid-template-columns\s*:\s*(repeat\(\s*3\s*,|\S+\s+\S+\s+\S+\s*;)/i.test(code) },
+    { say: "A gap between the photos", hint: "gap: 8px;", test: d => parseFloat(css(d, ".gallery").columnGap) > 0 || parseFloat(css(d, ".gallery").rowGap) > 0 },
+    { say: "The first photo spans two columns", hint: ".gallery .big { grid-column: span 2; }", test: (d, code) => /grid-column\s*:\s*span\s*2/i.test(code) },
+    { say: "A media query switches to one column on narrow screens", hint: "@media (max-width: 600px) { .gallery { grid-template-columns: 1fr; } }", test: (d, code) => /@media[^{]*max-width[^{]*\{[\s\S]*grid-template-columns\s*:\s*(1fr|repeat\(\s*1\s*,)/i.test(code) },
+  ],
+};
+
+// Flexbox playground
+(function () {
+  const ctl = document.getElementById("fxCtl"), box = document.getElementById("fxBox"), out = document.getElementById("fxCss");
+  if (!ctl) return;
+  const OPTS = {
+    "flex-direction": ["row", "column"],
+    "justify-content": ["flex-start", "center", "flex-end", "space-between", "space-around"],
+    "align-items": ["stretch", "flex-start", "center", "flex-end"],
+    "gap": ["0px", "6px", "20px"],
+  };
+  const start = { "flex-direction": "row", "justify-content": "flex-start", "align-items": "stretch", "gap": "6px" };
+  const v = { ...start };
+  ctl.innerHTML = Object.entries(OPTS).map(([k, vals]) => `<div class="fx-row"><span class="k">${k}</span><div class="opts">${vals.map(x => `<button type="button" data-k="${k}" data-v="${x}">${x}</button>`).join("")}</div></div>`).join("");
+  function draw() {
+    Object.entries(v).forEach(([k, x]) => box.style.setProperty(k, x));
+    ctl.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", v[b.dataset.k] === b.dataset.v));
+    out.textContent = ".box {\n  display: flex;\n" + Object.entries(v).map(([k, x]) => `  ${k}: ${x};`).join("\n") + "\n}";
+  }
+  ctl.addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b) return; v[b.dataset.k] = b.dataset.v; draw(); });
+  const reset = () => { Object.assign(v, start); draw(); };
+  if (typeof addReset === "function") addReset(box, reset); else window.addEventListener("load", () => addReset(box, reset));
+  draw();
+})();
+</script>
+<script src="../assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/guide.js"></script>
+<script src="../assets/live.js"></script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap and your portfolio · Web Foundations</title>
+<meta name="description" content="Lesson 8 of Web Foundations: Bootstrap's ready-made classes and grid, then build a portfolio site with a contact form and put it online with GitHub Pages.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("notebook-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<link rel="stylesheet" href="https://mo-ri-ch.github.io/study-notebook-design/v1/style.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+<style>
+  .plan { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 6px 0 12px; }
+  .plan div { background: var(--note-yellow); color: var(--ink); border: 1.5px solid var(--ink); border-radius: 4px; padding: 8px 10px; font-size: 0.95rem; transform: rotate(-0.6deg); }
+  .plan div:nth-child(2n) { background: var(--note-blue); transform: rotate(0.8deg); }
+  .plan div:nth-child(3n) { background: var(--note-green); }
+  .plan b { display: block; font-family: var(--head); font-size: 1.15rem; }
+  .final li { margin-bottom: 6px; }
+</style>
+</head>
+<body data-pen="orange">
+<div class="wrap">
+  <header class="topbar">
+    <a class="home" href="../">← Web Foundations</a>
+    <span class="where">Lesson 8 of 8</span>
+  </header>
+
+  <main data-paged>
+    <div class="paged-head">
+      <h1>Bootstrap and your portfolio</h1>
+      <div class="progress" aria-label="Lesson parts"></div>
+    </div>
+
+    <!-- 1 -->
+    <section class="part" data-title="What Bootstrap is">
+      <h2>What Bootstrap is</h2>
+      <p class="say"><mark>Bootstrap</mark> is a free CSS file full of ready-made classes. Instead of writing CSS, you add class names: <code>class="btn btn-primary"</code> makes a styled blue button.</p>
+      <p class="say">Add it with one <code>&lt;link&gt;</code> in the head, pointing to a copy online (a <span data-peek="Content Delivery Network: servers around the world that send common files quickly.">CDN</span>). Every editor in this lesson starts with that line.
+        <button class="doubt" data-peek-from="dBsVersion" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: delete the <code>&lt;link&gt;</code> line and see the plain page. Put it back. Then change <code>btn-primary</code> to <code>btn-success</code>.</div>
+        <div class="live" data-h="190"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <div class="container py-3">
+            <h1>Hello, Bootstrap</h1>
+            <p class="lead">Styled with class names only.</p>
+            <button class="btn btn-primary">A button</button>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Let's tour the most useful classes, starting with colour.</p>
+      <div hidden id="dBsVersion"><b>Which version is this?</b><br>Bootstrap 5.3. The number in the link chooses the version. The class names here are the same in all of Bootstrap 5.</div>
+    </section>
+
+    <!-- 2 -->
+    <section class="part" data-title="Colours and backgrounds">
+      <h2>Colours and backgrounds</h2>
+      <p class="say">Bootstrap names its colours by job: <code>primary</code> (blue), <code>secondary</code> (grey), <code>success</code> (green), <code>danger</code> (red), <code>warning</code> (yellow), <code>info</code>, <code>light</code> and <code>dark</code>.</p>
+      <p class="say"><code>text-danger</code> colours the text. <code>bg-success</code> colours the background. <code>text-white</code> makes text white, for dark backgrounds.</p>
+      <div class="activity">
+        <div class="do">Try it: make the last box <code>bg-warning</code>. Then make the first paragraph <code>text-success</code>.</div>
+        <div class="live" data-h="230"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <div class="container py-2">
+            <p class="text-primary">Primary text</p>
+            <p class="text-danger">Danger text</p>
+            <div class="bg-success text-white p-2 mb-2">Success background</div>
+            <div class="bg-dark text-white p-2 mb-2">Dark background</div>
+            <div class="bg-light p-2">Light background</div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Did you spot <code>p-2</code> and <code>mb-2</code>? Those are spacing classes.</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="part" data-title="Spacing">
+      <h2>Spacing</h2>
+      <p class="say">Spacing classes are short: <b>what</b>, <b>which side</b>, then a <b>size</b> from 0 to 5.</p>
+      <p class="say"><code>m</code> margin, <code>p</code> padding · then <code>t</code> top, <code>b</code> bottom, <code>s</code> start (left), <code>e</code> end (right), <code>x</code> left and right, <code>y</code> top and bottom, or nothing for all sides · then the size.</p>
+      <p class="say">So <code>mt-3</code> is margin-top size 3, and <code>px-4</code> is padding on the left and right, size 4. <code>mx-auto</code> centres a box that has a width.
+        <button class="doubt" data-peek-from="dSizes" aria-label="A doubt">🤔</button></p>
+      <div class="activity">
+        <div class="do">Try it: change the box's <code>p-1</code> to <code>p-5</code>. Then add <code>mt-4</code> to the second box.</div>
+        <div class="live" data-h="210"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <div class="container py-2">
+            <div class="bg-info p-1">p-1: a little padding</div>
+            <div class="bg-warning px-4 py-2">px-4 py-2</div>
+            <div class="bg-light border w-50 mx-auto mt-3 p-2">w-50 mx-auto: half width, centred</div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Next: borders, shadows and placing things.</p>
+      <div hidden id="dSizes"><b>How big is each size?</b><br>0 = none, 1 = a quarter of the text size, 2 = half, 3 = one text size (16px), 4 = one and a half, 5 = three. <code>w-50</code> means width 50%; there are also <code>w-25</code>, <code>w-75</code> and <code>w-100</code>.</div>
+    </section>
+
+    <!-- 4 -->
+    <section class="part" data-title="Borders, shadows and position">
+      <h2>Borders, shadows and position</h2>
+      <p class="say"><code>border</code> adds a thin border; <code>border-primary</code> colours it. <code>rounded</code> rounds the corners, <code>rounded-circle</code> makes a circle, and <code>shadow</code> adds a soft shadow.</p>
+      <p class="say">Position classes match CSS: <code>position-relative</code> on the parent, <code>position-absolute top-0 end-0</code> on the child puts it in the top-right corner.</p>
+      <div class="activity">
+        <div class="do">Try it: move the badge to the bottom-left with <code>bottom-0 start-0</code>. Then add <code>shadow</code> to the picture.</div>
+        <div class="live" data-h="230"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <div class="container py-3">
+            <div class="border border-primary rounded shadow p-3 position-relative" style="width: 240px;">
+              <img src="notebook.svg" alt="Notebook" class="rounded-circle border" width="80">
+              <p class="mt-2 mb-0">A card with a badge</p>
+              <span class="badge bg-danger position-absolute top-0 end-0 m-2">NEW</span>
+            </div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Next: text styles, and buttons.</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="part" data-title="Text and buttons">
+      <h2>Text and buttons</h2>
+      <p class="say">Text: <code>text-center</code> (also <code>text-start</code>, <code>text-end</code>) · <code>fw-bold</code> bold · <code>fst-italic</code> italic · <code>fs-1</code> (biggest) to <code>fs-6</code> (smallest) · <code>text-uppercase</code>.</p>
+      <p class="say">Buttons: <code>btn</code> plus a colour, like <code>btn btn-danger</code>. <code>btn-outline-primary</code> gives an outline only. <code>btn-lg</code> and <code>btn-sm</code> change the size. A link with these classes looks like a button too.</p>
+      <div class="activity">
+        <div class="do">Try it: make the heading <code>fs-1</code>. Then change the second button to <code>btn-outline-dark btn-lg</code>.</div>
+        <div class="live" data-h="210"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <div class="container py-3 text-center">
+            <p class="fs-3 fw-bold text-uppercase">Text styles</p>
+            <p class="fst-italic">Some italic words.</p>
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-outline-primary">Outline</button>
+            <a href="#" class="btn btn-success btn-sm">A link button</a>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Bootstrap does Flexbox with classes too.</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="part" data-title="Flex classes">
+      <h2>Flex classes</h2>
+      <p class="say"><code>d-flex</code> means <code>display: flex</code>. Then the same ideas as CSS, as classes: <code>justify-content-between</code>, <code>justify-content-center</code>, <code>align-items-center</code>, <code>flex-column</code>, and <code>gap-2</code> for space between items.</p>
+      <p class="say"><code>d-none</code> hides an element, like <code>display: none</code>.</p>
+      <div class="activity">
+        <div class="do">Try it: change <code>justify-content-between</code> to <code>justify-content-center</code>. Then add <code>gap-3</code> to the row of buttons.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <div class="container py-3">
+            <div class="d-flex justify-content-between align-items-center bg-light p-3 mb-3">
+              <span class="fw-bold">MySite</span>
+              <span>Home · About · Contact</span>
+            </div>
+            <div class="d-flex">
+              <button class="btn btn-primary">One</button>
+              <button class="btn btn-secondary">Two</button>
+              <button class="btn btn-success">Three</button>
+            </div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice with these classes.</p>
+    </section>
+
+    <!-- 7 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 8.1">
+      <h2>✏️ Practice 8.1</h2>
+      <p class="say">Remember:<br><code>bg-dark text-white</code> · spacing: <b class="eqbox">m/p + t/b/s/e/x/y + 0–5</b> · <code>border rounded shadow</code><br><code>text-center fw-bold</code> · <code>btn btn-primary</code> · <code>d-flex justify-content-center gap-2</code></p>
+      <div class="activity">
+        <div class="do">Style the card with Bootstrap classes only (no style tag, no style attribute).</div>
+        <div class="live" data-h="230" data-check="bs1" data-answer="bs1Answer"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <div class="container py-3">
+            <div class="card-box">
+              <img src="notebook.svg" alt="Asha" width="90">
+              <h3>Asha Menon</h3>
+              <p>Web developer in training</p>
+              <div>
+                <a href="#">GitHub</a>
+                <a href="#">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="bs1Answer">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+        <div class="container py-3">
+          <div class="card-box border rounded shadow p-4 text-center mx-auto w-50">
+            <img src="notebook.svg" alt="Asha" width="90" class="rounded-circle mb-2">
+            <h3 class="fw-bold">Asha Menon</h3>
+            <p class="text-secondary">Web developer in training</p>
+            <div class="d-flex justify-content-center gap-2">
+              <a href="#" class="btn btn-dark">GitHub</a>
+              <a href="#" class="btn btn-outline-primary">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </script>
+      <p class="hook">Next: Bootstrap's grid, for layouts that fit every screen.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="part" data-title="The grid: container, row, col">
+      <h2>The grid: container, row, col</h2>
+      <p class="say">Bootstrap's grid has three layers. A <code>container</code> centres the content and keeps it from getting too wide. Inside it, a <code>row</code> holds columns. Inside the row, each <code>col</code> is a column.</p>
+      <p class="say">Every row is 12 units wide. <code>col</code> on its own shares the width equally. <code>col-4</code> takes 4 of the 12 units: one third. <code>col-8</code> takes two thirds. In one row, the numbers should add up to 12.</p>
+      <div class="activity">
+        <div class="do">Try it: change the second row to <code>col-3</code> and <code>col-9</code>. Then add a third <code>col</code> to the first row.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+          <style> .col, [class*="col-"] { background: #dbeafe; border: 1px solid #93c5fd; padding: 10px; } </style>
+
+          <div class="container py-3">
+            <div class="row mb-2">
+              <div class="col">col</div>
+              <div class="col">col</div>
+            </div>
+            <div class="row">
+              <div class="col-4">col-4</div>
+              <div class="col-8">col-8</div>
+            </div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">The real power: different widths on different screens.</p>
+    </section>
+
+    <!-- 9 -->
+    <section class="part" data-title="Breakpoints">
+      <h2>Breakpoints</h2>
+      <p class="say">A <mark>breakpoint</mark> is a screen width where the layout changes. Bootstrap's are <code>sm</code> (576px), <code>md</code> (768px), <code>lg</code> (992px) and <code>xl</code> (1200px).</p>
+      <p class="say"><code>col-md-4</code> means: from <code>md</code> (768px) and wider, take 4 units; narrower than that, take the full width. So <code>col-12 col-md-4</code> gives three columns on a laptop and one column on a phone, with no media queries to write.</p>
+      <div class="activity">
+        <div class="do">Try it: drag the screen width below 768px and watch the columns stack. Then change <code>col-md-4</code> to <code>col-sm-4</code> and find the new breakpoint.</div>
+        <div class="live" data-h="200" data-resize="1"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+          <style> [class*="col-"] { background: #dcfce7; border: 1px solid #86efac; padding: 14px; } </style>
+
+          <div class="container py-3">
+            <div class="row">
+              <div class="col-12 col-md-4">One</div>
+              <div class="col-12 col-md-4">Two</div>
+              <div class="col-12 col-md-4">Three</div>
+            </div>
+          </div>
+        </textarea></div>
+      </div>
+      <p class="hook">Practice: a row of project cards that fits every screen.</p>
+    </section>
+
+    <!-- 10 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 8.2">
+      <h2>✏️ Practice 8.2</h2>
+      <p class="say">Remember:<br><code>container</code> → <code>row</code> → <code>col</code> · a row is <b class="eqbox">12 units</b><br><b class="eqbox">col-12 col-md-6</b> full width on phones, half from 768px up</p>
+      <div class="activity">
+        <div class="do">Put the four cards in a grid: one column on a phone, two columns from <code>md</code>. Test with the slider.</div>
+        <div class="live" data-h="220" data-resize="1" data-check="bs2" data-answer="bs2Answer"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <div class="container py-3">
+            <div class="border rounded p-3 mb-3">Project 1: Portfolio</div>
+            <div class="border rounded p-3 mb-3">Project 2: To-do app</div>
+            <div class="border rounded p-3 mb-3">Project 3: Quiz game</div>
+            <div class="border rounded p-3 mb-3">Project 4: Weather page</div>
+          </div>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="bs2Answer">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+        <div class="container py-3">
+          <div class="row">
+            <div class="col-12 col-md-6"><div class="border rounded p-3 mb-3">Project 1: Portfolio</div></div>
+            <div class="col-12 col-md-6"><div class="border rounded p-3 mb-3">Project 2: To-do app</div></div>
+            <div class="col-12 col-md-6"><div class="border rounded p-3 mb-3">Project 3: Quiz game</div></div>
+            <div class="col-12 col-md-6"><div class="border rounded p-3 mb-3">Project 4: Weather page</div></div>
+          </div>
+        </div>
+      </script>
+      <p class="hook">You have every tool you need. Time to build your own site.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="part" data-title="Plan your portfolio">
+      <h2>Plan your portfolio</h2>
+      <p class="say">A <mark>portfolio</mark> is a personal website that shows who you are and what you've built. It's often the first thing an employer looks at. Yours will have five sections, one under the other, with a menu at the top that jumps to each:</p>
+      <div class="plan">
+        <div><b>Main</b>Your photo, your name, one line about you.</div>
+        <div><b>About</b>A short paragraph: who you are and what you're learning.</div>
+        <div><b>Skills</b>HTML, CSS, JavaScript, Bootstrap…</div>
+        <div><b>Projects</b>Cards for the things you built, with links.</div>
+        <div><b>Contact</b>A form that emails you, plus your links.</div>
+      </div>
+      <p class="say">Each section is a <code>&lt;section&gt;</code> with an <code>id</code>, so menu links like <code>href="#about"</code> jump to it.
+        <button class="doubt" data-peek-from="dTemplates" aria-label="A doubt">🤔</button></p>
+      <p class="hook">Start at the top: the menu and the main section.</p>
+      <div hidden id="dTemplates"><b>Can I start from a template?</b><br>Yes. Sites like BootstrapMade, Start Bootstrap and ThemeWagon have free portfolio templates. Look at a few for ideas, but build your own first, so you understand every line.</div>
+    </section>
+
+    <!-- 12 -->
+    <section class="part" data-title="The menu and main section">
+      <h2>The menu and main section</h2>
+      <p class="say">Bootstrap's <code>navbar</code> classes make a menu bar. <code>sticky-top</code> keeps it at the top as you scroll. <code>navbar-expand</code> keeps the links in one row.</p>
+      <p class="say">The main section is often called the <mark>hero</mark>: a big, centred area with your photo and name. <code>min-vh-100</code> would make it fill the whole screen; here it's shorter so it fits the preview.</p>
+      <div class="activity">
+        <div class="do">Try it: put your own name in. Click "About" in the menu to jump. Change the hero's <code>bg-light</code> to <code>bg-dark text-white</code>.</div>
+        <div class="live" data-h="280"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <nav class="navbar navbar-expand bg-dark navbar-dark sticky-top px-3">
+            <a class="navbar-brand" href="#home">Asha</a>
+            <div class="navbar-nav ms-auto">
+              <a class="nav-link" href="#about">About</a>
+              <a class="nav-link" href="#contact">Contact</a>
+            </div>
+          </nav>
+
+          <section id="home" class="bg-light text-center py-5">
+            <img src="notebook.svg" alt="Asha Menon" class="rounded-circle border mb-3" width="110" height="110">
+            <h1 class="fw-bold">Asha Menon</h1>
+            <p class="lead">I build friendly websites.</p>
+            <a href="#contact" class="btn btn-primary">Say hello</a>
+          </section>
+
+          <section id="about" class="container py-5"><h2>About</h2><p>…</p></section>
+          <section id="contact" class="container py-5"><h2>Contact</h2><p>…</p></section>
+        </textarea></div>
+      </div>
+      <p class="hook">Next: the sections in the middle.</p>
+    </section>
+
+    <!-- 13 -->
+    <section class="part" data-title="About, skills and projects">
+      <h2>About, skills and projects</h2>
+      <p class="say"><b>About:</b> two or three honest sentences, in your own voice.</p>
+      <p class="say"><b>Skills:</b> Bootstrap <code>badge</code>s make neat little labels.</p>
+      <p class="say"><b>Projects:</b> Bootstrap's <code>card</code> classes (<code>card</code>, <code>card-body</code>, <code>card-title</code>, <code>card-text</code>) in a responsive grid. Link each card to the project's live page or code on GitHub.</p>
+      <div class="activity">
+        <div class="do">Try it: add your own skills as badges. Add a third project card in the row.</div>
+        <div class="live" data-h="280"><textarea aria-label="Your HTML">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+          <section id="skills" class="container py-3">
+            <h2>Skills</h2>
+            <span class="badge bg-primary">HTML</span>
+            <span class="badge bg-info text-dark">CSS</span>
+            <span class="badge bg-warning text-dark">JavaScript</span>
+          </section>
+
+          <section id="projects" class="container py-3">
+            <h2>Projects</h2>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <div class="card h-100"><div class="card-body">
+                  <h5 class="card-title">To-do app</h5>
+                  <p class="card-text">Add and remove tasks with JavaScript.</p>
+                  <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                </div></div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="card h-100"><div class="card-body">
+                  <h5 class="card-title">Quiz game</h5>
+                  <p class="card-text">Ten questions, a score at the end.</p>
+                  <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                </div></div>
+              </div>
+            </div>
+          </section>
+        </textarea></div>
+      </div>
+      <p class="hook">Last section: a contact form that really sends you an email.</p>
+    </section>
+
+    <!-- 14 -->
+    <section class="part" data-title="A contact form with EmailJS">
+      <h2>A contact form with EmailJS</h2>
+      <p class="say">A web page can't send email by itself. <mark>EmailJS</mark> is a free service that does it for you: your form sends its fields to EmailJS, and EmailJS emails them to you. Setting it up:</p>
+      <ol class="steps-list">
+        <li>Sign up at emailjs.com and connect your email (e.g. Gmail): that gives a <b>Service ID</b>.</li>
+        <li>Create an email template using <code>{{name}}</code>, <code>{{email}}</code> and <code>{{message}}</code>: that gives a <b>Template ID</b>.</li>
+        <li>Copy your <b>Public Key</b> from the Account page.</li>
+        <li>Add the code below to your page, with your own three values. The form fields' <code>name</code>s must match the template.</li>
+      </ol>
+<pre><code>&lt;form id="contact-form"&gt;
+  &lt;input name="name" class="form-control mb-2" placeholder="Name" required&gt;
+  &lt;input name="email" type="email" class="form-control mb-2" placeholder="Email" required&gt;
+  &lt;textarea name="message" class="form-control mb-2" rows="4" required&gt;&lt;/textarea&gt;
+  &lt;button class="btn btn-primary"&gt;Send&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  emailjs.init({ publicKey: "YOUR_PUBLIC_KEY" });
+  document.getElementById("contact-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
+      .then(() =&gt; alert("Message sent!"), () =&gt; alert("Sorry, it didn't send."));
+  });
+&lt;/script&gt;</code></pre>
+      <p class="say mini"><code>event.preventDefault()</code> stops the form from reloading the page, so the JavaScript can send it instead. <code>.then(…)</code> runs one function when sending works and the other when it fails. This can't run here; try it in your own site.</p>
+      <p class="hook">Your site is ready. Now put it online.</p>
+    </section>
+
+    <!-- 15 -->
+    <section class="part" data-title="Put it online with GitHub Pages">
+      <h2>Put it online with GitHub Pages</h2>
+      <p class="say"><mark>GitHub</mark> stores code online. <mark>GitHub Pages</mark> turns a folder of HTML, CSS and JS into a free website. Your main page must be named <code>index.html</code>.</p>
+      <ol class="steps-list">
+        <li>Make a free account at github.com.</li>
+        <li>Click <b>+</b> → <b>New repository</b>. Name it, for example, <code>portfolio</code>. Choose <b>Public</b>, then <b>Create repository</b>.</li>
+        <li>Click <b>uploading an existing file</b>, drag in <code>index.html</code> and your other files (pictures, CSS), then <b>Commit changes</b>.</li>
+        <li>Open <b>Settings</b> → <b>Pages</b>. Under "Branch", pick <code>main</code> and <code>/ (root)</code>, then <b>Save</b>.</li>
+        <li>After a minute or two your site is live at <code>https://YOUR-USERNAME.github.io/portfolio/</code>.</li>
+      </ol>
+      <p class="say">To update the site later, upload the changed files again: it refreshes by itself.
+        <button class="doubt" data-peek-from="dUserSite" aria-label="A doubt">🤔</button></p>
+      <p class="hook">Last step: profiles that point people to your site.</p>
+      <div hidden id="dUserSite"><b>Can my address be shorter?</b><br>Yes: name the repository exactly <code>YOUR-USERNAME.github.io</code>. Then the site lives at <code>https://YOUR-USERNAME.github.io/</code> with nothing after it.</div>
+    </section>
+
+    <!-- 16 -->
+    <section class="part" data-title="Your GitHub and LinkedIn profiles">
+      <h2>Your GitHub and LinkedIn profiles</h2>
+      <p class="say"><b>GitHub:</b></p>
+      <ul class="steps-list">
+        <li>A clear photo and a one-line bio.</li>
+        <li><b>Pin</b> your best repositories (portfolio, to-do app…) to the top of your profile.</li>
+        <li>Optional: a profile README, a repository named exactly like your username, whose README shows on your profile.</li>
+      </ul>
+      <p class="say"><b>LinkedIn:</b></p>
+      <ul class="steps-list">
+        <li>A photo, and a headline such as "Frontend developer · HTML, CSS, JavaScript".</li>
+        <li>An About section in your own words, and your skills.</li>
+        <li>Your portfolio link in your contact info, and projects in the Featured section.</li>
+      </ul>
+      <p class="say">Link all three together: your portfolio links to GitHub and LinkedIn, and both link back to your portfolio.</p>
+      <p class="hook">Practice: put the whole portfolio together.</p>
+    </section>
+
+    <!-- 17 · practice -->
+    <section class="part" data-nonum data-title="✏️ Practice 8.3">
+      <h2>✏️ Practice 8.3</h2>
+      <p class="say">Remember:<br>five sections with ids: <code>home</code> <code>about</code> <code>skills</code> <code>projects</code> <code>contact</code> · a menu of <code>href="#id"</code> links<br><code>navbar</code> · <code>row</code> + <code>col-12 col-md-6</code> · a form with named fields</p>
+      <div class="activity">
+        <div class="do">Build your portfolio page. When every item ticks, copy your code into a file called <code>index.html</code>, swap <code>notebook.svg</code> for your own photo, and put it on GitHub Pages.</div>
+        <div class="live" data-h="300" data-check="folio" data-answer="folioAnswer"><textarea aria-label="Your HTML">
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>My portfolio</title>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+          </head>
+          <body>
+
+          </body>
+          </html>
+        </textarea></div>
+      </div>
+      <script type="text/plain" id="folioAnswer">
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Asha Menon · Portfolio</title>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        </head>
+        <body>
+          <nav class="navbar navbar-expand bg-dark navbar-dark sticky-top px-3">
+            <a class="navbar-brand" href="#home">Asha</a>
+            <div class="navbar-nav ms-auto">
+              <a class="nav-link" href="#about">About</a>
+              <a class="nav-link" href="#skills">Skills</a>
+              <a class="nav-link" href="#projects">Projects</a>
+              <a class="nav-link" href="#contact">Contact</a>
+            </div>
+          </nav>
+
+          <section id="home" class="bg-light text-center py-5">
+            <img src="notebook.svg" alt="Asha Menon" class="rounded-circle border mb-3" width="110" height="110">
+            <h1 class="fw-bold">Asha Menon</h1>
+            <p class="lead">I build friendly websites.</p>
+          </section>
+
+          <section id="about" class="container py-4">
+            <h2>About</h2>
+            <p>I'm learning web development: HTML, CSS, JavaScript and Bootstrap.</p>
+          </section>
+
+          <section id="skills" class="container py-4">
+            <h2>Skills</h2>
+            <span class="badge bg-primary">HTML</span>
+            <span class="badge bg-info text-dark">CSS</span>
+            <span class="badge bg-warning text-dark">JavaScript</span>
+          </section>
+
+          <section id="projects" class="container py-4">
+            <h2>Projects</h2>
+            <div class="row g-3">
+              <div class="col-12 col-md-6"><div class="card"><div class="card-body"><h5 class="card-title">To-do app</h5><p class="card-text">Tasks with JavaScript.</p></div></div></div>
+              <div class="col-12 col-md-6"><div class="card"><div class="card-body"><h5 class="card-title">Quiz game</h5><p class="card-text">Ten questions and a score.</p></div></div></div>
+            </div>
+          </section>
+
+          <section id="contact" class="container py-4">
+            <h2>Contact</h2>
+            <form id="contact-form">
+              <input name="name" class="form-control mb-2" placeholder="Name" required>
+              <input name="email" type="email" class="form-control mb-2" placeholder="Email" required>
+              <textarea name="message" class="form-control mb-2" rows="3" placeholder="Message" required></textarea>
+              <button class="btn btn-primary">Send</button>
+            </form>
+          </section>
+
+          <footer class="text-center py-3 bg-dark text-white">
+            <a class="text-white" href="https://github.com">GitHub</a> · <a class="text-white" href="https://linkedin.com">LinkedIn</a>
+          </footer>
+        </body>
+        </html>
+      </script>
+      <p class="hook">Ready? The last test.</p>
+    </section>
+
+    <!-- 18 -->
+    <section class="part" data-title="Lesson test">
+      <h2>Lesson 8 test</h2>
+      <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
+      <div class="test" data-test="8">
+        <div class="quiz" data-page="lesson8.html#3" data-topic="Spacing" data-right="Right. m = margin, t = top, 3 = size 3.">
+          <div class="q"><small>1. Apply</small>Which class gives an element a margin on top only, size 3?</div>
+          <div class="options">
+            <button data-right>mt-3</button>
+            <button data-why="p means padding, not margin.">pt-3</button>
+            <button data-why="my sets the top and the bottom.">my-3</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson8.html#8" data-topic="The grid: container, row, col" data-right="Right. A row has 12 units: 12 − 3 − 3 = 6.">
+          <div class="q"><small>2. Work it out</small>A row has <code>col-3</code> and <code>col-3</code>. What should the third column be to fill the row?</div>
+          <div class="options">
+            <button data-right>col-6</button>
+            <button data-why="A row is 12 units wide, not 9.">col-3</button>
+            <button data-why="col-12 alone fills a whole row, so it would drop to a new line.">col-12</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson8.html#9" data-topic="Breakpoints" data-right="Right. Below 768px, col-12 applies: full width.">
+          <div class="q"><small>3. Predict</small>Three boxes are <code>col-12 col-md-4</code>. On a 400px-wide phone, how do they sit?</div>
+          <div class="options">
+            <button data-right>One under the other, each full width</button>
+            <button data-why="col-md-4 only starts at 768px wide. The phone is narrower.">Three side by side</button>
+            <button data-why="Nothing hides them; col-12 makes each full width.">Only the first one shows</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson8.html#4" data-topic="Borders, shadows and position" data-right="Right. Bootstrap's version of position: absolute with top 0 and right 0.">
+          <div class="q"><small>4. Apply</small>A badge should sit in the top-right corner of its card. The card has <code>position-relative</code>. Which classes go on the badge?</div>
+          <div class="options">
+            <button data-right>position-absolute top-0 end-0</button>
+            <button data-why="start means the left side.">position-absolute top-0 start-0</button>
+            <button data-why="Text alignment moves text inside the box, not the box itself.">text-end</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson8.html#11" data-topic="Plan your portfolio" data-right="Right. The link's #skills must match the section's id.">
+          <div class="q"><small>5. Spot the mistake</small>The menu link <code>&lt;a href="#skills"&gt;</code> doesn't jump anywhere. The section is <code>&lt;section class="skills"&gt;</code>. Why?</div>
+          <div class="options">
+            <button data-right>It needs id="skills", not class</button>
+            <button data-why="A # link looks for an id; the address itself is fine.">The link should be href="skills"</button>
+            <button data-why="Any element with the id works, including a section.">Links can't jump to sections</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson8.html#14" data-topic="A contact form with EmailJS" data-right="Right. The template's {{message}} is filled from the field named message.">
+          <div class="q"><small>6. Spot the mistake</small>Emails arrive, but the message is always blank. The template uses <code>{{message}}</code>, and the textarea is <code>&lt;textarea name="msg"&gt;</code>. Why?</div>
+          <div class="options">
+            <button data-right>The field's name must be "message"</button>
+            <button data-why="EmailJS reads textareas like any other field.">EmailJS can't read textareas</button>
+            <button data-why="The public key would stop every email, not just the message.">The public key is wrong</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+        <div class="quiz" data-page="lesson8.html#15" data-topic="Put it online with GitHub Pages" data-right="Right. GitHub Pages opens index.html as the home page.">
+          <div class="q"><small>7. Spot the mistake</small>You uploaded <code>home.html</code> and turned on Pages, but the site address shows "404". Why?</div>
+          <div class="options">
+            <button data-right>The main page must be named index.html</button>
+            <button data-why="Pages works for public repositories on free accounts.">Pages only works for paid accounts</button>
+            <button data-why="Pages serves any HTML file; it just needs one called index.html as the home page.">Pages can't show HTML files</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19 -->
+    <section class="part" data-title="You did it!">
+      <h2>You did it! 🎉</h2>
+      <p class="say">From your first <code>&lt;h1&gt;</code> to a live portfolio: HTML, CSS, Flexbox, Grid, JavaScript, the DOM and Bootstrap.</p>
+      <p class="say"><b>Before your final review, check you have:</b></p>
+      <ul class="steps-list final">
+        <li>✅ A portfolio with all five sections, live on GitHub Pages</li>
+        <li>✅ A working contact form (send yourself a test message)</li>
+        <li>✅ The site looks right on a phone (open it on yours)</li>
+        <li>✅ GitHub and LinkedIn profiles that link to it</li>
+        <li>✅ Every lesson test passed</li>
+      </ul>
+      <p class="say">Keep building: every small project you add to your portfolio teaches more than any page can.</p>
+      <p><button class="done-toggle" data-done="8">Mark lesson as done</button></p>
+    </section>
+  </main>
+</div>
+
+<nav class="pagebar" aria-label="Move between parts">
+  <div class="inner">
+    <button data-page-back>← Previous</button>
+    <span data-page-label></span>
+    <button class="primary" data-page-next>Next →</button>
+  </div>
+</nav>
+
+<script>
+const cls = (el, re) => !!el && re.test(el.className || "");
+const any = (d, sel, re) => [...d.querySelectorAll(sel)].some(el => cls(el, re));
+window.LIVE_CHECKS = {
+  bs1: [
+    { say: "The card has a border, rounded corners and a shadow", hint: "Add border rounded shadow to the card-box div.", test: d => { const c = d.querySelector(".card-box"); return cls(c, /\bborder\b/) && cls(c, /\brounded\b/) && cls(c, /\bshadow\b/); } },
+    { say: "The card has padding and centred text", hint: "Add p-4 text-center.", test: d => { const c = d.querySelector(".card-box"); return cls(c, /\bp[xy]?-[1-5]\b/) && cls(c, /\btext-center\b/); } },
+    { say: "The picture is a circle", hint: "class=\"rounded-circle\" on the img.", test: d => any(d, ".card-box img", /\brounded-circle\b/) },
+    { say: "Both links are buttons", hint: "class=\"btn btn-dark\" and class=\"btn btn-outline-primary\".", test: d => { const a = [...d.querySelectorAll(".card-box a")]; return a.length >= 2 && a.every(x => cls(x, /\bbtn\b/) && cls(x, /\bbtn-(outline-)?\w+/)); } },
+    { say: "The buttons sit in a centred flex row with a gap", hint: "class=\"d-flex justify-content-center gap-2\" on the div around the links.", test: d => { const w = d.querySelector(".card-box a") && d.querySelector(".card-box a").parentElement; return cls(w, /\bd-flex\b/) && cls(w, /\bjustify-content-center\b/) && cls(w, /\bgap-[1-5]\b/); } },
+    { say: "Only Bootstrap classes: no style tag or style attribute", hint: "Remove any &lt;style&gt; or style=\"…\".", test: d => !d.querySelector("style, [style]") && any(d, ".card-box", /\bborder\b/) },
+  ],
+  bs2: [
+    { say: "The cards are inside a <code>row</code>", hint: "Wrap all four in &lt;div class=\"row\"&gt;.", test: d => !!d.querySelector(".container .row") },
+    { say: "Each card is in a <code>col-12 col-md-6</code>", hint: "&lt;div class=\"col-12 col-md-6\"&gt;…card…&lt;/div&gt; around each card.", test: d => { const cols = [...d.querySelectorAll(".row > [class*='col']")]; return cols.length >= 4 && cols.every(c => cls(c, /\bcol-md-6\b/)); } },
+    { say: "All four projects are still there", hint: "Don't delete a card while wrapping them.", test: d => [1, 2, 3, 4].every(n => d.body.textContent.includes("Project " + n)) && !!d.querySelector(".row") },
+  ],
+  folio: [
+    { say: "A navbar with links to #about, #skills, #projects and #contact", hint: "&lt;nav class=\"navbar …\"&gt; with &lt;a href=\"#about\"&gt; and the others.", test: d => { const n = d.querySelector("nav"); if (!n) return false; const h = [...n.querySelectorAll("a[href]")].map(a => a.getAttribute("href")); return ["#about", "#skills", "#projects", "#contact"].every(x => h.includes(x)); } },
+    { say: "A main section (id=\"home\") with a picture and an <code>&lt;h1&gt;</code>", hint: "&lt;section id=\"home\"&gt; with an &lt;img&gt; and your name in an &lt;h1&gt;.", test: d => { const s = d.getElementById("home"); return !!s && !!s.querySelector("img[alt]") && !!s.querySelector("h1"); } },
+    { say: "Sections with ids about, skills, projects and contact", hint: "&lt;section id=\"about\"&gt;…&lt;/section&gt; and so on.", test: d => ["about", "skills", "projects", "contact"].every(id => { const s = d.getElementById(id); return !!s && s.tagName === "SECTION" && !!s.querySelector("h2"); }) },
+    { say: "Projects in a responsive grid: a row of <code>col-12 col-md-6</code>", hint: "Inside #projects: &lt;div class=\"row\"&gt; with &lt;div class=\"col-12 col-md-6\"&gt; cards.", test: d => { const p = d.getElementById("projects"); return !!p && p.querySelectorAll(".row > [class*='col-md-']").length >= 2; } },
+    { say: "A contact form with name, email and message fields", hint: "Inputs named name and email (type=\"email\"), a textarea named message, and a button.", test: d => { const f = d.querySelector("#contact form"); return !!f && !!f.querySelector('[name="name"]') && !!f.querySelector('input[type="email"][name="email"]') && !!f.querySelector('textarea[name="message"]') && !!f.querySelector("button, input[type=submit]"); } },
+    { say: "Every menu link jumps to a section that exists", hint: "Each href=\"#x\" needs an element with id=\"x\".", test: d => { const a = [...d.querySelectorAll("nav a[href^='#']")]; return a.length >= 4 && a.every(l => l.getAttribute("href").length > 1 && !!d.getElementById(l.getAttribute("href").slice(1))); } },
+  ],
+};
+</script>
+<script src="../assets/course.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/common.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/pen.js"></script>
+<script src="https://mo-ri-ch.github.io/study-notebook-design/v1/guide.js"></script>
+<script src="../assets/live.js"></script>
+</body>
+</html>
