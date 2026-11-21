@@ -6,7 +6,7 @@ const COURSE_LESSONS = [
   // n: lesson number · step: short word for the step row · file: the page in lessons/
   // ready: false shows "Soon" on the home page · leaves: the question that leads to the next lesson
   // test: the page (counting every page) that holds the lesson test
-  { part: "Part 1 · HTML & CSS", n: 1, step: "first page", title: "Your first web page", file: "lesson1.html", ready: true, test: 16,
+  { part: "Part 1 · HTML & CSS", n: 1, step: "first page", title: "Your first web page", file: "lesson1.html", ready: true, test: 17,
     summary: "Tags, headings, paragraphs, links, images and lists. Write real HTML from the first minute.",
     leaves: "How do we lay out tables, forms and boxes?" },
   { n: 2, step: "structure", title: "Tables, forms and boxes", file: "lesson2.html", ready: true, test: 17,

@@ -43,24 +43,43 @@
     </section>
 
     <!-- 2 -->
-    <section class="part" data-title="Tags and elements">
-      <h2>Tags and elements</h2>
-      <p class="say">A label like <code>&lt;p&gt;</code> is called a <mark>tag</mark>. Most tags come in pairs: an opening tag, and a closing tag with a <code>/</code> before the name.
-        <button class="doubt" data-peek-from="dTagsPair" aria-label="A doubt">🤔</button></p>
-      <div class="anat"><span class="t" data-peek="Opening tag: “a paragraph starts here”.">&lt;p&gt;</span><span data-peek="Content: the words the reader sees.">Hello!</span><span class="t" data-peek="Closing tag: the same name with a / in front. “The paragraph ends here.”">&lt;/p&gt;</span></div>
-      <p class="say">The opening tag, the content and the closing tag together make one <mark>element</mark>: here, one paragraph element.</p>
+    <section class="part" data-title="What a tag does">
+      <h2>What a tag does</h2>
+      <p class="say">A label like <code>&lt;p&gt;</code> or <code>&lt;h1&gt;</code> is called a <mark>tag</mark>. The tag tells the browser what a piece of content is, and so <b>how to show it</b>.</p>
+      <p class="say">The same word looks different in different tags: <code>&lt;h1&gt;Hello&lt;/h1&gt;</code> shows as a big heading, <code>&lt;p&gt;Hello&lt;/p&gt;</code> as ordinary text.</p>
       <div class="activity">
-        <div class="do">Try it: <code>&lt;b&gt;</code> makes text bold. Delete the closing <code>&lt;/b&gt;</code> and watch the rest of the text.</div>
-        <div class="live" data-h="120"><textarea aria-label="Your HTML">
-          <p>This is <b>bold</b> and this is not.</p>
-          <p>A second paragraph.</p>
+        <div class="do">Try it: every line says "Hello", but each looks different. Change <code>h1</code> to <code>h3</code> in both its tags, or <code>b</code> to <code>mark</code>.</div>
+        <div class="live" data-h="200"><textarea aria-label="Your HTML">
+          <h1>Hello</h1>
+          <p>Hello</p>
+          <b>Hello</b>
+          <i>Hello</i>
         </textarea></div>
       </div>
-      <p class="hook">Without its closing tag, the browser has to guess where bold stops, and it guesses "much later". Always close what you open.</p>
-      <div hidden id="dTagsPair"><b>Do all tags have a closing tag?</b><br>No. A few tags hold no words, so there is nothing to close. For example, <code>&lt;br&gt;</code> starts a new line. These are called empty elements.</div>
+      <p class="hook">Did you notice most tags come in pairs? Not all of them do.</p>
     </section>
 
     <!-- 3 -->
+    <section class="part" data-title="Two kinds of tags">
+      <h2>Two kinds of tags</h2>
+      <p class="say"><mark>Container tags</mark> come in pairs: an opening tag, and a closing tag with a <code>/</code> before the name. The content goes between them.</p>
+      <div class="anat"><span class="t" data-peek="Opening tag: “a paragraph starts here”.">&lt;p&gt;</span><span data-peek="Content: the words the reader sees.">Hello!</span><span class="t" data-peek="Closing tag: the same name with a / in front. “The paragraph ends here.”">&lt;/p&gt;</span></div>
+      <p class="say"><mark>Self-closing tags</mark> hold no content, so there is nothing to close: just one tag. <code>&lt;br&gt;</code> starts a new line, <code>&lt;hr&gt;</code> draws a line across, <code>&lt;img&gt;</code> shows a picture.
+        <button class="doubt" data-peek-from="dSelfClose" aria-label="A doubt">🤔</button></p>
+      <p class="say">A tag together with its content makes one <mark>element</mark>.</p>
+      <div class="activity">
+        <div class="do">Try it: delete the closing <code>&lt;/b&gt;</code> and watch the rest of the text. Then add a second <code>&lt;hr&gt;</code>.</div>
+        <div class="live" data-h="150"><textarea aria-label="Your HTML">
+          <p>This is <b>bold</b> and this is not.</p>
+          <hr>
+          <p>Line one<br>Line two</p>
+        </textarea></div>
+      </div>
+      <p class="hook">Without its closing tag, the browser guesses where bold stops, and it guesses "much later". Always close a container tag.</p>
+      <div hidden id="dSelfClose"><b>I've seen <code>&lt;br /&gt;</code> with a slash. Is that different?</b><br>No, it's the same tag. In HTML the slash is optional. Self-closing tags are also called <b>empty</b> or <b>void</b> elements.</div>
+    </section>
+
+    <!-- 4 -->
     <section class="part" data-title="Every page's skeleton">
       <h2>Every page's skeleton</h2>
       <p class="say">A full HTML file wraps your content in the same frame every time. Elements sit inside other elements, like boxes inside boxes. We indent the inner ones so the boxes are easy to see.
@@ -86,7 +105,7 @@
       <div hidden id="dDoctype"><b>What is <code>&lt;!DOCTYPE html&gt;</code> for?</b><br>It tells the browser "this is a modern HTML page". It always goes on the very first line, and it has no closing tag.</div>
     </section>
 
-    <!-- 4 -->
+    <!-- 5 -->
     <section class="part" data-title="Headings">
       <h2>Headings</h2>
       <p class="say">Headings are titles for the parts of a page. There are six sizes: <code>&lt;h1&gt;</code> is the biggest and most important, <code>&lt;h6&gt;</code> the smallest.</p>
@@ -107,12 +126,12 @@
       <div hidden id="dHeadSize"><b>Can I pick <code>&lt;h3&gt;</code> just because I like its size?</b><br>Better not. Search engines and screen readers use headings to understand how the page is organised. To change the size of text, use CSS (coming in Lesson 3).</div>
     </section>
 
-    <!-- 5 -->
+    <!-- 6 -->
     <section class="part" data-title="Paragraphs and line breaks">
       <h2>Paragraphs and line breaks</h2>
       <p class="say"><code>&lt;p&gt;</code> makes a paragraph: a block of text with a gap above and below it.</p>
       <p class="say">The browser ignores extra spaces and new lines in your file. Ten spaces show as one, and pressing Enter does not start a new line on the page.</p>
-      <p class="say">To start a new line inside a paragraph, use <code>&lt;br&gt;</code> (line break). It is empty, so it has no closing tag.
+      <p class="say">To start a new line inside a paragraph, use <code>&lt;br&gt;</code> (line break), a self-closing tag.
         <button class="doubt" data-peek-from="dSpace" aria-label="A doubt">🤔</button></p>
       <div class="activity">
         <div class="do">Try it: compare the first two paragraphs. Then add a <code>&lt;br&gt;</code> to the third, after "Day 1".</div>
@@ -129,10 +148,10 @@
       <div hidden id="dSpace"><b>How do I get a bigger gap, then?</b><br>With CSS, using margin and padding (coming in Lesson 3). Don't stack many <code>&lt;br&gt;</code> tags to make space.</div>
     </section>
 
-    <!-- 6 · practice -->
+    <!-- 7 · practice -->
     <section class="part" data-nonum data-title="✏️ Practice 1.1">
       <h2>✏️ Practice 1.1</h2>
-      <p class="say">Remember:<br><b class="eqbox">&lt;tag&gt;content&lt;/tag&gt;</b> makes one element<br><code>&lt;title&gt;</code> in the head names the tab · <code>&lt;h1&gt;</code>…<code>&lt;h6&gt;</code> headings · <code>&lt;p&gt;</code> paragraph · <code>&lt;br&gt;</code> new line</p>
+      <p class="say">Remember:<br><b class="eqbox">&lt;tag&gt;content&lt;/tag&gt;</b> a container tag · <code>&lt;br&gt;</code> a self-closing tag<br><code>&lt;title&gt;</code> in the head names the tab · <code>&lt;h1&gt;</code>…<code>&lt;h6&gt;</code> headings · <code>&lt;p&gt;</code> paragraph · <code>&lt;br&gt;</code> new line</p>
       <div class="activity">
         <div class="do">Build a small "About me" page. The list below ticks itself as you type.</div>
         <div class="live" data-h="210" data-tab="1" data-check="aboutMe" data-answer="aboutMeAnswer"><textarea aria-label="Your HTML">
@@ -164,7 +183,7 @@
       <p class="hook">Next: tags that need a few extra details.</p>
     </section>
 
-    <!-- 7 -->
+    <!-- 8 -->
     <section class="part" data-title="Attributes">
       <h2>Attributes: extra details for a tag</h2>
       <p class="say">Some tags need extra details. You write them inside the opening tag, as <code>name="value"</code>. These details are called <mark>attributes</mark>.</p>
@@ -180,7 +199,7 @@
       <p class="hook">The most useful attribute of all makes links.</p>
     </section>
 
-    <!-- 8 -->
+    <!-- 9 -->
     <section class="part" data-title="Links">
       <h2>Links</h2>
       <p class="say">The <code>&lt;a&gt;</code> tag makes a link. Its <code>href</code> attribute holds the address to go to:<br>
@@ -198,10 +217,10 @@
       <div hidden id="dHref"><b>What else can <code>href</code> point to?</b><br>Another page of your own site, like <code>href="about.html"</code>.<br>An email address: <code>href="mailto:you@example.com"</code> opens the reader's email app.</div>
     </section>
 
-    <!-- 9 -->
+    <!-- 10 -->
     <section class="part" data-title="Images">
       <h2>Images</h2>
-      <p class="say"><code>&lt;img&gt;</code> shows a picture. It is empty, so it has no closing tag. It needs two attributes:</p>
+      <p class="say"><code>&lt;img&gt;</code> shows a picture. It is a self-closing tag. It needs two attributes:</p>
       <p class="say"><code>src</code>: where the picture file is.<br><code>alt</code>: words that describe it. Screen readers read them aloud, and they show if the picture can't load.</p>
       <p class="say"><code>width</code> sets the width in <span data-peek="The tiny dots a screen is made of. A laptop screen is about 1,400 pixels wide.">pixels</span>; the height follows to keep its shape.
         <button class="doubt" data-peek-from="dSrc" aria-label="A doubt">🤔</button></p>
@@ -215,7 +234,7 @@
       <div hidden id="dSrc"><b>Where does a picture's address come from?</b><br>Put the picture file in the same folder as your HTML file and write its name: <code>src="photo.jpg"</code>.<br>Or use the full web address of a picture online, starting with <code>https://</code>.</div>
     </section>
 
-    <!-- 10 -->
+    <!-- 11 -->
     <section class="part" data-title="The style attribute">
       <h2>The style attribute</h2>
       <p class="say">The <code>style</code> attribute changes how one element looks. Its value is a list of <code>property: value;</code> pairs:<br>
@@ -234,7 +253,7 @@
       <div hidden id="dColors"><b>Which colour names can I use?</b><br>About 140 names work, such as <code>red</code>, <code>teal</code>, <code>tomato</code> or <code>gold</code>. You can also use colour codes like <code>#ff6347</code> (explained in Lesson 3).</div>
     </section>
 
-    <!-- 11 · practice -->
+    <!-- 12 · practice -->
     <section class="part" data-nonum data-title="✏️ Practice 1.2">
       <h2>✏️ Practice 1.2</h2>
       <p class="say">Remember:<br><b class="eqbox">&lt;a href="address" target="_blank"&gt;words&lt;/a&gt;</b><br><b class="eqbox">&lt;img src="file" alt="description" width="150"&gt;</b><br><b class="eqbox">style="property: value;"</b></p>
@@ -254,7 +273,7 @@
       <p class="hook">Next: small tags that change words inside a paragraph.</p>
     </section>
 
-    <!-- 12 -->
+    <!-- 13 -->
     <section class="part" data-title="Formatting text">
       <h2>Formatting text</h2>
       <p class="say">A few small tags change how words look inside a paragraph: bold, italic, highlighted, struck out, and raised or lowered like in H₂O and x². Each one is shown on the right.
@@ -273,7 +292,7 @@
       <div hidden id="dStrong"><b>What's the difference between <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code>?</b><br>They look the same. <code>&lt;strong&gt;</code> also means "this is important", so screen readers stress it. In the same way, <code>&lt;em&gt;</code> means "say this with emphasis", while <code>&lt;i&gt;</code> is only italic.</div>
     </section>
 
-    <!-- 13 -->
+    <!-- 14 -->
     <section class="part" data-title="Lists">
       <h2>Lists</h2>
       <p class="say"><code>&lt;ul&gt;</code> makes an <mark>unordered list</mark>, with bullets. <code>&lt;ol&gt;</code> makes an <mark>ordered list</mark>, with numbers. Inside both, each item is an <code>&lt;li&gt;</code> (list item).
@@ -304,7 +323,7 @@
       <div hidden id="dOl"><b>Can the numbers start at 5, or be letters?</b><br>Yes. <code>&lt;ol start="5"&gt;</code> starts counting at 5.<br><code>&lt;ol type="A"&gt;</code> uses A, B, C, and <code>type="i"</code> uses i, ii, iii.</div>
     </section>
 
-    <!-- 14 -->
+    <!-- 15 -->
     <section class="part" data-title="Lists inside lists">
       <h2>Lists inside lists</h2>
       <p class="say">A list item can hold a whole new list. Put the inner <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> inside the <code>&lt;li&gt;</code>, just before its <code>&lt;/li&gt;</code>. This makes a <mark>multi-level list</mark>, like the outline of a book.
@@ -328,7 +347,7 @@
       <div hidden id="dNest"><b>Why must the inner list go inside the <code>&lt;li&gt;</code>?</b><br>Only <code>&lt;li&gt;</code> elements may sit directly inside <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>. The inner list belongs to one item, so it goes inside that item.</div>
     </section>
 
-    <!-- 15 · practice -->
+    <!-- 16 · practice -->
     <section class="part" data-nonum data-title="✏️ Practice 1.3">
       <h2>✏️ Practice 1.3</h2>
       <p class="say">Remember:<br><b class="eqbox">&lt;ol&gt;</b> numbers · <b class="eqbox">&lt;ul&gt;</b> bullets · each item is an <code>&lt;li&gt;</code><br>An inner list goes inside an <code>&lt;li&gt;</code>, before its <code>&lt;/li&gt;</code>.</p>
@@ -366,12 +385,12 @@
       <p class="hook">Ready? A short test on everything in this lesson.</p>
     </section>
 
-    <!-- 16 -->
+    <!-- 17 -->
     <section class="part" data-title="Lesson test">
       <h2>Lesson 1 test</h2>
       <p class="say">Think first, then pick. A wrong answer shows which page to read again.</p>
       <div class="test" data-test="1">
-        <div class="quiz" data-page="lesson1.html#2" data-topic="Tags and elements" data-right="Right. With no closing tag, the browser keeps the text bold well past where you meant it to stop.">
+        <div class="quiz" data-page="lesson1.html#3" data-topic="Two kinds of tags" data-right="Right. With no closing tag, the browser keeps the text bold well past where you meant it to stop.">
           <div class="q"><small>1. Predict</small>You write <code>&lt;p&gt;This is &lt;b&gt;bold and this is not.&lt;/p&gt;</code> What does the page show?</div>
           <div class="options">
             <button data-right>"bold and this is not." is all bold</button>
@@ -380,7 +399,7 @@
           </div>
           <div class="feedback"></div>
         </div>
-        <div class="quiz" data-page="lesson1.html#5" data-topic="Paragraphs and line breaks" data-right="Right. The browser squeezes all those spaces and the new line into a single space.">
+        <div class="quiz" data-page="lesson1.html#6" data-topic="Paragraphs and line breaks" data-right="Right. The browser squeezes all those spaces and the new line into a single space.">
           <div class="q"><small>2. Predict</small>A paragraph has "One", then ten spaces, then Enter, then "two". On the page, what is between the two words?</div>
           <div class="options">
             <button data-right>One space</button>
@@ -389,7 +408,7 @@
           </div>
           <div class="feedback"></div>
         </div>
-        <div class="quiz" data-page="lesson1.html#4" data-topic="Headings" data-right="Right. One h1 for the page title, then an h2 for each section.">
+        <div class="quiz" data-page="lesson1.html#5" data-topic="Headings" data-right="Right. One h1 for the page title, then an h2 for each section.">
           <div class="q"><small>3. Apply</small>A page has a main title and three sections. Which headings fit best?</div>
           <div class="options">
             <button data-right>One &lt;h1&gt;, then three &lt;h2&gt;</button>
@@ -398,7 +417,7 @@
           </div>
           <div class="feedback"></div>
         </div>
-        <div class="quiz" data-page="lesson1.html#8" data-topic="Links" data-right="Right. The address goes in href, inside the opening &lt;a&gt; tag.">
+        <div class="quiz" data-page="lesson1.html#9" data-topic="Links" data-right="Right. The address goes in href, inside the opening &lt;a&gt; tag.">
           <div class="q"><small>4. Spot the mistake</small>Which one is a working link?</div>
           <div class="options">
             <button data-why="src is for pictures. A link's address goes in href.">&lt;a src="https://example.com"&gt;Go&lt;/a&gt;</button>
@@ -407,7 +426,7 @@
           </div>
           <div class="feedback"></div>
         </div>
-        <div class="quiz" data-page="lesson1.html#9" data-topic="Images" data-right="Right. When the picture can't load, the browser shows the alt words instead.">
+        <div class="quiz" data-page="lesson1.html#10" data-topic="Images" data-right="Right. When the picture can't load, the browser shows the alt words instead.">
           <div class="q"><small>5. Predict</small><code>&lt;img src="dog.jpg" alt="My dog Bruno"&gt;</code>, but dog.jpg isn't in the folder. What does the reader see?</div>
           <div class="options">
             <button data-right>The words "My dog Bruno"</button>
@@ -416,7 +435,7 @@
           </div>
           <div class="feedback"></div>
         </div>
-        <div class="quiz" data-page="lesson1.html#10" data-topic="The style attribute" data-right="Right. Each pair is property: value; with a colon and a semicolon.">
+        <div class="quiz" data-page="lesson1.html#11" data-topic="The style attribute" data-right="Right. Each pair is property: value; with a colon and a semicolon.">
           <div class="q"><small>6. Spot the mistake</small>Which one makes the text red?</div>
           <div class="options">
             <button data-why="Inside style, a property and its value are joined with a colon, not =.">&lt;p style="color = red"&gt;</button>
@@ -425,7 +444,7 @@
           </div>
           <div class="feedback"></div>
         </div>
-        <div class="quiz" data-page="lesson1.html#14" data-topic="Lists inside lists" data-right="Right. The inner list sits inside the Fruits item, before its &lt;/li&gt;.">
+        <div class="quiz" data-page="lesson1.html#15" data-topic="Lists inside lists" data-right="Right. The inner list sits inside the Fruits item, before its &lt;/li&gt;.">
           <div class="q"><small>7. Spot the mistake</small>Which puts "Apple" under "Fruits" correctly?</div>
           <div class="options">
             <button data-right>&lt;ul&gt;&lt;li&gt;Fruits &lt;ul&gt;&lt;li&gt;Apple&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</button>
@@ -437,7 +456,7 @@
       </div>
     </section>
 
-    <!-- 17 -->
+    <!-- 18 -->
     <section class="part" data-title="What's next?">
       <h2>What's next?</h2>
       <p class="say">You can now write a real page: headings, paragraphs, links, pictures, formatting and lists.</p>
