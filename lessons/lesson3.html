@@ -245,6 +245,13 @@
     <section class="part" data-title="The box model">
       <h2>The box model</h2>
       <p class="say">Every element is a box made of four layers: the content, then padding, then border, then margin. This is the <mark>box model</mark>.</p>
+      <div class="lesson-video" data-no-swipe>
+        <div class="vcap">▶ Watch first: 33 seconds, in Malayalam</div>
+        <video controls preload="metadata" playsinline poster="../assets/video/box-model.jpg" aria-label="Video: the box model, in Malayalam">
+          <source src="../assets/video/box-model.mp4" type="video/mp4">
+        </video>
+        <div class="vnote">Narrated with an AI copy of your teacher's voice, used with his permission.</div>
+      </div>
       <p class="say">By default, <code>width</code> sets only the content. A box with <code>width: 100px</code>, <code>padding: 10px</code> and <code>border: 5px</code> really takes up<br>5 + 10 + 100 + 10 + 5 = 130 pixels across (before margins).</p>
       <p class="say"><code>box-sizing: border-box</code> makes <code>width</code> include the padding and border, so the box stays exactly as wide as you said.
         <button class="doubt" data-peek-from="dBb" aria-label="A doubt">🤔</button></p>
@@ -332,6 +339,13 @@
     <section class="part" data-title="position: absolute">
       <h2>position: absolute</h2>
       <p class="say"><code>position: absolute</code> lifts a box out of the page's flow: the other elements close the gap as if it weren't there.</p>
+      <div class="lesson-video" data-no-swipe>
+        <div class="vcap">▶ Watch first: 31 seconds, in Malayalam</div>
+        <video controls preload="metadata" playsinline poster="../assets/video/position.jpg" aria-label="Video: relative and absolute, in Malayalam">
+          <source src="../assets/video/position.mp4" type="video/mp4">
+        </video>
+        <div class="vnote">Narrated with an AI copy of your teacher's voice, used with his permission.</div>
+      </div>
       <p class="say">Its <code>top</code>, <code>right</code>, <code>bottom</code> and <code>left</code> are measured from the nearest parent that has a position other than static. The usual trick: give the parent <code>position: relative</code>, so the child is placed inside it.</p>
       <div class="activity">
         <div class="do">Try it: change <code>top: 10px; right: 10px;</code> to <code>bottom: 10px; left: 10px;</code>. Then delete <code>position: relative</code> from <code>.card</code>.</div>
