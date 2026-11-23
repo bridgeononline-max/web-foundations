@@ -12,3 +12,8 @@
 .serp .t { color: #1A0DAB; font-size: 1.15rem; margin: 2px 0; }
 .serp .d { color: #4D5156; font-size: 0.88rem; }
 .serp .t.empty, .serp .d.empty { color: #A0A4AB; font-style: italic; }
+/* short teaching videos, placed before an activity; they never play on their own */
+.lesson-video { margin: 4px 0 14px; max-width: 760px; }
+.lesson-video video { display: block; width: 100%; border: 3px solid var(--ink); border-radius: var(--radius, 8px); background: #000; box-shadow: 6px 6px 0 var(--hl-yellow); }
+.lesson-video .vcap { font-family: var(--head); font-size: 1.05rem; color: var(--pencil); margin: 0 0 4px; }
+.lesson-video .vnote { font-size: 0.82rem; color: var(--pencil); margin-top: 6px; }
